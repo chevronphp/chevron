@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="src/Chevron/autoload.php">
+<phpunit bootstrap="src/Chevron/autoload/autoload.php">
 	<php>
 		<const name="TEST_DB_DSN" value="mysql:host=127.0.0.1;port=3306;dbname=testing;charset=utf8" />
 		<const name="TEST_DB_USERNAME" value="root" />

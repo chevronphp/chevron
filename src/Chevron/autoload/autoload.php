@@ -16,15 +16,15 @@ spl_autoload_register(function ( $request ) {
 	$ns     = explode("\\", $request);
 	$class  = array_pop($ns);
 	$module = array_pop($ns);
-	$file   = __DIR__ . "{$sep}{$module}{$sep}{$class}.php";
+	$file   = __DIR__ . "/../{$sep}{$module}{$sep}{$class}.php";
 
 	if( file_exists( $file ) ){
 		include_once( $file );
 	}
 });
 
-include_once( __DIR__ . "/WeightsAndMeasures/WeightsAndMeasures.php");
-include_once( __DIR__ . "/Misc/debug_functions.php");
+include_once( __DIR__ . "/../WeightsAndMeasures/WeightsAndMeasures.php");
+include_once( __DIR__ . "/../Misc/debug_functions.php");
 
 set_exception_handler(array('\Chevron\Errors\ExceptionHandler','handle'));
 
