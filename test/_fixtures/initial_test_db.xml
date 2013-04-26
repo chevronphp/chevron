@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="testing">
+	<table_structure name="sprockets">
+		<field Field="title" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="sprocket_id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="descr" Type="text" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="type_id" Type="int(11)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="updated" Type="datetime" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="sprockets" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="sprocket_id" Collation="A" Cardinality="10" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="sprockets" Engine="InnoDB" Version="10" Row_format="Compact" Rows="10" Avg_row_length="1638" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="6400507904" Auto_increment="11" Create_time="2013-04-20 05:04:06" Collation="utf8_general_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="sprockets">
+	<row>
+		<field name="title">5397182fed3869547139e31bcd36e536</field>
+		<field name="sprocket_id">1</field>
+		<field name="descr">627d1a84-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">24</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">59937e546341411e72996003bb97bcd1</field>
+		<field name="sprocket_id">2</field>
+		<field name="descr">627d1bba-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">25</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">155e5d75b8461058ce49f26f9a6e8440</field>
+		<field name="sprocket_id">3</field>
+		<field name="descr">627d1c00-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">26</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">ec9cdeaa47e8dfa4c593029a842407f5</field>
+		<field name="sprocket_id">4</field>
+		<field name="descr">627d1c46-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">27</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">3ab3b1eaa3cd8049b89f4133fa54c531</field>
+		<field name="sprocket_id">5</field>
+		<field name="descr">627d1c82-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">28</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">bbd68671b9b3841a3b43a9a018708c13</field>
+		<field name="sprocket_id">6</field>
+		<field name="descr">627d1cb4-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">29</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">cfdd54ded8c9d81729569f37cf01fdcf</field>
+		<field name="sprocket_id">7</field>
+		<field name="descr">627d1d2c-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">30</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">815ff2889752897f120037010b36f921</field>
+		<field name="sprocket_id">8</field>
+		<field name="descr">627d1d68-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">31</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">245344a9c9fdcd00a97482e2b42efd59</field>
+		<field name="sprocket_id">9</field>
+		<field name="descr">627d1da4-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">32</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	<row>
+		<field name="title">962e9985f90fe6e1d438e042487c0725</field>
+		<field name="sprocket_id">10</field>
+		<field name="descr">627d1dd6-a976-11e2-910d-973c674f56c2</field>
+		<field name="type_id">33</field>
+		<field name="updated">2013-04-19 23:54:29</field>
+	</row>
+	</table_data>
+	<table_structure name="widgets">
+		<field Field="title" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="widget_id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="descr" Type="text" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="type_id" Type="int(11)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="updated" Type="datetime" Null="YES" Key="" Extra="" Comment="" />
+		<key Table="widgets" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="widget_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="widgets" Engine="InnoDB" Version="10" Row_format="Compact" Rows="10" Avg_row_length="1638" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="6400507904" Auto_increment="11" Create_time="2013-04-20 05:05:50" Collation="utf8_general_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="widgets">
+	<row>
+		<field name="title">2a067a09feb7ff9469b28a2da8633326</field>
+		<field name="widget_id">1</field>
+		<field name="descr">6eb54e2a-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">38</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">f44d6c28dd0ccd5aab7d8ac6f3779317</field>
+		<field name="widget_id">2</field>
+		<field name="descr">6eb55118-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">39</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">bfcf5c5605bfac4771339ba506fe010a</field>
+		<field name="widget_id">3</field>
+		<field name="descr">6eb55302-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">40</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">6b28d86415f1dca50408d68729870606</field>
+		<field name="widget_id">4</field>
+		<field name="descr">6eb5542e-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">41</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">d6813682ef256981af0804131c6e511b</field>
+		<field name="widget_id">5</field>
+		<field name="descr">6eb55550-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">42</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">3f0ea5d32694d6e9e5e48b151f2a110e</field>
+		<field name="widget_id">6</field>
+		<field name="descr">6eb55668-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">43</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">91a865b2a9203759adc67cc782f106f3</field>
+		<field name="widget_id">7</field>
+		<field name="descr">6eb55780-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">44</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">c07b9092ab18cdf2d7f1b16c45aa661a</field>
+		<field name="widget_id">8</field>
+		<field name="descr">6eb558a2-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">45</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">5c47eb59a87972b52ef54d28468af150</field>
+		<field name="widget_id">9</field>
+		<field name="descr">6eb559b0-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">46</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	<row>
+		<field name="title">991e4d03df889f9b6c30a1730a1643ae</field>
+		<field name="widget_id">10</field>
+		<field name="descr">6eb55ac8-a949-11e2-910d-973c674f56c2</field>
+		<field name="type_id">47</field>
+		<field name="updated">2013-04-19 23:50:10</field>
+	</row>
+	</table_data>
+	<table_structure name="widgets_to_sprockets">
+		<field Field="widget_id" Type="int(11)" Null="YES" Key="MUL" Extra="" Comment="" />
+		<field Field="sprocket_id" Type="int(11)" Null="YES" Key="MUL" Extra="" Comment="" />
+		<key Table="widgets_to_sprockets" Non_unique="0" Key_name="test_id" Seq_in_index="1" Column_name="widget_id" Collation="A" Cardinality="9" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="widgets_to_sprockets" Non_unique="0" Key_name="test_id" Seq_in_index="2" Column_name="sprocket_id" Collation="A" Cardinality="9" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="widgets_to_sprockets" Non_unique="1" Key_name="subtest_id" Seq_in_index="1" Column_name="sprocket_id" Collation="A" Cardinality="9" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="widgets_to_sprockets" Engine="InnoDB" Version="10" Row_format="Compact" Rows="9" Avg_row_length="1820" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="6400507904" Create_time="2013-04-20 04:53:54" Collation="utf8_general_ci" Create_options="" Comment="" />
+	</table_structure>
+	<table_data name="widgets_to_sprockets">
+	<row>
+		<field name="widget_id">1</field>
+		<field name="sprocket_id">2</field>
+	</row>
+	<row>
+		<field name="widget_id">2</field>
+		<field name="sprocket_id">2</field>
+	</row>
+	<row>
+		<field name="widget_id">3</field>
+		<field name="sprocket_id">1</field>
+	</row>
+	<row>
+		<field name="widget_id">4</field>
+		<field name="sprocket_id">3</field>
+	</row>
+	<row>
+		<field name="widget_id">4</field>
+		<field name="sprocket_id">6</field>
+	</row>
+	<row>
+		<field name="widget_id">5</field>
+		<field name="sprocket_id">1</field>
+	</row>
+	<row>
+		<field name="widget_id">5</field>
+		<field name="sprocket_id">7</field>
+	</row>
+	<row>
+		<field name="widget_id">8</field>
+		<field name="sprocket_id">3</field>
+	</row>
+	<row>
+		<field name="widget_id">9</field>
+		<field name="sprocket_id">9</field>
+	</row>
+	</table_data>
+</database>
+</mysqldump>
