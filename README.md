@@ -6,12 +6,14 @@ time I hope it grows in scope and usefulness but not in complexity.
 
 As it stands now, there is a PDO wrapper with some useful helper
 functions, a dependency injection container, a simple input sanitizer,
-and a basic implementation of the registry pattern.
+and a basic implementation of the registry pattern, and a few more.
 
 ## Why?
 
 Because I find these tools useful and wanted to package them in a way
-that I could reuse them.
+that I could reuse them. Most of these tools have made building web
+applications much easier for me and I hope, if you download them, you
+find them useful as well.
 
 ## Goals
 
@@ -28,3 +30,5 @@ documentation.
   - rewrite and test Chevron\Redis
   - test Chevron\Stub
   - write some example usage
+
+

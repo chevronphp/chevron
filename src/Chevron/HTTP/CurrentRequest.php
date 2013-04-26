@@ -82,8 +82,6 @@ class CurrentRequest extends Request {
 
 	function base_href(){}
 
-	function redirect(){}
-
 	/**
 	 * check if the current request is a POST request
 	 * @return bool

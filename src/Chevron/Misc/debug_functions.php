@@ -1,6 +1,6 @@
 <?php
 
-namespace Chevron\Library;
+namespace Chevron;
 
 /**
  * function to parse a variable number of args into a more descriptive format and

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chevron\Library;
+namespace Chevron;
 
 $WeightsAndMeasures = array(
 	"ONE_SECOND" => 1,
