@@ -31,4 +31,8 @@ documentation.
   - test Chevron\Stub
   - write some example usage
 
+### Travis
+
+[![Build Status](https://travis-ci.org/henderjon/chevron.png)](https://travis-ci.org/henderjon/chevron)
+
 
