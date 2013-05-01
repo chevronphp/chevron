@@ -86,3 +86,82 @@ function cli_backtrace( $array = false ){
 
     return sprintf( "%s\n\n" , $final);
 }
+
+/**
+ * Testing the odd/even value of an int.
+ * You'll inevitably need to alternate colors on rows ...
+ *
+ * @param int $num Tests $num in a bitwise fashion to see if it's value is an odd number
+ * @example $style = ((base::is_odd($num)) ? 'odd' : 'even');
+ * @return bool
+ */
+function is_odd($num){
+	return (bool)($num & 1);
+}
+
+
+/*
+ * output a formatted string of hours and minutes for a given seconds value
+ *
+ * @author Nick Bartlett
+ * @date Apr 20, 2011
+ * @param int $seconds
+ * @return
+ */
+function seconds_to_HM($seconds){
+
+	$hours   = floor($seconds / 3600);
+	$minutes = floor(($seconds % 3600) / 60);
+
+	$str = '';
+	if ($hours) $str .= sprintf("%s hr%s, ", number_format($hours), ($hours == 1 ? '' : 's'));
+	$str .= sprintf("%d min", $minutes);
+
+	return $str;
+}
+
+/**
+ * Function to change a number of seconds to a display of HH:MM:SS
+ *
+ * @param mixed $seconds The string or int value to change
+ * @return string
+ */
+function seconds_to_HMS($seconds){
+
+	$hours   = floor($seconds / 3600);
+	$minutes = floor(($seconds % 3600) / 60);
+	$seconds = floor($seconds % 60);
+
+	return sprintf("%s:%02d:%02d", number_format($hours), $minutes, $seconds);
+}
+
+function duration( $start, $end ){
+
+	$seconds = (int)$end - (int)$start;
+
+	$mins = ($seconds / 60);
+	if(!is_int($mins)){
+		$mins = floor($mins);
+		$secs = ($seconds % 60);
+	}
+
+
+	if($mins > 60){
+		$hours = ($mins / 60);
+		if(!is_int($hours)){
+			$hours = floor($hours);
+			$mins = $mins % 60;
+		}
+	}
+
+	return sprintf("%02s:%02s:%02s", $hours, $mins, $secs);
+
+}
+
+/***/
+function index2assoc( $array ){
+	while( $key = array_shift( $array ) ){
+		$final[ $key ] = array_shift( $array );
+	}
+	return $final;
+}
