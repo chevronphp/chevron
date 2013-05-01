@@ -22,8 +22,8 @@ of the time.
 
 ### How would one go about using these tools?
 
-Check the tests. They're verbose so that they can double as examples and
-documentation.
+Check the tests. Hopefully they're verbose enough to double as examples
+and documentation.
 
 ### TODO
 
