@@ -54,3 +54,35 @@ function cli_format( $msg, $attrs = array() ){
 	return sprintf( $code, $msg );
 
 }
+
+function cli_backtrace( $array = false ){
+	global $argv;
+	$debug_backtrace = $array ?: debug_backtrace();
+	$debug_backtrace = array_slice( $debug_backtrace, 2 );
+
+	$order = array( "file", "line", "class", "object", "type", "function", "args" );
+	$indent = sprintf( "\n%18s", " " );
+
+	$final = "";
+    foreach( $debug_backtrace as $row ){
+    	$args  = "";
+    	$file = ltrim(str_replace( getcwd(), "", $row["file"] ), '/');
+    	$final .= sprintf( "\n%s:%s\n", $file, $row["line"] );
+    	$final .= sprintf( "%'-76s\n\n", "-" );
+    	$final .= sprintf( "%12s => %s\n", "file",     $file );
+    	$final .= sprintf( "%12s => %s\n", "line",     $row["line"] );
+    	if( !empty($row["class"]) )  { $final .= sprintf( "%12s => %s\n", "class",    $row["class"] ); }
+    	if( !empty($row["object"]) ) { $final .= sprintf( "%12s => %s\n", "object",   ( is_object( $row["object"] ) ? get_class( $row["object"] ) : "" ) ); }
+    	if( !empty($row["type"]) )   { $final .= sprintf( "%12s => %s\n", "type",     $row["type"] ); }
+    	$final .= sprintf( "%12s => %s\n", "function", $row["function"] );
+    	if( is_array( $row["args"] ) ){
+			foreach( $row["args"] as $i => $_arg ){
+				$arg   = str_replace( "\n", $indent, print_r( $_arg, true ) );
+				$args .= $i == 0 ? sprintf( "- %s\n", $arg ) : sprintf( "%16s- %s\n", " ", $arg );
+			}
+    	}
+    	$final .= sprintf( "%12s => %s\n\n", "args", $args );
+	}
+
+    return sprintf( "%s\n\n" , $final);
+}

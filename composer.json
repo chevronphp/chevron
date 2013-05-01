@@ -1,14 +1,14 @@
 {
-	"name": "chevron/chevron",
-	"type": "library",
+	"name"       : "chevron/chevron",
+	"type"       : "library",
 	"description": "a simple set of useful tools",
-	"homepage": "http://github.com/henderjon/chevron",
-	"license": "BSD-3-Clause",
-	"authors": [
+	"homepage"   : "http://github.com/henderjon/chevron",
+	"license"    : "BSD-3-Clause",
+	"authors"    : [
 		{
-			"name": "Jon Henderson",
-			"freenode": "henderjon",
-			"role": "Developer"
+			"name"            : "Jon Henderson",
+			"irc.freenode.com": "henderjon",
+			"role"            : "Developer"
 		}
 	],
 	"require": {
