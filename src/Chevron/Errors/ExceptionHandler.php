@@ -7,7 +7,7 @@ class ExceptionHandler {
 		$stream = fopen("php://memory", "rw");
 
 		$file = $e->getFile();
-		$file = basename($file;
+		$file = basename($file);
 		fwrite($stream, "\n\n### {$file}:{$e->getLine()} \n");
 		fwrite($stream, str_repeat("#", 72));
 		fwrite($stream, "\n\n{$e->getMessage()}");
@@ -39,7 +39,7 @@ class ExceptionHandler {
 
 			$file = "";
 			if(isset($row["file"])){
-				$file = basename($row["file"];
+				$file = basename($row["file"]);
 			}
 
 			$line = "";
