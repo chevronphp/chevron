@@ -21,6 +21,7 @@ class Request {
 		"extension"        => "",
 		"filename"         => "",
 		"action"           => "",
+		"hash"             => "",
 	);
 
 	function __construct( $url = "", array $query = array() ){
@@ -79,6 +80,7 @@ class Request {
 		}
 
 		if(array_key_exists("path", $info)){
+			$info["hash"] = hash("md5", $info["path"]);
 			$parts = pathinfo($info["path"]);
 			foreach($parts as $name => $value){
 				$info[$name] = $value;
