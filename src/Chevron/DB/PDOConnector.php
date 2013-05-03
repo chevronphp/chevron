@@ -2,6 +2,8 @@
 
 namespace Chevron\DB;
 /**
+ * A simple PDO constuctor
+ *
  * @package Chevron\DB
  * @author Jon Henderson
  */

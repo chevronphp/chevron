@@ -2,6 +2,8 @@
 
 namespace Chevron\DB;
 /**
+ * An interface defining the functionality of the Chevron\DB\PDOWrapper class
+ *
  * @package Chevron\DB
  * @author Jon Henderson
  */

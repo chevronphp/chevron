@@ -2,6 +2,7 @@
 
 namespace Chevron\DB;
 /**
+ * A DB wrapper class offering some helpful shortcut methods
  *
  * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
  *
