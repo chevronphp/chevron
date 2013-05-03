@@ -45,12 +45,8 @@ class Registry {
 	 * @return mixed
 	 */
 	function __set($key, $value){
-		if(array_key_exists($key, $this->map)){
-			$this->success = true;
-			return $this->map[$key] = $value;
-		}
-		$this->success = false;
-		return null;
+		$this->success = true;
+		return $this->map[$key] = $value;
 	}
 
 }

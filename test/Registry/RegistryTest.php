@@ -118,7 +118,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$expected = null;
 
 		// get value that doesn't exist
-		$this->assertEquals($data, $expected, "Registry::__get (non set value) failed to return correct data");
+		$this->assertEquals($expected, $data, "Registry::__get (non set value) failed to return correct data");
 		$this->assertInternalType("null", $data, "Registry::__get (non set value) failed to return correct type");
 
 	}
@@ -136,7 +136,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$expected = false;
 
 		// test unsuccess
-		$this->assertEquals($data, $expected, "Registry::success (failure) failed to return correct data");
+		$this->assertEquals($expected, $data, "Registry::success (failure) failed to return correct data");
 		$this->assertInternalType("bool", $data, "Registry::success (failure) failed to return correct type");
 	}
 
@@ -148,7 +148,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$data = $registry->numeric;
 
 		// set int
-		$this->assertNotEquals($data, 23, "Registry::__set (int) failed to return correct data");
+		$this->assertNotEquals( 23, $data,"Registry::__set (int) failed to return correct data");
 		$this->assertInternalType("int", $data, "Registry::__set (int) failed to return correct type");
 
 	}
@@ -166,7 +166,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$expected = true;
 
 		// test success
-		$this->assertEquals($data, $expected, "Registry::success (successful) failed to return correct data");
+		$this->assertEquals($expected, $data, "Registry::success (successful) failed to return correct data");
 		$this->assertInternalType("bool", $data, "Registry::success (successful) failed to return correct type");
 
 	}
@@ -179,12 +179,12 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$data = $registry->string;
 
 		// change value and type
-		$this->assertNotEquals($data, "Led Zeppelin", "Registry::__set (change value and type) failed to return correct data");
+		$this->assertNotEquals("Led Zeppelin", $data, "Registry::__set (change value and type) failed to return correct data");
 		$this->assertInternalType("int", $data, "Registry::__set (change value and type) failed to return correct type");
 
 	}
 
-	public function testMagicSetNothing(){
+	public function testMagicSetNewValue(){
 
 		$registry = $this->getLoadedRegistry();
 
@@ -192,15 +192,50 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$data = $registry->not_string;
 
 		// set value not there
-		$this->assertEquals($data, null, "Registry::__set (non set value) failed to return correct data");
+		$this->assertEquals("not a string", $data, "Registry::__set (non set value) failed to return correct data");
+		$this->assertInternalType("string", $data, "Registry::__set (non set value) failed to return correct type");
+
+	}
+
+	/**
+	 * @depends testMagicSetNewValue
+	 */
+	public function testMagicSetNewValueSuccessStatus(){
+
+		$registry = $this->getLoadedRegistry();
+
+		$registry->not_string = "not a string";
+
+		$data = $registry->success();
+		// $expected = true;
+
+		// test unsuccess
+		$this->assertEquals($expected, $data, "Registry::success (failure) failed to return correct data");
+		$this->assertInternalType("bool", $data, "Registry::success (failure) failed to return correct type");
+
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function _MagicSetNothing(){
+
+		$registry = $this->getLoadedRegistry();
+
+		$registry->not_string = "not a string";
+		$data = $registry->not_string;
+
+		// set value not there
+		$this->assertEquals(null, $data, "Registry::__set (non set value) failed to return correct data");
 		$this->assertInternalType("null", $data, "Registry::__set (non set value) failed to return correct type");
 
 	}
 
 	/**
+	 * @deprecated
 	 * @depends testMagicSetNothing
 	 */
-	public function testMagicSetNothingSuccessStatus(){
+	public function _MagicSetNothingSuccessStatus(){
 
 		$registry = $this->getLoadedRegistry();
 
@@ -210,7 +245,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$expected = false;
 
 		// test unsuccess
-		$this->assertEquals($data, $expected, "Registry::success (failure) failed to return correct data");
+		$this->assertEquals($expected, $data, "Registry::success (failure) failed to return correct data");
 		$this->assertInternalType("bool", $data, "Registry::success (failure) failed to return correct type");
 
 	}
