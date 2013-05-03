@@ -147,6 +147,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 			"basename"         => "file.html",
 			"filename"         => "file",
 			"extension"        => "html",
+			'hash'             => '68527be74e41edaf65030fba85e9011d'
 		);
 
 		$this->assertEquals($expected, $result, "Request::parse_extended failed to parse the array correctly");
@@ -176,6 +177,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 			"basename"         => "file.html",
 			"filename"         => "file",
 			"extension"        => "html",
+			'hash'             => '68527be74e41edaf65030fba85e9011d'
 		);
 
 		$this->assertEquals($expected, $result, "Request::parse_extended failed to parse the array correctly");
