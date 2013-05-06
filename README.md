@@ -25,6 +25,10 @@ of the time.
 Check the tests. Hopefully they're verbose enough to double as examples
 and documentation.
 
+### Installation (Composer)
+
+	`"require": { "chevron/chevron": "dev-master" }`
+
 ### TODO
 
   - cleanup, finish, more betterify the comments and documentation
@@ -32,6 +36,10 @@ and documentation.
   - test Chevron\Stub
   - write some example usage
   - allow Registry::__set for a key that doesn't exist
+
+### Notes
+
+  - Don't use the included autoloader, you should use Composers.
 
 ### Travis
 
