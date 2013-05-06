@@ -7,7 +7,7 @@ namespace Chevron\PDO\MySQL;
  *
  * @package DB
  */
-class Queries implements QueriesInterface {
+class Query implements QueryInterface {
 
 	protected $namedTokens = false;
 	protected $columns, $tokens;

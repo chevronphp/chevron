@@ -2,12 +2,12 @@
 
 namespace Chevron\PDO\MySQL;
 /**
- * An interface defining the functionality of the Chevron\PDO\MySQL\Queries class
+ * An interface defining the functionality of the Chevron\PDO\MySQL\Query class
  *
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-Interface QueriesInterface {
+Interface QueryInterface {
 	/**
 	 * Flag if we're accepting named tokens
 	 */
