@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\DB;
+namespace Chevron\PDO;
 /**
  * A simple PDO constuctor
  *
- * @package Chevron\DB
+ * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class PDOConnector {
+class Connector {
 	/**
 	 * Hold our connection
 	 */

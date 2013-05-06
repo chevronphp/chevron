@@ -207,7 +207,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$registry->not_string = "not a string";
 
 		$data = $registry->success();
-		// $expected = true;
+		$expected = true;
 
 		// test unsuccess
 		$this->assertEquals($expected, $data, "Registry::success (failure) failed to return correct data");

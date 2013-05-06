@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\DB;
+namespace Chevron\PDO\MySQL;
 /**
  *
  * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
  *
  * @package DB
  */
-class SQLQ implements DBQInterface {
+class Queries implements QueriesInterface {
 
 	protected $namedTokens = false;
 	protected $columns, $tokens;

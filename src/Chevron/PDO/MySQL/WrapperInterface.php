@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\DB;
+namespace Chevron\PDO\MySQL;
 /**
- * An interface defining the functionality of the Chevron\DB\PDOWrapper class
+ * An interface defining the functionality of the Chevron\PDO\MySQL\Wrapper class
  *
- * @package Chevron\DB
+ * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-Interface DBInterface {
+Interface WrapperInterface {
 	/**
 	 * Returns a connection to a DB via PDO
 	 * @return object

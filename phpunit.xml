@@ -24,7 +24,7 @@
 			<directory>test/HTML</directory>
 			<directory>test/HTTP</directory>
 			<!-- These files act on either Headers or External Dependecies (e.g. a live DB) -->
-			<exclude>test/DB/PDOWrapperTest.php</exclude>
+			<exclude>test/DB/MySQL/WrapperTest.php</exclude>
 			<exclude>test/HTTP/UtilsTest.php</exclude>
 		</testsuite>
     </testsuites>

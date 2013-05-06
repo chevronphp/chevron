@@ -1,12 +1,12 @@
 <?php
 
-class PDOWrapperTest extends PHPUnit_Framework_TestCase {
+class WrapperTest extends PHPUnit_Framework_TestCase {
 
 	protected $dbConn;
 
 	public function __construct(){
 		if(null == $this->dbConn){
-			$pdo = new Chevron\DB\PDOWrapper( TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD );
+			$pdo = new Chevron\PDO\MySQL\Wrapper( TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD );
 			$this->dbConn = $pdo;
 		}
 		return $this->dbConn;
@@ -92,7 +92,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPassthru(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = "ec9cdeaa47e8dfa4c593029a842407f5";
 
@@ -104,7 +104,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testScalar(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = "ec9cdeaa47e8dfa4c593029a842407f5";
 
@@ -112,12 +112,12 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->scalar($sql, array(4));
-		$this->assertInternalType("scalar", $result, "PDOWrapper::scalar did not return scalar");
-		$this->assertEquals($result, $expected, "PDOWrapper::scalar returned the wrong result");
+		$this->assertInternalType("scalar", $result, "Wrapper::scalar did not return scalar");
+		$this->assertEquals($result, $expected, "Wrapper::scalar returned the wrong result");
 	}
 
 	public function testScalarIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = "ec9cdeaa47e8dfa4c593029a842407f5";
 
@@ -125,24 +125,24 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->scalar($sql, array(array(4,5,6)), true);
-		$this->assertInternalType("scalar", $result, "PDOWrapper::scalar (in) did not return scalar");
-		$this->assertEquals($result, $expected, "PDOWrapper::scalar (in) returned the wrong result");
+		$this->assertInternalType("scalar", $result, "Wrapper::scalar (in) did not return scalar");
+		$this->assertEquals($result, $expected, "Wrapper::scalar (in) returned the wrong result");
 
 	}
 
 	public function testScalarEmptyResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$sql = "select title from widgets where widget_id in (%s) order by widget_id;";
 
 		// empty
 		$result = $this->dbConn->scalar($sql, array(array(14,15,16)), true);
-		$this->assertInternalType("null", $result, "PDOWrapper::scalar (empty result) did not return scalar");
-		$this->assertEquals($result, null, "PDOWrapper::scalar returned (empty result) the wrong result");
+		$this->assertInternalType("null", $result, "Wrapper::scalar (empty result) did not return scalar");
+		$this->assertEquals($result, null, "Wrapper::scalar returned (empty result) the wrong result");
 	}
 
 	public function testScalars(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(2,3);
 
@@ -150,13 +150,13 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->scalars($sql, array(2,3));
-		$this->assertInternalType("array", $result, "PDOWrapper::scalars did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::scalars returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::scalars did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::scalars returned the wrong result");
 
 	}
 
 	public function testScalarsIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(2,3);
 
@@ -164,24 +164,24 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->scalars($sql, array(array(2,3)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::scalars (in) did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::scalars (in) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::scalars (in) did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::scalars (in) returned the wrong result");
 
 	}
 
 	public function testScalarsEmptyResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$sql = "select widget_id from widgets where widget_id in (%s) order by widget_id;";
 
 		// empty
 		$result = $this->dbConn->scalars($sql, array(array(12,13)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::scalars (empty result) did not return array");
-		$this->assertEquals($result, array(), "PDOWrapper::scalars (empty result) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::scalars (empty result) did not return array");
+		$this->assertEquals($result, array(), "Wrapper::scalars (empty result) returned the wrong result");
 	}
 
 	public function testKeyPair(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(2 => 39, 3 => 40);
 
@@ -189,13 +189,13 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->keypair($sql, array(2,3));
-		$this->assertInternalType("array", $result, "PDOWrapper::keypair did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::keypair returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::keypair did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::keypair returned the wrong result");
 
 	}
 
 	public function testKeyPairIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(2 => 39, 3 => 40);
 
@@ -203,24 +203,24 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->keypair($sql, array(array(2,3)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::keypair (in) did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::keypair (in) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::keypair (in) did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::keypair (in) returned the wrong result");
 
 	}
 
 	public function testKeyPairEmptyResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$sql = "select widget_id, type_id from widgets where widget_id in (%s) order by widget_id;";
 
 		// empty
 		$result = $this->dbConn->keypair($sql, array(array(12,13)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::keypair (empty result) did not return array");
-		$this->assertEquals($result, array(), "PDOWrapper::keypair (empty result) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::keypair (empty result) did not return array");
+		$this->assertEquals($result, array(), "Wrapper::keypair (empty result) returned the wrong result");
 	}
 
 	public function testRow(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(
 			0           => "5397182fed3869547139e31bcd36e536",
@@ -239,13 +239,13 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->row($sql, array(1));
-		$this->assertInternalType("array", $result, "PDOWrapper::row did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::row returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::row did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::row returned the wrong result");
 
 	}
 
 	public function testRowIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(
 			0           => "5397182fed3869547139e31bcd36e536",
@@ -264,25 +264,25 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->row($sql, array(array(1,2,3)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::row (in) did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::row (in) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::row (in) did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::row (in) returned the wrong result");
 
 	}
 
 	public function testRowEmptyResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$sql = "select * from widgets where widget_id in (%s) order by widget_id;";
 
 		// empty
 		$result = $this->dbConn->row($sql, array(array(11,12,13)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::row (empty result) did not return array");
-		$this->assertEquals($result, array(), "PDOWrapper::row (empty result) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::row (empty result) did not return array");
+		$this->assertEquals($result, array(), "Wrapper::row (empty result) returned the wrong result");
 
 	}
 
 	public function testAssoc(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(
 			array(
@@ -305,13 +305,13 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->assoc($sql, array(2,3));
-		$this->assertInternalType("array", $result, "PDOWrapper::assoc did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::assoc returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::assoc did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::assoc returned the wrong result");
 
 	}
 
 	public function testAssocIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = array(
 			array(
@@ -334,24 +334,24 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->assoc($sql, array(array(2,3)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::assoc (in) did not return array");
-		$this->assertEquals($result, $expected, "PDOWrapper::assoc (in) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::assoc (in) did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::assoc (in) returned the wrong result");
 
 	}
 
 	public function testAssocEmptyResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$sql = "select * from widgets where widget_id in (%s) order by widget_id;";
 
 		// empty
 		$result = $this->dbConn->assoc($sql, array(array(12,13)), true);
-		$this->assertInternalType("array", $result, "PDOWrapper::assoc (empty result) did not return array");
-		$this->assertEquals($result, array(), "PDOWrapper::assoc (empty result) returned the wrong result");
+		$this->assertInternalType("array", $result, "Wrapper::assoc (empty result) did not return array");
+		$this->assertEquals($result, array(), "Wrapper::assoc (empty result) returned the wrong result");
 	}
 
 	public function testExeWithOutResult(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = true;
 
@@ -359,14 +359,14 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// standard
 		$result = $this->dbConn->exe($sql, array(2,3));
-		$this->assertInternalType("bool", $result, "PDOWrapper::exe did not return bool");
-		$this->assertEquals($result, $expected, "PDOWrapper::exe the wrong result");
+		$this->assertInternalType("bool", $result, "Wrapper::exe did not return bool");
+		$this->assertEquals($result, $expected, "Wrapper::exe the wrong result");
 
 		$this->setUp();
 	}
 
 	public function testExeWithOutResultIn(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$expected = true;
 
@@ -374,8 +374,8 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// using IN
 		$result = $this->dbConn->exe($sql, array(array(4,5)), true);
-		$this->assertInternalType("bool", $result, "PDOWrapper::exe (in) did not return bool");
-		$this->assertEquals($result, $expected, "PDOWrapper::exe (in) the wrong result");
+		$this->assertInternalType("bool", $result, "Wrapper::exe (in) did not return bool");
+		$this->assertEquals($result, $expected, "Wrapper::exe (in) the wrong result");
 
 		$this->setUp();
 	}
@@ -384,7 +384,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	 * @depends testScalars
 	 */
 	public function testInsertFull(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(false);
 
@@ -397,7 +397,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// insert full
 		$result = $this->dbConn->insert("sprockets", $data);
-		$this->assertEquals($result, 1, "PDOWrapper::insert (full) didn't insert");
+		$this->assertEquals($result, 1, "Wrapper::insert (full) didn't insert");
 		/**
 		 * Verify Rows
 		 */
@@ -406,14 +406,14 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select title from sprockets where type_id in (24, 25, 26) order by type_id;";
 
 		$result = $this->dbConn->scalars($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::insert(s) did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::insert(s) did not verify");
 	}
 
 	/**
 	 * @depends testScalars
 	 */
 	public function testInsertPartial(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(false);
 
@@ -424,7 +424,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// insert partial
 		$result = $this->dbConn->insert("sprockets", $data);
-		$this->assertEquals($result, 1, "PDOWrapper::insert (partial) didn't insert");
+		$this->assertEquals($result, 1, "Wrapper::insert (partial) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -434,14 +434,14 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select title from sprockets where type_id in (24, 25, 26) order by type_id;";
 
 		$result = $this->dbConn->scalars($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::insert(s) did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::insert(s) did not verify");
 	}
 
 	/**
 	 * @depends testScalars
 	 */
 	public function testInsertFuncs(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(false);
 
@@ -454,7 +454,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// insert with funcs
 		$result = $this->dbConn->insert("sprockets", $data);
-		$this->assertEquals($result, 1, "PDOWrapper::insert (with funcs) didn't insert");
+		$this->assertEquals($result, 1, "Wrapper::insert (with funcs) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -464,14 +464,14 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select title from sprockets where type_id in (24, 25, 26) order by type_id;";
 
 		$result = $this->dbConn->scalars($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::insert(s) did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::insert(s) did not verify");
 	}
 
 	/**
 	 * @depends testAssoc
 	 */
 	public function testReplaceFull(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -485,7 +485,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// replace full ... we expect 2 because of a delete & an insert
 		$result = $this->dbConn->replace("sprockets", $data);
-		$this->assertEquals($result, 2, "PDOWrapper::replace (full) didn't insert");
+		$this->assertEquals($result, 2, "Wrapper::replace (full) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -497,7 +497,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// uuid should change
 		$expected = "6eb55118-a949-11e2-910d-973c674f56c2";
-		$this->assertNotEquals($result[0]["descr"], $expected, "PDOWrapper::replace (full) did not verify");
+		$this->assertNotEquals($result[0]["descr"], $expected, "Wrapper::replace (full) did not verify");
 
 	}
 
@@ -505,7 +505,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	 * @depends testAssoc
 	 */
 	public function testReplacePartial(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -517,7 +517,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// replace partial ... we expect 2 because of a delete & an insert
 		$result = $this->dbConn->replace("sprockets", $data);
-		$this->assertEquals($result, 2, "PDOWrapper::replace (partial) didn't insert");
+		$this->assertEquals($result, 2, "Wrapper::replace (partial) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -529,11 +529,11 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// uuid should change
 		$expected = "6eb55118-a949-11e2-910d-973c674f56c2";
-		$this->assertNotEquals($result[1]["descr"], $expected, "PDOWrapper::replace (partial) did not verify");
+		$this->assertNotEquals($result[1]["descr"], $expected, "Wrapper::replace (partial) did not verify");
 
 		// partial replace should blank some columns
 		$expected = null;
-		$this->assertEquals($result[1]["updated"], $expected, "PDOWrapper::replace (partial) did not verify");
+		$this->assertEquals($result[1]["updated"], $expected, "Wrapper::replace (partial) did not verify");
 
 	}
 
@@ -541,7 +541,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	 * @depends testScalars
 	 */
 	public function testMultiInsert(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(false);
 
@@ -572,7 +572,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// insert multi
 		$result = $this->dbConn->multi_insert("sprockets", $data);
-		$this->assertEquals($result, 3, "PDOWrapper::insert (multi) didn't insert");
+		$this->assertEquals($result, 3, "Wrapper::insert (multi) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -582,10 +582,10 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$result = $this->dbConn->scalars($sql);
 
 		$expected = "multi sprocket 45";
-		$this->assertEquals($result[0], $expected, "PDOWrapper::insert (multi) did not verify");
+		$this->assertEquals($result[0], $expected, "Wrapper::insert (multi) did not verify");
 
 		$expected = "multi sprocket 46";
-		$this->assertEquals($result[1], $expected, "PDOWrapper::insert (multi) did not verify");
+		$this->assertEquals($result[1], $expected, "Wrapper::insert (multi) did not verify");
 
 	}
 
@@ -593,7 +593,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 	 * @depends testAssoc
 	 */
 	public function testMultiReplace(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -616,7 +616,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// replace full ... we expect 4 because of a 2 delete(s) & 2 insert(s)
 		$result = $this->dbConn->multi_replace("sprockets", $data);
-		$this->assertEquals($result, 4, "PDOWrapper::replace (multi) didn't insert");
+		$this->assertEquals($result, 4, "Wrapper::replace (multi) didn't insert");
 
 		/**
 		 * Verify Rows
@@ -628,22 +628,22 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// uuid should change
 		$expected = "6eb55118-a949-11e2-910d-973c674f56c2";
-		$this->assertNotEquals($result[0]["descr"], $expected, "PDOWrapper::replace (multi) did not verify");
+		$this->assertNotEquals($result[0]["descr"], $expected, "Wrapper::replace (multi) did not verify");
 
 		// uuid should change
 		$expected = "6eb55118-a949-11e2-910d-973c674f56c2";
-		$this->assertNotEquals($result[1]["descr"], $expected, "PDOWrapper::replace (multi) did not verify");
+		$this->assertNotEquals($result[1]["descr"], $expected, "Wrapper::replace (multi) did not verify");
 
 		// partial replace should blank some columns
 		$expected = null;
-		$this->assertEquals($result[1]["updated"], $expected, "PDOWrapper::replace (multi) did not verify");
+		$this->assertEquals($result[1]["updated"], $expected, "Wrapper::replace (multi) did not verify");
 	}
 
 	/**
 	 * @depends testRow
 	 */
 	public function testUpdate(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -672,7 +672,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$result = $this->dbConn->update("sprockets", $data, $where);
-		$this->assertEquals($result, 1, "PDOWrapper::update didn't update");
+		$this->assertEquals($result, 1, "Wrapper::update didn't update");
 
 		/**
 		 * Verify Rows
@@ -680,15 +680,15 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select * from sprockets where sprocket_id = 8;";
 
 		$result = $this->dbConn->row($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::update did not verify");
-		$this->assertInternalType("null", $result["updated"], "PDOWrapper::update did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::update did not verify");
+		$this->assertInternalType("null", $result["updated"], "Wrapper::update did not verify");
 	}
 
 	/**
 	 * @depends testRow
 	 */
 	public function testUpdateOnDuplicateKey(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -718,7 +718,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 
 		// updates report 2 affected rows, as per the MySQL manual
 		$result = $this->dbConn->on_duplicate_key("sprockets", $data, $where);
-		$this->assertEquals($result, 2, "PDOWrapper::update didn't update");
+		$this->assertEquals($result, 2, "Wrapper::update didn't update");
 
 		/**
 		 * Verify Rows
@@ -726,15 +726,15 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select * from sprockets where sprocket_id = 8;";
 
 		$result = $this->dbConn->row($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::update did not verify");
-		$this->assertInternalType("null", $result["updated"], "PDOWrapper::update did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::update did not verify");
+		$this->assertInternalType("null", $result["updated"], "Wrapper::update did not verify");
 	}
 
 	/**
 	 * @depends testRow
 	 */
 	public function testInsertOnDuplicateKey(){
-		// $this->markTestSkipped("PDOWrapper requires an active DB connection");
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
 
 		$this->setUpSprockets(true);
 
@@ -763,7 +763,7 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$result = $this->dbConn->on_duplicate_key("sprockets", $data, $where);
-		$this->assertEquals($result, 1, "PDOWrapper::update didn't update");
+		$this->assertEquals($result, 1, "Wrapper::update didn't update");
 
 		/**
 		 * Verify Rows
@@ -771,8 +771,8 @@ class PDOWrapperTest extends PHPUnit_Framework_TestCase {
 		$sql = "select * from sprockets where sprocket_id = 18;";
 
 		$result = $this->dbConn->row($sql);
-		$this->assertEquals($result, $expected, "PDOWrapper::update did not verify");
-		$this->assertInternalType("null", $result["updated"], "PDOWrapper::update did not verify");
+		$this->assertEquals($result, $expected, "Wrapper::update did not verify");
+		$this->assertInternalType("null", $result["updated"], "Wrapper::update did not verify");
 	}
 
 }

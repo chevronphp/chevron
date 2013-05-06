@@ -1,15 +1,15 @@
 <?php
 
-namespace Chevron\DB;
+namespace Chevron\PDO\MySQL;
 /**
  * A DB wrapper class offering some helpful shortcut methods
  *
  * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
  *
- * @package Chevron\DB
+ * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class PDOWrapper extends PDOConnector implements DBInterface {
+class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 ##### PUT HELPERS
 ################################################################################
 	/**
@@ -26,7 +26,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function insert($table, array $map){
-		$pdoq = new SQLQ;
+		$pdoq = new Queries;
 		$query = $pdoq->insert($table, $map, 0);
 
 		$data = $pdoq->filter_data($map);
@@ -37,7 +37,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function update($table, array $map, array $where = array()){
-		$pdoq = new SQLQ;
+		$pdoq = new Queries;
 		$query = $pdoq->update($table, $map, $where);
 
 		$data = $pdoq->filter_data($map, $where);
@@ -48,7 +48,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function replace($table, array $map){
-		$pdoq  = new SQLQ;
+		$pdoq  = new Queries;
 		$query = $pdoq->replace($table, $map, 0);
 		$data  = $pdoq->filter_data($map);
 		return $this->exe_return_count($query, $data);
@@ -57,7 +57,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function on_duplicate_key($table, array $map, array $where){
-		$pdoq  = new SQLQ;
+		$pdoq  = new Queries;
 		$query = $pdoq->on_duplicate_key($table, $map, $where);
 		$data  = $pdoq->filter_data($map, $where, $map);
 		return $this->exe_return_count($query, $data);
@@ -66,7 +66,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function multi_insert($table, array $map){
-		$pdoq  = new SQLQ;
+		$pdoq  = new Queries;
 		$query = $pdoq->insert($table, $map, count($map));
 		$data  = $pdoq->filter_data($map);
 		return $this->exe_return_count($query, $data);
@@ -75,7 +75,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
 	 */
 	function multi_replace($table, array $map){
-		$pdoq  = new SQLQ;
+		$pdoq  = new Queries;
 		$query = $pdoq->replace($table, $map, count($map));
 		$data  = $pdoq->filter_data($map);
 		return $this->exe_return_count($query, $data);
@@ -149,7 +149,7 @@ class PDOWrapper extends PDOConnector implements DBInterface {
 	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
-		$pdoq = new SQLQ;
+		$pdoq = new Queries;
 		if($in){
 			// this syntax (returning an array with two values) is a little more
 			// esoteric than i'd prefer ... but it works

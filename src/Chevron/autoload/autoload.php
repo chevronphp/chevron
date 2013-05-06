@@ -13,10 +13,15 @@ define('IS_CLI', 0 === stripos(php_sapi_name(), "cli"));
  */
 spl_autoload_register(function ( $request ) {
 	$sep    = DIRECTORY_SEPARATOR;
-	$ns     = explode("\\", $request);
-	$class  = array_pop($ns);
-	$module = array_pop($ns);
-	$file   = __DIR__ . "/../{$sep}{$module}{$sep}{$class}.php";
+	$parts  = explode("\\", $request);
+
+	$final = "";
+	while($part = array_pop($parts)){
+		$final = "{$sep}{$part}{$final}";
+	}
+
+	$final = ltrim($final, "/");
+	$file = __DIR__ . "/../../{$final}.php";
 
 	if( file_exists( $file ) ){
 		include_once( $file );

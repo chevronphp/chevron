@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\DB;
+namespace Chevron\PDO\MySQL;
 /**
- * An interface defining the functionality of the Chevron\DB\SQLQ class
+ * An interface defining the functionality of the Chevron\PDO\MySQL\Queries class
  *
- * @package Chevron\DB
+ * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-Interface DBQInterface {
+Interface QueriesInterface {
 	/**
 	 * Flag if we're accepting named tokens
 	 */
