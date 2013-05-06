@@ -27,7 +27,7 @@ and documentation.
 
 ### Installation (Composer)
 
-	`"require": { "chevron/chevron": "dev-master" }`
+	"require": { "chevron/chevron": "dev-master" }
 
 ### TODO
 
