@@ -13,7 +13,7 @@ class Connector {
 	 */
 	protected $conn;
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 
 	function __construct($dsn, $username, $password){

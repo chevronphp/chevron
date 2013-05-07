@@ -4,7 +4,7 @@ namespace Chevron\PDO\MySQL;
 /**
  * A DB wrapper class offering some helpful shortcut methods
  *
- * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+ * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
  *
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
@@ -13,7 +13,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 ##### PUT HELPERS
 ################################################################################
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function put($table, array $map, array $where = array()){
 		if( $where ){
@@ -23,7 +23,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		}
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function insert($table, array $map){
 		$pdoq = new Query;
@@ -34,7 +34,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function update($table, array $map, array $where = array()){
 		$pdoq = new Query;
@@ -45,7 +45,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function replace($table, array $map){
 		$pdoq  = new Query;
@@ -54,7 +54,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function on_duplicate_key($table, array $map, array $where){
 		$pdoq  = new Query;
@@ -63,7 +63,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_insert($table, array $map){
 		$pdoq  = new Query;
@@ -72,7 +72,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_replace($table, array $map){
 		$pdoq  = new Query;
@@ -81,7 +81,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	protected function exe_return_count($query, array $data){
 
@@ -96,20 +96,20 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 ##### SELECT HELPERS
 ################################################################################
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function exe($query, array $map = array(), $in = false){
 		return $this->exe_return_result($query, $map, $in);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function assoc($query, array $map = array(), $in = false){
 		$result = $this->exe_return_result($query, $map, $in, \PDO::FETCH_ASSOC);
 		return iterator_to_array($result) ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function row($query, array $map = array(), $in = false){
 		$result = $this->exe_return_result($query, $map, $in);
@@ -117,7 +117,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function scalar($query, array $map = array(), $in = false){
 		$result = $this->exe_return_result($query, $map, $in);
@@ -125,7 +125,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return null;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function scalars($query, array $map = array(), $in = false){
 		$result = $this->exe_return_result($query, $map, $in);
@@ -134,7 +134,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $final;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function keypair($query, array $map = array(), $in = false){
 		$result = $this->exe_return_result($query, $map, $in);
@@ -145,7 +145,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		return $final ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
@@ -177,7 +177,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 ##### UTIL HELPERS
 ################################################################################
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function __call($name, $args){
 
@@ -190,7 +190,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		throw new \Exception("Method PDO::{$name} doesn't exist.");
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	protected function validate_and_prepare($query, $param_count){
 		if( !($query InstanceOf \PDOStatement ) ){

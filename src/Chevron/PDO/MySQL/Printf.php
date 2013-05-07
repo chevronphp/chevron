@@ -14,7 +14,7 @@ class Printf {
 ##### PUT HELPERS
 ################################################################################
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function put($table, array $map, array $where = array()){
 		if( $where ){
@@ -24,7 +24,7 @@ class Printf {
 		}
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function insert($table, array $map){
 		$pdoq = new Query;
@@ -35,7 +35,7 @@ class Printf {
 		return array($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function update($table, array $map, array $where = array()){
 		$pdoq = new Query;
@@ -46,7 +46,7 @@ class Printf {
 		return array($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function replace($table, array $map){
 		$pdoq  = new Query;
@@ -55,7 +55,7 @@ class Printf {
 		return array($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function on_duplicate_key($table, array $map, array $where){
 		$pdoq  = new Query;
@@ -64,7 +64,7 @@ class Printf {
 		return array($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_insert($table, array $map){
 		$pdoq  = new Query;
@@ -73,7 +73,7 @@ class Printf {
 		return array($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_replace($table, array $map){
 		$pdoq  = new Query;

@@ -39,6 +39,13 @@ class Widget {
 	function __isset($name){
 		return array_key_exists($name, $this->data_map);
 	}
+	/***/
+	function __get($name){
+		if(array_key_exists($name, $this->data_map)){
+			return $this->data_map[$name];
+		}
+		return null;
+	}
 	/**
 	 * Require, and thus render, a file
 	 */

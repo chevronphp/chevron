@@ -1,4 +1,4 @@
-(This is a 3-Clause BSD License)
+(This is a BSD-3-Clause License)
 
 Copyright (c) 2012, Jon Henderson (@henderjon) All rights reserved.
 

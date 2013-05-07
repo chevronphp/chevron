@@ -3,7 +3,7 @@
 namespace Chevron\PDO\MySQL;
 /**
  *
- * For documentation, consult the Interface (__DIR__ . "/DBInterface.php")
+ * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
  *
  * @package DB
  */
@@ -13,7 +13,7 @@ class Query implements QueryInterface {
 	protected $columns, $tokens;
 
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function __construct($tokens = false){
 		if($tokens){
@@ -21,7 +21,7 @@ class Query implements QueryInterface {
 		}
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function insert($table, array $map, $multiple){
 		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
@@ -29,7 +29,7 @@ class Query implements QueryInterface {
 		return $_SQL;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function replace($table, array $map, $multiple){
 		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
@@ -37,7 +37,7 @@ class Query implements QueryInterface {
 		return $_SQL;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function update($table, array $map, array $where){
 		$column_map      = $this->equal_pairs($map, ", ");
@@ -46,7 +46,7 @@ class Query implements QueryInterface {
 		return $_SQL;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function on_duplicate_key($table, array $map, array $where){
 		$column_map      = $this->equal_pairs($map, ", ");
@@ -55,7 +55,7 @@ class Query implements QueryInterface {
 		return $_SQL;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function in($query, array $map){
 		$iter1 = new \ArrayIterator($map);
@@ -70,7 +70,7 @@ class Query implements QueryInterface {
 		return array( $_SQL, $final );
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function filter_data(){
 		$iter1 = new \RecursiveArrayIterator(func_get_args());
@@ -93,7 +93,7 @@ class Query implements QueryInterface {
 		return $final;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function paren_pairs(array $map, $multiple){
 		list($columns, $tokens) = $this->map_columns($map);
@@ -108,7 +108,7 @@ class Query implements QueryInterface {
 		return array( $columns, $tokens );
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function equal_pairs(array $map, $sep = ", "){
 		list($columns, $tokens) = $this->map_columns($map);
@@ -121,7 +121,7 @@ class Query implements QueryInterface {
 		return implode($sep, $temp);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/DBQInterface.php")
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function map_columns(array $map){
 		$iter1 = new \RecursiveArrayIterator($map);

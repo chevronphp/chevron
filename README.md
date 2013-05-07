@@ -35,7 +35,6 @@ and documentation.
   - rewrite and test Chevron\Redis
   - test Chevron\Stub
   - write some example usage
-  - allow Registry::__set for a key that doesn't exist
 
 ### Notes
 
