@@ -4,27 +4,83 @@ namespace Chevron\Redis;
 
 /**
  * Class to talk to redis at a low level ... http://redis.io/topics/protocol
- *
- * Shoulders of giants: https://github.com/kylebragger/iRedis/blob/master/iredis.php
- * Shoulders of giants: https://github.com/jdp/redisent
  */
 class Redis extends Protocol {
+	/***/
+	private $handle;
 	/**
-	 * Magic method to allow devs to use Redis methods via php
-	 *
-	 * @param string $func The redis function to execute
-	 * @param array $args An array of the arguments passed
-	 * @return mixed
+	 * Connect to a Redis instance. This isn't in the constructor so
+	 * that the tests can instantiate this object and replace the
+	 * socket handle.
+	 * @param string $ip The IP of the Redis instance
+	 * @param string $port The port of the Redis instance
+	 * @return
 	 */
-	function __call($func, $args = false){
-
-		$iter1 = new \RecursiveArrayIterator(func_get_args());
-		$iter2 = new \RecursiveIteratorIterator($iter1);
-
-		for($iter2->rewind(); $iter2->valid(); $iter2->next()){
-			$command[] = $iter2->current();
+	function connect( $ip, $port ){
+		try {
+			$errno = $errstr = "";
+			$sock = "tcp://{$ip}:{$port}";
+			$this->handle = stream_socket_client($sock, $errno, $errstr);
+			// $this->handle = fsockopen($host, $port, $errno, $error);
+		} catch (Exception $e) {
+			trigger_error($e->getMessage());
 		}
 
-		return $this->pipe( $command );
+		if( !$this->handle ){
+			trigger_error("Connection Error: {$errno} / {$error}");
+		}
 	}
+	/**
+	 * Catch all calls to Redis functions and pass them to the underlying
+	 * connection
+	 * @param string $func The function name
+	 * @param mixed $args The string(s) or array(s) of the arguments
+	 * @return mixed
+	 */
+	function __call($func, $args){
+		$command = $this->protocol( $func, $args );
+		return $this->exec( $command, 1 );
+	}
+	/**
+	 * Take an array of arrays of mixed string/arrays and pipe them all
+	 * to Redis. Since Protocol::protocol takes strings and arrays and
+	 * assumes that they're all one specific command, this funciton takes
+	 * an array of those.
+	 * @param mixed $args The string(s) or array(s) of the arguments
+	 * @return mixed
+	 */
+	function pipe(){
+		$args = func_get_args();
+
+		if( count($args) == 1 ){
+			$args = reset($args);
+		}
+
+		$iter1 = new \ArrayIterator( $args );
+
+		for($iter1->rewind(); $iter1->valid(); $iter1->next()){
+			$commands[] = $this->protocol($iter1->current());
+		}
+
+		$command = implode("\r\n", $commands). "\r\n";
+
+		return $this->exec( $command, count($commands) );
+	}
+	/**
+	 * Both __call() and pipe() do the filtering work of creating a single
+	 * string of our command(s), this function simply writes and reads
+	 * to our underlying connection
+	 * @param string $string The command(s) in protocol format
+	 * @param int $count The number of commands sent/expected responses
+	 * @return mixed
+	 */
+	protected function exec( $string, $count ){
+
+		// list( $count, $string ) = $this->protocol( $commands );
+		$length   = $this->write( $this->handle, $string );
+		$response = $this->read( $this->handle, $count );
+
+		return count( $response ) == 1 ? current( $response ) : $response;
+	}
+
 }

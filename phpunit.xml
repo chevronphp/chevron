@@ -23,6 +23,7 @@
 			<directory>test/Registry</directory>
 			<directory>test/HTML</directory>
 			<directory>test/HTTP</directory>
+			<directory>test/Redis</directory>
 			<!-- These files act on either Headers or External Dependecies (e.g. a live DB) -->
 			<exclude>test/DB/MySQL/WrapperTest.php</exclude>
 			<exclude>test/HTTP/UtilsTest.php</exclude>
