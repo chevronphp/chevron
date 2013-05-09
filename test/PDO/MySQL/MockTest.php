@@ -3,15 +3,15 @@
 class MockTest extends PHPUnit_Framework_TestCase {
 
 	public function test_implements(){
-		$mock = new \Chevron\PDO\Mysql\Mock("", "", "");
-		$this->assertInstanceOf("\Chevron\PDO\Mysql\WrapperInterface", $mock, "Mock::__construct failed to return in instance of \Chevron\PDO\Mysql\WrapperInterface");
+		$mock = new \Chevron\PDO\MySQL\Mock("", "", "");
+		$this->assertInstanceOf("\Chevron\PDO\MySQL\WrapperInterface", $mock, "Mock::__construct failed to return in instance of \Chevron\PDO\MySQL\WrapperInterface");
 	}
 
 	/**
 	 * @depends test_implements
 	 */
 	public function test_next_func(){
-		$mock = new \Chevron\PDO\Mysql\Mock("", "", "");
+		$mock = new \Chevron\PDO\MySQL\Mock("", "", "");
 
 		$reflection = new \ReflectionClass($mock);
 		$next = $reflection->getProperty("next");
@@ -31,7 +31,7 @@ class MockTest extends PHPUnit_Framework_TestCase {
 	 * @depends test_implements
 	 */
 	public function test_return_next1(){
-		$mock = new \Chevron\PDO\Mysql\Mock("", "", "");
+		$mock = new \Chevron\PDO\MySQL\Mock("", "", "");
 
 		$expected = array(true, "string", null, 123);
 
@@ -47,7 +47,7 @@ class MockTest extends PHPUnit_Framework_TestCase {
 	 * @depends test_implements
 	 */
 	public function test_return_next2(){
-		$mock = new \Chevron\PDO\Mysql\Mock("", "", "");
+		$mock = new \Chevron\PDO\MySQL\Mock("", "", "");
 
 		$expected = array(true, "string", null, 123);
 
