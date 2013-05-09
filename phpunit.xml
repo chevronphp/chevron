@@ -17,7 +17,7 @@
 	</php>
 	<testsuites>
 		<testsuite name="Library">
-			<directory>test/DB</directory>
+			<directory>test/PDO</directory>
 			<directory>test/Hollow</directory>
 			<directory>test/Filter</directory>
 			<directory>test/Registry</directory>
@@ -25,7 +25,7 @@
 			<directory>test/HTTP</directory>
 			<directory>test/Redis</directory>
 			<!-- These files act on either Headers or External Dependecies (e.g. a live DB) -->
-			<exclude>test/DB/MySQL/WrapperTest.php</exclude>
+			<exclude>test/PDO/MySQL/WrapperTest.php</exclude>
 			<exclude>test/HTTP/UtilsTest.php</exclude>
 		</testsuite>
     </testsuites>

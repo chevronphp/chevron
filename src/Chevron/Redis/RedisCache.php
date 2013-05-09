@@ -10,7 +10,8 @@ class RedisCache extends Redis implements \Chevron\Cache\CacheInterface {
 	 * For documentation, consult the Interface
 	 */
 	function get($key){
-		$value = $this->pipe(array("get", $key));
+		$commands[] = array("get", $key);
+		$value = $this->pipe($commands);
 		if( !is_null($value) ){
 			$this->last_result = false;
 			return null;
@@ -27,7 +28,8 @@ class RedisCache extends Redis implements \Chevron\Cache\CacheInterface {
 			throw new \Exception("Cache keys must be scalar.");
 		}
 		$expire = $expire ?: $this->expire;
-		return $this->pipe(array("set", $key, serialize($value), $expire));
+		$commands[] = array("set", $key, serialize($value), $expire);
+		return $this->pipe($commands);
 	}
 	/**
 	 * For documentation, consult the Interface

@@ -80,7 +80,7 @@ class Redis extends Protocol {
 		$length   = $this->write( $this->handle, $string );
 		$response = $this->read( $this->handle, $count );
 
-		return count( $response ) == 1 ? current( $response ) : $response;
+		return count( $response ) == 1 ? reset( $response ) : $response;
 	}
 
 }
