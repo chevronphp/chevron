@@ -27,18 +27,14 @@ and documentation.
 
 ### Installation ###
 
-Install Chevron via `Composer` by using the [Packagist archive](https://packagist.org/packages/chevron/chevron).
+Install the [Packagist archive](https://packagist.org/packages/chevron/chevron)
+using `Composer`. Chevron comes with an autoloader but that's only for
+testing and you should use Composer's autoloader.
 
 ### TODO ###
 
   - cleanup, finish, more betterify the comments and documentation
   - write some example usage
-
-### Notes ###
-
-  - Don't use the included autoloader, you should use Composers.
-
-### Travis ###
 
 [![Build Status](https://travis-ci.org/henderjon/chevron.png)](https://travis-ci.org/henderjon/chevron)
 
