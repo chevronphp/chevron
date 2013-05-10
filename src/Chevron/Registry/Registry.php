@@ -13,7 +13,7 @@ class Registry {
 	 * @param array $data The data
 	 * @return
 	 */
-	function load_data(array $data){
+	function data(array $data){
 		foreach($data as $key => $value){
 			$this->map[$key] = $value;
 		}
@@ -47,6 +47,14 @@ class Registry {
 	function __set($key, $value){
 		$this->success = true;
 		return $this->map[$key] = $value;
+	}
+	/**
+	 * A means to check if a particular data point is set
+	 * @param string $name The key of the data to check
+	 * @return bool
+	 */
+	function __isset($name){
+		return array_key_exists($name, $this->map);
 	}
 
 }

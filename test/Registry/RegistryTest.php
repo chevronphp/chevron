@@ -16,21 +16,21 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 
-		$registry->load_data($data);
+		$registry->data($data);
 
 		$map = $reflection->getProperty("map");
 		$map->setAccessible(true);
 
 		$value = $map->getValue($registry);
 
-		$this->assertInternalType("array", $value, "Registry::load_data (type) failed");
-		$this->assertEquals(count($value), 3, "Registry::load_data (count) failed");
-		$this->assertInternalType("int", $value["numeric"], "Registry::load_data (int) failed");
-		$this->assertInternalType("string", $value["string"], "Registry::load_data (string) failed");
-		$this->assertInternalType("array", $value["array"], "Registry::load_data (array) failed");
-		$this->assertEquals(count($value["array"]), 2, "Registry::load_data (sub-array) count failed");
-		$this->assertInternalType("int", count($value["array"]["numeric"]), "Registry::load_data (sub-array) type failed");
-		$this->assertInternalType("string", $value["array"]["string"], "Registry::load_data (sub-array) type failed");
+		$this->assertInternalType("array", $value, "Registry::data (type) failed");
+		$this->assertEquals(count($value), 3, "Registry::data (count) failed");
+		$this->assertInternalType("int", $value["numeric"], "Registry::data (int) failed");
+		$this->assertInternalType("string", $value["string"], "Registry::data (string) failed");
+		$this->assertInternalType("array", $value["array"], "Registry::data (array) failed");
+		$this->assertEquals(count($value["array"]), 2, "Registry::data (sub-array) count failed");
+		$this->assertInternalType("int", count($value["array"]["numeric"]), "Registry::data (sub-array) type failed");
+		$this->assertInternalType("string", $value["array"]["string"], "Registry::data (sub-array) type failed");
 
 	}
 
@@ -46,7 +46,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 
-		$registry->load_data($data);
+		$registry->data($data);
 		return $registry;
 	}
 

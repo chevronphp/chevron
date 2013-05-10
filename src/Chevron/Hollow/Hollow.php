@@ -52,7 +52,11 @@ abstract class Hollow {
 	 * @return mixed
 	 */
 	public static function raw($name){
-		return self::$map[$name] ?: null;
+		$return = null;
+		if(isset(self::$map[$name])){
+			$return = self::$map[$name];
+		}
+		return $return;
 	}
 	/**
 	 * Call a stored item, with args

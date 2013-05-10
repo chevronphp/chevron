@@ -2,7 +2,7 @@
 
 namespace Chevron\Cache;
 
-class NonCache implements CacheInterface {
+class Mock implements CacheInterface {
 	/**
 	 * For documentation, consult the Interface
 	 */
@@ -19,7 +19,7 @@ class NonCache implements CacheInterface {
 	 * For documentation, consult the Interface
 	 */
 	function success(){
-		return null;
+		return false;
 	}
 	/**
 	 * For documentation, consult the Interface

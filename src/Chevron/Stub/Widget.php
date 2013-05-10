@@ -2,9 +2,9 @@
 
 namespace Chevron\Stub;
 
-class Widget {
+class Widget extends \Chevron\Registry\Registry {
 
-	protected $file, $data_map;
+	protected $file;
 	/**
 	 * Set the file and data map for the Widget
 	 * @param string $file The file to render
@@ -21,30 +21,6 @@ class Widget {
 		if(!empty($data)){
 			$this->data($data);
 		}
-	}
-	/**
-	 * Set the various data to be scoped within the widget rendering
-	 * @param array $map The data to scope within the widget
-	 */
-	function data(array $map){
-		foreach($map as $key => $value){
-			$this->data_map[$key] = $value;
-		}
-	}
-	/**
-	 * A means to check if a particular data point is set
-	 * @param string $name The key of the data to check
-	 * @return bool
-	 */
-	function __isset($name){
-		return array_key_exists($name, $this->data_map);
-	}
-	/***/
-	function __get($name){
-		if(array_key_exists($name, $this->data_map)){
-			return $this->data_map[$name];
-		}
-		return null;
 	}
 	/**
 	 * Require, and thus render, a file
