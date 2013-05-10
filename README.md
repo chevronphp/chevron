@@ -25,9 +25,9 @@ of the time.
 Check the tests. Hopefully they're verbose enough to double as examples
 and documentation.
 
-### Installation (Composer) ###
+### Installation ###
 
-	"require": { "chevron/chevron": "dev-master" }
+Install Chevron via `Composer` by using the [Packagist archive](https://packagist.org/packages/chevron/chevron).
 
 ### TODO ###
 
