@@ -59,7 +59,7 @@ class CurrentRequest extends Request {
 				header('WWW-Authenticate: Basic realm="Chevron"');
 				header('HTTP/1.0 401 Unauthorized');
 				printf("It was a good rain, the kind you wait for ...");
-				die();
+				exit(1);
 			break;
 		}
 
