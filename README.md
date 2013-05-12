@@ -4,10 +4,6 @@ Chevron aims to be a 'simple set of useful tools'. This means that it
 exists as a collection of code I've written and found quite useful. Over
 time I hope it grows in scope and usefulness but not in complexity.
 
-As it stands now, there is a PDO wrapper with some useful helper
-functions, a dependency injection container, a simple input sanitizer,
-and a basic implementation of the registry pattern, and a few more.
-
 ### Why? ###
 
 Because I find these tools useful and wanted to package them in a way
@@ -28,8 +24,7 @@ and documentation.
 ### Installation ###
 
 Install the [Packagist archive](https://packagist.org/packages/chevron/chevron)
-using `Composer`. Chevron comes with an autoloader but that's only for
-testing and you should use Composer's autoloader.
+using `Composer`.
 
 ### TODO ###
 
