@@ -165,3 +165,105 @@ function index2assoc( $array ){
 	}
 	return $final;
 }
+
+
+
+/**
+ * Round a number to the nearest 5, as per metametrics
+ */
+function round_to_nearest_5($int){
+	if(empty($int)){
+		return $int;
+	}
+	return ((int)((int)$int / 5) * 5);
+}
+
+
+/**
+ * Method to encapsulate a dictionary of HTTP errors
+ * @param int $int The int of the error code
+ * @param bool $message A toggle to return the explanation
+ * @return string
+ */
+function HTTP_error_code( $int, $explanation = false ){
+
+	$error_codes = array(
+		"200" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 200 OK",
+				"explanation" => "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+			),
+		"204" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 204 No Content",
+				"explanation" => "The server successfully processed the request, but is not returning any content."
+			),
+		"301" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 301 Moved Permanently",
+				"explanation" => "This and all future requests should be directed to the given URI."
+			),
+		"303" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 303 See Other",
+				"explanation" => "The response to the request can be found under another URI using a GET method. When received in response to a PUT, it should be assumed that the server has received the data and the redirect should be issued with a separate GET message."
+			),
+		"307" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 307 Temporary Redirect",
+				"explanation" => "In this occasion, the request should be repeated with another URI, but future requests can still use the original URI. In contrast to 303, the request method should not be changed when reissuing the original request. For instance, a POST request must be repeated using another POST request."
+			),
+		"400" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 400 Bad Request",
+				"explanation" => "The request contains bad syntax or cannot be fulfilled."
+			),
+		"401" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 401 Unauthorized",
+				"explanation" => "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource. See Basic access authentication and Digest access authentication."
+			),
+		"403" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 403 Forbidden",
+				"explanation" => "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+			),
+		"404" => array(
+				"message" => "Interesting how you know how to work a computer but you can't find a simple webpage ... ",
+				"code" => "HTTP/1.1 404 Not Found",
+				"explanation" => "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+			),
+		"405" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 405 Method Not Allowed",
+				"explanation" => ":: A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+			),
+		"408" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 408 Request Timeout",
+				"explanation" => ":: The server timed out waiting for the request. The client did not produce a request within the time that the server was prepared to wait. The client MAY repeat the request without modifications at any later time."
+			),
+		"500" => array(
+				"message" => "",
+				"code" => "HTTP/1.1 500 Internal Server Error",
+				"explanation" => "A generic error message, given when no more specific message is suitable."
+			)
+	);
+
+	if( $error_codes[ $int ] ){
+		return $explanation ? $error_codes[ $int ]["explanation"] : $error_codes[ $int ]["code"];
+	}
+
+	return "";
+
+}
+
+function time_display($seconds){
+		$times = array(86400 => "day", 3600 => "hour", 60 => "minute");
+		foreach($times as $duration => $label){
+			$exp = $seconds / $duration;
+			if( $exp >= 1 ){
+				return sprintf("%s %s(s)", round($exp, 2), $label);
+			}
+		}
+	}
