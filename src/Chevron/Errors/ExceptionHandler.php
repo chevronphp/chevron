@@ -64,7 +64,7 @@ class ExceptionHandler {
 		exit($code);
 	}
 
-	public static function handle(\Exception $e){
+	public static function handler(\Exception $e){
 		 self::printException($e);
 	}
 }
