@@ -1,7 +1,5 @@
 <?php
 
-namespace Chevron;
-
 $WeightsAndMeasures = array(
 	"ONE_SECOND" => 1,
 	"ONE_MINUTE" => 60,
