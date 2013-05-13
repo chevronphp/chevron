@@ -23,7 +23,7 @@ and documentation.
 
 **Installation**
 
-Install the [Packagist archive](https://packagist.org/packages/chevron/chevron)
+Install the [Packagist archive](https://packagist.org/packages/henderjon/chevron)
 using [Composer](http://getcomposer.org/).
 
 **Notes**
