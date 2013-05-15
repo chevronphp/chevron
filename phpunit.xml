@@ -25,6 +25,7 @@
 			<directory>test/HTTP</directory>
 			<directory>test/Redis</directory>
 			<directory>test/Stack</directory>
+			<directory>test/Misc</directory>
 			<!-- These files act on either Headers or External Dependecies (e.g. a live DB) -->
 			<exclude>test/PDO/MySQL/WrapperTest.php</exclude>
 			<exclude>test/HTTP/UtilsTest.php</exclude>

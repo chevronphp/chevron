@@ -2,6 +2,10 @@
 
 include_once( __DIR__ . "/autoload.php");
 
+// error_reporting(E_ALL ^ E_NOTICE);
+set_exception_handler(array('\Chevron\Errors\ExceptionHandler','handler'));
+set_error_handler(array('\Chevron\Errors\ErrorHandler','handler'));
+
 define('IS_CLI', substr(strtolower(php_sapi_name()), 0, 3) == 'cli');
 
 date_default_timezone_set('UTC');
@@ -11,12 +15,8 @@ if( function_exists('mb_internal_encoding') ) {
 	mb_internal_encoding('UTF-8');
 }
 
-// error_reporting(E_ALL ^ E_NOTICE);
-set_exception_handler(array('\Chevron\Errors\ExceptionHandler','handler'));
-set_error_handler(array('\Chevron\Errors\ErrorHandler','handler'));
-
 Chevron\Misc\Loader::loadConstants("WeightsAndMeasures");
-Chevron\Misc\Loader::loadFunctions("debug_functions");
+Chevron\Misc\Loader::loadFunctions("drop", "scan_args");
 
 # http://us3.php.net/manual/en/ini.list.php
 // ini_set("short_open_tag", true);

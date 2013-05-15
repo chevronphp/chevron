@@ -8,12 +8,12 @@ class ExceptionHandler {
 
 		$file = $e->getFile();
 		$file = basename($file);
-		fwrite($stream, "\n\n### {$file}:{$e->getLine()} \n");
-		fwrite($stream, str_repeat("#", 72));
+		fwrite($stream, "\n\n/// {$file}:{$e->getLine()} \n");
+		fwrite($stream, str_repeat("/", 72));
 		fwrite($stream, "\n\n{$e->getMessage()}");
 		fwrite($stream, "\n\n");
-		fwrite($stream, "\n\n### BackTrace \n");
-		fwrite($stream, str_repeat("#", 72));
+		fwrite($stream, "\n\n/// BackTrace \n");
+		fwrite($stream, str_repeat("/", 72));
 		// fwrite($stream, "\n\n{$e->getTraceAsString()}");
 		$trace = $e->getTrace();
 		foreach($trace as $i => $row){

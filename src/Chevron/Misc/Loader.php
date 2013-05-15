@@ -24,9 +24,11 @@ class Loader {
 			$length = strcspn($name, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 			$subdir = substr($name, $length);
 			// $subdir = preg_replace("|(.*)([A-Z]\w*)|", "\\2", $name);
-			$file   = pathinfo($args[0], PATHINFO_FILENAME);
-			if($subdir != ""){
-				include_once("{$dir}/{$subdir}/{$file}.php");
+			foreach($args as $arg){
+				$file   = pathinfo($arg, PATHINFO_FILENAME);
+				if($subdir != ""){
+					include_once("{$dir}/{$subdir}/{$file}.php");
+				}
 			}
 		}
 	}
