@@ -6,9 +6,9 @@
 	"license"    : "BSD-3-Clause",
 	"authors"    : [
 		{
-			"name"    : "Jon Henderson",
-			"role"    : "Developer",
-			"homepage": "http://github.com/henderjon"
+			"name"     : "Jon Henderson",
+			"role"     : "Developer",
+			"homepage" : "http://github.com/henderjon"
 		}
 	],
 	"support" : {

@@ -54,6 +54,8 @@ class ExceptionHandler {
 
 		}
 
+		fwrite($stream, "\n\n");
+
 		if(0 === stripos(php_sapi_name(), "cli")){
 			fwrite(STDOUT, stream_get_contents($stream, -1, 0));
 		}else{
