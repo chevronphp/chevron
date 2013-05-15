@@ -52,7 +52,7 @@ class Memcached extends \Memcached implements \Chevron\Cache\CacheInterface {
 			}
 			return $mem->getExtendedStats();
 		}
-		return null;
+		return array();
 	}
 }
 

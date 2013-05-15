@@ -34,8 +34,8 @@ abstract class Protocol {
 
 			switch( $type ){
 				case( '-' ): //error
-					$response[] = $bytes;
-					// throw new \Exception($response);
+					// $response[] = $bytes;
+					throw new \Exception($bytes);
 				break;
 				case( '+' ): //single line
 				case( ':' ): //integer

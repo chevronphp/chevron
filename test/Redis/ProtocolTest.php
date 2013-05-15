@@ -146,7 +146,23 @@ class ProtocolTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * @expectedException Exception
+	 */
 	public function test_read_err(){
+
+		$handle = $this->get_handle("-ERR Operation not permitted");
+		$redis = new \Chevron\Redis\Redis;
+
+		$reflection = new ReflectionClass($redis);
+		$read = $reflection->getMethod("read");
+		$read->setAccessible(true);
+
+		$bytes = $read->invoke( $redis, $handle, 1 );
+
+	}
+
+	public function deprecated_read_err(){
 
 		$handle = $this->get_handle("-ERR Operation not permitted");
 		$redis = new \Chevron\Redis\Redis;

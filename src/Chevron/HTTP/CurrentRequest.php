@@ -24,7 +24,7 @@ class CurrentRequest extends Request {
 		$params = array("SERVER_NAME", "SERVER_PORT", "REQUEST_URI", "REQUEST_METHOD");
 		foreach($params as $param){
 			if(!array_key_exists($param, $_SERVER)){
-				throw new \Exception("The {$param} is missing form the server array.");
+				throw new \Exception("The {$param} is missing from the server array.");
 			}
 		}
 
