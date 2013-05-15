@@ -28,6 +28,7 @@
 			<directory>test/Misc</directory>
 			<!-- These files act on either Headers or External Dependecies (e.g. a live DB) -->
 			<exclude>test/PDO/MySQL/WrapperTest.php</exclude>
+			<exclude>test/PDO/MySQL/SprintferTest.php</exclude>
 			<exclude>test/HTTP/UtilsTest.php</exclude>
 		</testsuite>
     </testsuites>

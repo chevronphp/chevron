@@ -123,7 +123,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 		// insert one
 		$qry = $sqlq->insert("table", array("col1" => "val1", "col2" => "val2"), 0);
 
-		$expectation = "INSERT INTO table (`col1`, `col2`) VALUES (?, ?);";
+		$expectation = "INSERT INTO `table` (`col1`, `col2`) VALUES (?, ?);";
 
 		$this->assertEquals($qry, $expectation, "Query::insert (single) was not formatted properly.");
 	}
@@ -140,7 +140,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
 		$qry = $sqlq->insert("table", $data, 2);
 
-		$expectation = "INSERT INTO table (`col1`, `col2`) VALUES (?, ?),(?, ?);";
+		$expectation = "INSERT INTO `table` (`col1`, `col2`) VALUES (?, ?),(?, ?);";
 
 		$this->assertEquals($qry, $expectation, "Query::insert (multiple) was not formatted properly.");
 	}
@@ -152,7 +152,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 		// replace one
 		$qry = $sqlq->replace("table", array("col1" => "val1", "col2" => "val2"), 0);
 
-		$expectation = "REPLACE INTO table (`col1`, `col2`) VALUES (?, ?);";
+		$expectation = "REPLACE INTO `table` (`col1`, `col2`) VALUES (?, ?);";
 
 		$this->assertEquals($qry, $expectation, "Query::replace (single) was not formatted properly.");
 	}
@@ -169,7 +169,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
 		$qry = $sqlq->replace("table", $data, 2);
 
-		$expectation = "REPLACE INTO table (`col1`, `col2`) VALUES (?, ?),(?, ?);";
+		$expectation = "REPLACE INTO `table` (`col1`, `col2`) VALUES (?, ?),(?, ?);";
 
 		$this->assertEquals($qry, $expectation, "Query::replace (multiple) was not formatted properly.");
 	}
@@ -180,7 +180,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
 		$qry = $sqlq->update("table", array("col1" => "val1", "col2" => "val2"), array( "col3" => "val3" ));
 
-		$expectation = "UPDATE table SET `col1` = ?, `col2` = ? WHERE `col3` = ?;";
+		$expectation = "UPDATE `table` SET `col1` = ?, `col2` = ? WHERE `col3` = ?;";
 
 		$this->assertEquals($qry, $expectation, "Query::update was not formatted properly.");
 	}
@@ -191,7 +191,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
 		$qry = $sqlq->on_duplicate_key("table", array("col1" => "val1", "col2" => "val2"), array( "col3" => "val3" ));
 
-		$expectation = "INSERT INTO table SET `col1` = ?, `col2` = ?, `col3` = ? ON DUPLICATE KEY UPDATE `col1` = ?, `col2` = ?;";
+		$expectation = "INSERT INTO `table` SET `col1` = ?, `col2` = ?, `col3` = ? ON DUPLICATE KEY UPDATE `col1` = ?, `col2` = ?;";
 
 		$this->assertEquals($qry, $expectation, "Query::on_duplicate_key was not formatted properly.");
 	}

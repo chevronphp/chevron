@@ -25,7 +25,7 @@ class Query implements QueryInterface {
 	 */
 	function insert($table, array $map, $multiple){
 		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
-		$_SQL   = sprintf("INSERT INTO %s %s VALUES %s;", $table, $columns, $tokens);
+		$_SQL   = sprintf("INSERT INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
 		return $_SQL;
 	}
 	/**
@@ -33,7 +33,7 @@ class Query implements QueryInterface {
 	 */
 	function replace($table, array $map, $multiple){
 		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
-		$_SQL = sprintf("REPLACE INTO %s %s VALUES %s;", $table, $columns, $tokens);
+		$_SQL = sprintf("REPLACE INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
 		return $_SQL;
 	}
 	/**
@@ -42,7 +42,7 @@ class Query implements QueryInterface {
 	function update($table, array $map, array $where){
 		$column_map      = $this->equal_pairs($map, ", ");
 		$conditional_map = $this->equal_pairs($where, " and ");
-		$_SQL = sprintf("UPDATE %s SET %s WHERE %s;", $table, $column_map, $conditional_map);
+		$_SQL = sprintf("UPDATE `%s` SET %s WHERE %s;", $table, $column_map, $conditional_map);
 		return $_SQL;
 	}
 	/**
@@ -51,7 +51,7 @@ class Query implements QueryInterface {
 	function on_duplicate_key($table, array $map, array $where){
 		$column_map      = $this->equal_pairs($map, ", ");
 		$conditional_map = $this->equal_pairs($where, ", ");
-		$_SQL = sprintf("INSERT INTO %s SET %s, %s ON DUPLICATE KEY UPDATE %s;", $table, $column_map, $conditional_map, $column_map);
+		$_SQL = sprintf("INSERT INTO `%s` SET %s, %s ON DUPLICATE KEY UPDATE %s;", $table, $column_map, $conditional_map, $column_map);
 		return $_SQL;
 	}
 	/**
@@ -129,6 +129,7 @@ class Query implements QueryInterface {
 		// arrays should never be more than 2 deep
 		$iter2->setMaxDepth(2);
 
+		$columns = $tokens = array();
 		// re:REWIND ... http://stackoverflow.com/questions/13555884/recursiveiteratoriterator-returns-extra-elements
 		for($iter2->rewind(); $iter2->valid(); $iter2->next()){
 			$iter3 = $iter2->getInnerIterator();
