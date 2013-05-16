@@ -9,11 +9,8 @@ if( !function_exists("scan_args") ){
 	function scan_args(array $args, array $values, array $flags = array()){
 
 		// $values = array_fill_keys($values, false);
-		$final  = array_fill_keys($flags, false);
-
+		$final = array_fill_keys($flags, false);
 		$_argv = array_reverse($args);
-
-		$self = array_pop($_argv);
 
 		while( $arg = array_pop($_argv) ){
 			$arg = trim($arg, " -");
