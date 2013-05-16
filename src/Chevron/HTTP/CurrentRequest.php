@@ -80,8 +80,6 @@ class CurrentRequest extends Request {
 		return $request->rebuild($params, $preserve);
 	}
 
-	function base_href(){}
-
 	/**
 	 * check if the current request is a POST request
 	 * @return bool

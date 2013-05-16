@@ -292,12 +292,3 @@ class ProtocolTest extends PHPUnit_Framework_TestCase {
 	}
 
 }
-
-/*
-
-		"hostname" : "10.28.6.14",
-		"hostport" : "6379",
-		"database" : "3",
-		"password" : "M2E3YjJmNzRkNDU4NTA4MGJiZWM0YWQxZGQzYjE0OWIK"
-
-*/
