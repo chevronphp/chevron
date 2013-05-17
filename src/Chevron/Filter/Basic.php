@@ -3,18 +3,6 @@
 namespace Chevron\Filter;
 
 abstract class Basic {
-
-	static $magic = false;
-	/**
-	 * At some point we may need to care about magic quotes
-	 * @return bool
-	 */
-	protected static function magic(){
-		if( function_exists('get_magic_quotes_gpc') ){
-			static::$magic = get_magic_quotes_gpc();
-		}
-		return static::$magic;
-	}
 	/**
 	 * Filter a mixed value translating spaces " " for dangerous control chars.
 	 * This will recurse deeper into arrays
