@@ -14,6 +14,12 @@ if( !function_exists("scan_args") ){
 
 		while( $arg = array_pop($_argv) ){
 			$arg = trim($arg, " -");
+
+			if(false !== ($pos = strpos($arg, "="))){
+				$_argv[] = substr($arg, ($pos + 1));
+				$arg     = substr($arg, 0, $pos);
+			}
+
 			switch(true){
 				case in_array($arg, $values) :
 					$final[$arg] = array_pop($_argv);
