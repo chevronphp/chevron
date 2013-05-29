@@ -87,7 +87,7 @@ class HonkerBot extends Commands {
 
 	/**
 	 * add an event. events are composed of a regex pattern to match and a
-	 * callback. the callback is passed the array of matches form the regex.
+	 * callback. the callback is passed the array of matches from the regex.
 	 * the callback should return the response string or NULL. if NULL the event
 	 * will be removed from the events array. this is useful for events that
 	 * ought to only fire once or after a certain number of calls.
@@ -108,7 +108,7 @@ class HonkerBot extends Commands {
 	 * @return type
 	 */
 	function listen(){
-		while( $line = trim( fgets( $this->handle ))){
+		while( $line = trim( fgets( $this->handle ) ) ){
 			stream_set_timeout( $this->handle, 3600 );
 
 			if(!$this->suppress) fwrite(STDERR, "<< {$line}\n");
