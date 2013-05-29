@@ -6,7 +6,8 @@ include_once( __DIR__ . "/autoload.php");
 set_exception_handler(array('\Chevron\Errors\ExceptionHandler','handler'));
 set_error_handler(array('\Chevron\Errors\ErrorHandler','handler'));
 
-define('IS_CLI', substr(strtolower(php_sapi_name()), 0, 3) == 'cli');
+if(!defined("IS_CLI"))
+	define('IS_CLI', substr(strtolower(php_sapi_name()), 0, 3) == 'cli');
 
 date_default_timezone_set('UTC');
 // date_default_timezone_set('America/Chicago');
