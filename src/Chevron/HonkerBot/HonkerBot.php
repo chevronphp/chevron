@@ -101,8 +101,10 @@ class HonkerBot extends Commands {
 	 * @param callable $callback The function to execute
 	 * @return
 	 */
-	function addEvent( $pattern, callable $callback ){
-		$this->events[$pattern][] = $callback;
+	function addEvent( $pattern, $callback ){
+		if(is_callable($callback)){
+			$this->events[$pattern][] = $callback;
+		}
 	}
 
 	/**
