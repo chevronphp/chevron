@@ -59,13 +59,15 @@ class HonkerBotTest extends PHPUnit_Framework_TestCase {
 		$events = $reflection->getProperty("events");
 		$events->setAccessible(true);
 
-		$bot->addEvent("|^PING :(?P<code>.*)$|i", function($matches){
+		$pattern = "|^PING :(?P<code>.*)$|i";
+
+		$bot->addEvent($pattern, function($matches){
 			return "a string";
 		});
 
 		$events = $events->getValue($bot);
 
-		$this->assertEquals(2, count($events), "HonkerBot::addEvent failed to set a second event");
+		$this->assertEquals(2, count($events[$pattern]), "HonkerBot::addEvent failed to set a second event");
 
 	}
 

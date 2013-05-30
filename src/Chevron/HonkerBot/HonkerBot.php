@@ -68,21 +68,24 @@ class HonkerBot extends Commands {
 	 */
 	function hook( $line ){
 		if(!is_array($this->events)) return;
-		foreach($this->events as $k => $event){
-			if(!is_callable($event["callback"])) continue;
 
-			$response = false;
-			if( preg_match($event["pattern"], $line, $matches) ){
-				$response = call_user_func($event["callback"], $matches);
-			}
+		$patterns = array_keys($this->events);
 
-			switch(true){
-				case is_string($response) :
-					$this->write($this->handle, $response);
-				break;
-				case is_null($response) :
-					unset($this->events[$k]);
-				break;
+		foreach($patterns as $pattern){
+			if(1 !== preg_match($pattern, $line, $matches)) continue;
+
+			foreach($this->events[$pattern] as $k => $callback){
+				$response = false;
+				$response = call_user_func($callback, $matches);
+
+				switch(true){
+					case is_string($response) :
+						$this->write($this->handle, $response);
+						break;
+					case is_null($response) :
+						unset($this->events[$pattern][$k]);
+						break;
+				}
 			}
 		}
 	}
@@ -98,11 +101,8 @@ class HonkerBot extends Commands {
 	 * @param callable $callback The function to execute
 	 * @return
 	 */
-	function addEvent( $pattern, $callback ){
-		$this->events[] = array(
-			"pattern"  => $pattern,
-			"callback" => $callback,
-		);
+	function addEvent( $pattern, callable $callback ){
+		$this->events[$pattern][] = $callback;
 	}
 
 	/**
