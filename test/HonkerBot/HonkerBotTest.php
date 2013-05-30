@@ -85,7 +85,9 @@ class HonkerBotTest extends PHPUnit_Framework_TestCase {
 		$botHandle->setAccessible(true);
 		$botHandle->setValue($bot, $handle);
 
-		$bot->addEvent("|^PING :(?P<code>.*)$|i", function($matches){
+		$pattern = "|^PING :(?P<code>.*)$|i";
+
+		$bot->addEvent($pattern, function($matches){
 			return null;
 		});
 
@@ -95,7 +97,7 @@ class HonkerBotTest extends PHPUnit_Framework_TestCase {
 
 		$events = $events->getValue($bot);
 
-		$this->assertEquals(1, count($events), "HonkerBot::hook (null) failed to remove a null event");
+		$this->assertEquals(1, count($events[$pattern]), "HonkerBot::hook (null) failed to remove a null event");
 
 	}
 
