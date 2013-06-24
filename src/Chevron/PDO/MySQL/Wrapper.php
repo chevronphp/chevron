@@ -147,6 +147,17 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
+	function keyrow($query, array $map = array(), $in = false){
+		$result = $this->exe_return_result($query, $map, $in);
+		$final = array();
+		foreach($result as $row){
+			$final[$row[0]] = $row;
+		}
+		return $final ?: array();
+	}
+	/**
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
 		$pdoq = new Query;

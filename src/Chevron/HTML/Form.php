@@ -109,10 +109,18 @@ class Form extends Element {
 
 		foreach($options as $key => $value){
 			if(is_array($value)){
-				$temp = sprintf('<optgroup label="%s">%s</optgroup>', $key, self::select("", $value, $selected, array(), $level + 1));
+				$_options = self::select("", $value, $selected, array(), $level + 1);
+				$temp = sprintf('<optgroup label="%s">%s</optgroup>', $key, $_options);
 			}else{
-				$sel = in_array($key, (array)$selected) ? ' selected="selected"' : "";
-				$temp = sprintf('<option value="%s"%s>%s</option>', $key, $sel, $value);
+				$_value = $_selected = "";
+
+				$_value = " value=\"{$key}\"";
+
+				if(in_array($key, (array)$selected)){
+					$_selected = ' selected="selected"';
+				}
+
+				$temp = sprintf('<option%s%s>%s</option>', $_value, $_selected, $value);
 			}
 			$opts .= $temp;
 		}

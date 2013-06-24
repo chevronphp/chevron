@@ -219,6 +219,71 @@ class WrapperTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($result, array(), "Wrapper::keypair (empty result) returned the wrong result");
 	}
 
+	public function testKeyRow(){
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
+
+		$expected = array(
+			2 => array(
+				'widget_id' => '2',
+				0 => '2',
+				'type_id' => '39',
+				1 => '39',
+			),
+			3 => array(
+				'widget_id' => '3',
+				0 => '3',
+				'type_id' => '40',
+				1 => '40',
+			)
+		);
+
+		$sql = "select widget_id, type_id from widgets where widget_id in (?, ?) order by widget_id;";
+
+		// standard
+		$result = $this->dbConn->keyrow($sql, array(2,3));
+		$this->assertInternalType("array", $result, "Wrapper::keyrow did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::keyrow returned the wrong result");
+
+	}
+
+	public function testKeyRowIn(){
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
+
+		$expected = array(
+			2 => array(
+				'widget_id' => '2',
+				0 => '2',
+				'type_id' => '39',
+				1 => '39',
+			),
+			3 => array(
+				'widget_id' => '3',
+				0 => '3',
+				'type_id' => '40',
+				1 => '40',
+			)
+		);
+
+		$sql = "select widget_id, type_id from widgets where widget_id in (%s) order by widget_id;";
+
+		// using IN
+		$result = $this->dbConn->keyrow($sql, array(array(2,3)), true);
+		$this->assertInternalType("array", $result, "Wrapper::keyrow (in) did not return array");
+		$this->assertEquals($result, $expected, "Wrapper::keyrow (in) returned the wrong result");
+
+	}
+
+	public function testKeyRowEmptyResult(){
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
+
+		$sql = "select widget_id, type_id from widgets where widget_id in (%s) order by widget_id;";
+
+		// empty
+		$result = $this->dbConn->keyrow($sql, array(array(12,13)), true);
+		$this->assertInternalType("array", $result, "Wrapper::keyrow (empty result) did not return array");
+		$this->assertEquals($result, array(), "Wrapper::keyrow (empty result) returned the wrong result");
+	}
+
 	public function testRow(){
 		// $this->markTestSkipped("Wrapper requires an active DB connection");
 

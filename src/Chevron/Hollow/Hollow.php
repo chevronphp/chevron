@@ -22,8 +22,13 @@ abstract class Hollow {
 	 */
 	public static function get($name){
 		if( array_key_exists($name, self::$map) ){
-			$value = self::$map[$name] ?: null;
-			return is_callable($value) ? call_user_func($value) : $value;
+			if(!self::$map[$name]) return null;
+
+			if(is_callable(self::$map[$name])){
+				self::$map[$name] = call_user_func(self::$map[$name]);
+			}
+
+			return self::$map[$name];
 		}
 		return null;
 	}

@@ -108,7 +108,8 @@ class HonkerBot extends Commands {
 	}
 
 	/**
-	 * infinite loop over each line that comes from the server
+	 * infinite loop over each line that comes from the server. some servers
+	 * have longer ping intervals, play with the server timeout as desired
 	 * @return type
 	 */
 	function listen(){

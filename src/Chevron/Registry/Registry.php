@@ -7,7 +7,8 @@ namespace Chevron\Registry;
  */
 class Registry {
 
-	protected $map, $success;
+	protected $map = array();
+	protected $success;
 	/**
 	 * Load an array of data into the Conf registry
 	 * @param array $data The data

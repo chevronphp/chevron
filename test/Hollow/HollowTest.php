@@ -96,8 +96,6 @@ class HollowTest extends PHPUnit_Framework_TestCase {
 		$get = $hollow->getMethod("get");
 
 		$set->invoke($hollow, "TestKey", function(){
-			static $inst;
-			if( !is_null($inst) ) return $inst;
 
 			$inst = md5(mt_rand(1, 9999));
 			return $inst;
@@ -116,15 +114,13 @@ class HollowTest extends PHPUnit_Framework_TestCase {
 	public function testDuplicate(){
 
 		$hollow = new ReflectionClass("Chevron\Hollow\Hollow");
-		$map       = $hollow->getProperty("map");
+		$map = $hollow->getProperty("map");
 		$map->setAccessible(true);
 
-		$set       = $hollow->getMethod("set");
+		$set = $hollow->getMethod("set");
 		$duplicate = $hollow->getMethod("duplicate");
 
 		$set->invoke($hollow, "TestKey", function(){
-			static $inst;
-			if( !is_null($inst) ) return $inst;
 
 			$inst = md5(mt_rand(1, 9999));
 			return $inst;
@@ -136,8 +132,5 @@ class HollowTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertSame($vals["TestKey"], $vals["TestKey2"], "Getter Error: Hollow::duplicate value didn't copy");
 	}
-
-	// public function testRaw(){ assertSame() }
-	// public function testCall(){}
 
 }

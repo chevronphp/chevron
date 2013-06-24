@@ -14,9 +14,9 @@ abstract class INI {
 	 * Offer some simple reasons as to what went wrong
 	 */
 	static $ini_errors = array(
-		static::INI_ERROR_NONE         => "No error has occurred"
-		static::INI_FILE_PARSE_ERROR   => "There was an error parsing the file"
-		static::INI_STRING_PARSE_ERROR => "There was an error parsing the string"
+		101 => "No error has occurred",
+		102 => "There was an error parsing the file",
+		103 => "There was an error parsing the string",
 	);
 	/**
 	 * Parse an INI file and throw an error if it fails
@@ -32,6 +32,7 @@ abstract class INI {
 		if( false === $data ){
 			static::throw_ini_error(static::INI_FILE_PARSE_ERROR);
 		}
+		return $data;
 	}
 	/**
 	 * Parse an INI string and throw an error if it fails
@@ -44,6 +45,7 @@ abstract class INI {
 		if( false === $data ){
 			static::throw_ini_error(static::INI_STRING_PARSE_ERROR);
 		}
+		return $data;
 	}
 	/**
 	 * Throw a descriptive error if parsing an INI file/string fails
