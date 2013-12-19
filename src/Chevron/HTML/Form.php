@@ -7,6 +7,7 @@ class Form extends Element {
 	 * Array of aliases to allow for input creation via type
 	 */
 	protected static $tag_aliases = array(
+		"file"     =>  array("tag" => "input", "type" => "file"),
 		"text"     =>  array("tag" => "input", "type" => "text"),
 		"search"   =>  array("tag" => "input", "type" => "search"),
 		"password" =>  array("tag" => "input", "type" => "password"),
@@ -55,6 +56,7 @@ class Form extends Element {
 		switch( $tag ){
 			case( "button" ):
 				$innerHTML = $attributes["value"];
+			break;
 			case( "textarea" ):
 				$innerHTML = $attributes["value"];
 				$attributes["value"] = null;

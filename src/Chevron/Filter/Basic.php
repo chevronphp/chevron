@@ -7,7 +7,7 @@ abstract class Basic {
 	 * Filter a mixed value translating spaces " " for dangerous control chars.
 	 * This will recurse deeper into arrays
 	 *
-	 * @param mixed $value The value to sanitize
+	 * @param array $map The value to sanitize
 	 * @return mixed
 	 */
 	public static function sanitize_array(array $map){

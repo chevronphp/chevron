@@ -17,10 +17,6 @@ class Connector {
 	 */
 
 	function __construct($dsn, $username, $password){
-		try {
 			$this->conn = new \PDO( $dsn, $username, $password );
-		} catch (PDOException $e) {
-		    trigger_error($e->getMessage());
-		}
 	}
 }

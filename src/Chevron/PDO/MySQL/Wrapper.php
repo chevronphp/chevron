@@ -9,7 +9,11 @@ namespace Chevron\PDO\MySQL;
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
+class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\WrapperInterface {
+
+	public $debug       = false;
+	public $num_retries = 5;
+	public $lastQry     = "";
 ##### PUT HELPERS
 ################################################################################
 	/**
@@ -68,7 +72,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 	function multi_insert($table, array $map){
 		$pdoq  = new Query;
 		$query = $pdoq->insert($table, $map, count($map));
-		$data  = $pdoq->filter_data($map);
+		$data  = $pdoq->filter_multi_data($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
@@ -77,7 +81,7 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 	function multi_replace($table, array $map){
 		$pdoq  = new Query;
 		$query = $pdoq->replace($table, $map, count($map));
-		$data  = $pdoq->filter_data($map);
+		$data  = $pdoq->filter_multi_data($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
@@ -87,11 +91,20 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 
 		$statement = $this->validate_and_prepare($query, count($data));
 
-		if( $statement->execute($data) ){
+		$retry = $this->num_retries;
+		while( $retry-- ){
+			$success = $statement->execute($data);
+
+			if( $success ){
 			return $statement->rowCount();
-		}else{
+			}
+
+			// deadlock
+			if( $statement->errorCode() == "40001" ){ continue; }
+
 			throw new \Exception($this->error($statement));
 		}
+		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
 	}
 ##### SELECT HELPERS
 ################################################################################
@@ -158,6 +171,17 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
+	function keyrows($query, array $map = array(), $in = false){
+		$result = $this->exe_return_result($query, $map, $in);
+		$final = array();
+		foreach($result as $row){
+			$final[$row[0]][] = $row;
+		}
+		return $final ?: array();
+	}
+	/**
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
 		$pdoq = new Query;
@@ -174,16 +198,27 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 
 		$statement->setFetchMode($fetch);
 
-		if( $statement->execute($data) ){
+		$retry = $this->num_retries;
+		while( $retry-- ){
+			$success = $statement->execute($data);
+
+			if( $success ){
 			if( $statement->columnCount() ){
 				// only queries that return a result set should have a column count
 				return new \IteratorIterator($statement);
 			}
 			// successful queries that do not return a result
 			return true;
-		}else{
+			}
+
+			// deadlock
+			if( $statement->errorCode() == "40001" ){ continue; }
+
 			throw new \Exception($this->error($query));
 		}
+
+		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
+
 	}
 ##### UTIL HELPERS
 ################################################################################
@@ -207,6 +242,13 @@ class Wrapper extends \Chevron\PDO\Connector implements WrapperInterface {
 		if( !($query InstanceOf \PDOStatement ) ){
 			$query = strtr($query, "\t", " ");
 			$statement = $this->conn->prepare($query);
+		}
+
+		$msg = sprintf("Query: %s \n\nToken Count: %s", $statement->queryString, $param_count);
+		$this->lastQry = $msg;
+
+		if($this->debug){
+			throw new \Exception("PDO Debug:\n{$msg}");
 		}
 
 		if( substr_count($statement->queryString, "?") != $param_count ){

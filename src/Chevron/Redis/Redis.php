@@ -8,6 +8,7 @@ namespace Chevron\Redis;
 class Redis extends Protocol {
 	/***/
 	private $handle;
+	public  $db = 0;
 	/**
 	 * Connect to a Redis instance. This isn't in the constructor so
 	 * that the tests can instantiate this object and replace the
@@ -38,6 +39,12 @@ class Redis extends Protocol {
 	 * @return mixed
 	 */
 	function __call($func, $args){
+
+		// track the current db ...
+		if($func == strtolower("select")){
+			$this->db = reset($args);
+		}
+
 		$command = $this->protocol( $func, $args );
 		return $this->exec( $command, 1 );
 	}

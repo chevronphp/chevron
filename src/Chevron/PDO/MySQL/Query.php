@@ -7,7 +7,7 @@ namespace Chevron\PDO\MySQL;
  *
  * @package DB
  */
-class Query implements QueryInterface {
+class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 
 	protected $namedTokens = false;
 	protected $columns, $tokens;
@@ -73,6 +73,20 @@ class Query implements QueryInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	function filter_data(){
+		$final = array();
+		foreach(func_get_args() as $arg){
+			foreach($arg as $key => $value){
+				if( is_scalar($value) ){
+					$final[] = $value;
+				}
+			}
+		}
+		return $final;
+	}
+	/**
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 */
+	function filter_multi_data(){
 		$iter1 = new \RecursiveArrayIterator(func_get_args());
 		$iter2 = new \RecursiveIteratorIterator($iter1);
 		// arrays should never be more than 2 deep
@@ -129,19 +143,22 @@ class Query implements QueryInterface {
 		// arrays should never be more than 2 deep
 		$iter2->setMaxDepth(2);
 
-		$columns = $tokens = array();
 		// re:REWIND ... http://stackoverflow.com/questions/13555884/recursiveiteratoriterator-returns-extra-elements
 		for($iter2->rewind(); $iter2->valid(); $iter2->next()){
 			$iter3 = $iter2->getInnerIterator();
 			foreach($iter3 as $key => $value){
 				if(is_null($value)) continue; // null values must be array(true, 'null')
+
+				// allow unescaped values when passed as array(true, $value)
+				if( is_array($value) ){
+					if($value[0] === true){
 				$columns[$key] = $key;
-				if( is_array($value) && (true === $value[0]) ){
 					$tokens[$key] = $value[1];
+					}
 				}else{
-					if( $this->namedTokens && (strpos($val, ":") === 0) ){
-						$tokens[$key]  = $value;
-					}else{
+				// disallow numeric column names, helps filter out the array(true, value) syntax
+					if(!is_numeric($key)){
+						$columns[$key] = $key;
 						$tokens[$key]  = "?";
 					}
 				}

@@ -5,9 +5,9 @@ class CurrentRequestTest extends PHPUnit_Framework_TestCase {
 	public function test_current_request_type(){
 
 		// CurrentRequest is dependent on the $_SERVER array set in the phpunit XML manifest
-		$request = new \Chevron\HTTP\CurrentRequest(false);
+		$request = new \Chevron\HTTP\Requests\CurrentRequest(false);
 
-		$this->assertInstanceOf("Chevron\HTTP\Request", $request, "CurrentRequest::__construct failed to return an object of the proper type");
+		$this->assertInstanceOf("Chevron\HTTP\Requests\BaseRequest", $request, "CurrentRequest::__construct failed to return an object of the proper type");
 
 	}
 
@@ -17,7 +17,7 @@ class CurrentRequestTest extends PHPUnit_Framework_TestCase {
 	public function test_current_request_structure(){
 
 		// CurrentRequest is dependent on the $_SERVER array set in the phpunit XML manifest
-		$request = new \Chevron\HTTP\CurrentRequest(false);
+		$request = new \Chevron\HTTP\Requests\CurrentRequest(false);
 		$reflection = new ReflectionClass($request);
 		$property = $reflection->getProperty("info");
 		$property->setAccessible(true);
@@ -52,7 +52,7 @@ class CurrentRequestTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function test_pwd(){
-		$request = new \Chevron\HTTP\CurrentRequest(false);
+		$request = new \Chevron\HTTP\Requests\CurrentRequest(false);
 
 		$original = $request->build();
 
@@ -65,7 +65,7 @@ class CurrentRequestTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function test_is_post(){
-		$request = new \Chevron\HTTP\CurrentRequest(false);
+		$request = new \Chevron\HTTP\Requests\CurrentRequest(false);
 
 		$result = $request->is_post();
 

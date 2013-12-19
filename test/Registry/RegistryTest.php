@@ -34,8 +34,21 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 
 	}
 
-	public function getLoadedRegistry(){
-		$registry   = new \Chevron\Registry\Registry;
+	public function testMagicGetInt() {
+
+		$registry = $this->getLoadedRegistry();
+
+		$data     = $registry->numeric;
+		$expected = 23;
+
+		// get int
+		$this->assertEquals($data, $expected, "Registry::__get (int) failed to return correct data");
+		$this->assertInternalType("int", $data, "Registry::__get (int) failed to return correct type");
+
+	}
+
+	public function getLoadedRegistry() {
+		$registry = new \Chevron\Registry\Registry;
 
 		$data = array(
 			"numeric" => 23,
@@ -47,23 +60,11 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$registry->data($data);
+
 		return $registry;
 	}
 
-	public function testMagicGetInt(){
-
-		$registry = $this->getLoadedRegistry();
-
-		$data = $registry->numeric;
-		$expected = 23;
-
-		// get int
-		$this->assertEquals($data, $expected, "Registry::__get (int) failed to return correct data");
-		$this->assertInternalType("int", $data, "Registry::__get (int) failed to return correct type");
-
-	}
-
-	public function testMagicGetString(){
+	public function testMagicGetString() {
 
 		$registry = $this->getLoadedRegistry();
 
@@ -148,7 +149,7 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		$data = $registry->numeric;
 
 		// set int
-		$this->assertNotEquals( 23, $data,"Registry::__set (int) failed to return correct data");
+		$this->assertNotEquals(23, $data, "Registry::__set (int) failed to return correct data");
 		$this->assertInternalType("int", $data, "Registry::__set (int) failed to return correct type");
 
 	}
@@ -212,6 +213,15 @@ class RegistryTest extends PHPUnit_Framework_TestCase {
 		// test unsuccess
 		$this->assertEquals($expected, $data, "Registry::success (failure) failed to return correct data");
 		$this->assertInternalType("bool", $data, "Registry::success (failure) failed to return correct type");
+
+	}
+
+	public function testMagicIsset() {
+
+		$registry = $this->getLoadedRegistry();
+
+		$this->assertSame(true, isset($registry->numeric), "Registry::isset truth-y failure");
+		$this->assertSame(false, isset($registry->madeupcrap), "Registry::isset false-y failure");
 
 	}
 

@@ -15,17 +15,30 @@ abstract class Hollow {
 	 * The map in which to store our objects
 	 */
 	private static $map = array();
+
+	/**
+	 * @var array The map in which we store called values
+	 */
+	private static $called = array();
+
 	/**
 	 * Retrieve an item; calling if callable
-	 * @param string $name The name/key of the item
-	 * @return mixed
+	 * @param string $name
+	 * @param bool $new When $name is callable, force it to be called
+	 * @return mixed|null
 	 */
-	public static function get($name){
-		if( array_key_exists($name, self::$map) ){
-			if(!self::$map[$name]) return null;
+	public static function get( $name, $new = false ) {
+		if( array_key_exists($name, self::$map) ) {
+			if( !isset(self::$map[$name]) ) return null;
 
-			if(is_callable(self::$map[$name])){
-				self::$map[$name] = call_user_func(self::$map[$name]);
+			if( is_callable(self::$map[$name]) ) {
+				if( $new ) {
+					return call_user_func(self::$map[$name]);
+				} elseif( !isset(self::$called[$name]) ) {
+					self::$called[$name] = call_user_func(self::$map[$name]);
+				}
+
+				return self::$called[$name];
 			}
 
 			return self::$map[$name];

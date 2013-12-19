@@ -54,7 +54,32 @@ class ExceptionHandler {
 
 		}
 
+		if(0 === stripos(php_sapi_name(), "cli")){
+			fwrite(STDOUT, stream_get_contents($stream, -1, 0));
+		}else{
+			printf("<pre>%s</pre>", stream_get_contents($stream, -1, 0));
+		}
+
+		$code = $e->getCode();
+		exit($code);
+	}
+
+	public static function printSimpleException(\Exception $e){
+		$stream = fopen("php://memory", "rw");
+
+		$file = $e->getFile();
+		$file = basename($file);
+		fwrite($stream, "\n\n### {$file}:{$e->getLine()} \n");
+		fwrite($stream, str_repeat("-", 72));
+		fwrite($stream, "\n\n!!! " . date("r"));
+		fwrite($stream, "\n\n{$e->getMessage()}");
 		fwrite($stream, "\n\n");
+		if($e->xdebug_message){
+			fwrite($stream, "\n\n### Call Stack \n");
+			fwrite($stream, str_repeat("-", 72));
+			fwrite($stream, "\n\n{$e->xdebug_message}()");
+			fwrite($stream, "\n\n");
+		}
 
 		if(0 === stripos(php_sapi_name(), "cli")){
 			fwrite(STDOUT, stream_get_contents($stream, -1, 0));
@@ -68,5 +93,9 @@ class ExceptionHandler {
 
 	public static function handler(\Exception $e){
 		 self::printException($e);
+	}
+
+	public static function simpleHandle(\Exception $e){
+		 self::printSimpleException($e);
 	}
 }

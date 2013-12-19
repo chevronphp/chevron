@@ -87,6 +87,30 @@ class HollowTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @depends testGetCallable
+	 */
+	public function testGetCallableNew() {
+
+		$hollow = new ReflectionClass("Chevron\Hollow\Hollow");
+		$set    = $hollow->getMethod("set");
+		$get    = $hollow->getMethod("get");
+
+		$set->invoke($hollow, "TestXKey", function () { return uniqid(); });
+
+		$value1 = $get->invoke($hollow, "TestXKey");
+		$value2 = $get->invoke($hollow, "TestXKey");
+		$value3 = $get->invoke($hollow, "TestXKey", true);
+		$value4 = $get->invoke($hollow, "TestXKey", true);
+		$value5 = $get->invoke($hollow, "TestXKey");
+
+		$this->assertEquals($value1, $value2, "Getter Error: Hollow::get closure didn't return the same value twice when callable");
+		$this->assertNotEquals($value1, $value3, "Getter Error: Hollow::get returned the same value twice despite asking for a new value");
+		$this->assertNotEquals($value3, $value4, "Getter Error: Hollow::get returned the same value twice despite asking for a new value");
+		$this->assertEquals($value1, $value5, "Getter Error: Hollow::get closure didn't return the initial value after a new value was also created");
+	}
+
+
+	/**
 	 * @depends testSetCallable
 	 */
 	public function testGetSingleton(){
