@@ -69,7 +69,7 @@ class Printf {
 	function multi_insert($table, array $map){
 		$pdoq  = new Query;
 		$query = $pdoq->insert($table, $map, count($map));
-		$data  = $pdoq->filter_data($map);
+		$data  = $pdoq->filter_multi_data($map);
 		return array($query, $data);
 	}
 	/**
@@ -78,7 +78,7 @@ class Printf {
 	function multi_replace($table, array $map){
 		$pdoq  = new Query;
 		$query = $pdoq->replace($table, $map, count($map));
-		$data  = $pdoq->filter_data($map);
+		$data  = $pdoq->filter_multi_data($map);
 		return array($query, $data);
 	}
 }

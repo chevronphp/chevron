@@ -41,17 +41,6 @@ abstract class INI {
 	}
 
 	/**
-	 * Throw a descriptive error if parsing an INI file/string fails
-	 *
-	 * @param int $error_code The error code
-	 * @throws \Exception
-	 */
-	static function throw_ini_error( $error_code ) {
-		$error = sprintf("%d: %s", $error_code, static::$ini_errors[$error_code]);
-		throw new \Exception($error);
-	}
-
-	/**
 	 * Parse an INI string and throw an error if it fails
 	 *
 	 * @param string $string The string to parse

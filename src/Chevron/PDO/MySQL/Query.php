@@ -9,6 +9,9 @@ namespace Chevron\PDO\MySQL;
  */
 class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 
+	/**
+	 * I am NOT handling named tokens at this time.
+	 */
 	protected $namedTokens = false;
 	protected $columns, $tokens;
 
@@ -98,6 +101,7 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 			$iter3 = $iter2->getInnerIterator();
 			$count[] = $iter3->count();
 			foreach($iter3 as $key => $value){
+
 				if(is_scalar($value)){
 					$final[] = $value;
 				}
