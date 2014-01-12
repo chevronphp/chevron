@@ -35,8 +35,5 @@ using [Composer](http://getcomposer.org/).
   - cleanup, finish, more betterify the comments and documentation
   - write some example usage
 
-**Build Status**
-
-[![Build Status](https://travis-ci.org/henderjon/chevron.png)](https://travis-ci.org/henderjon/chevron)
 
 
