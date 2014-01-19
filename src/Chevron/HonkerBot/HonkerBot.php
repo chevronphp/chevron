@@ -20,6 +20,11 @@ class HonkerBot extends Commands {
 	public $suppress = false;
 
 	/**
+	 * stream timeout
+	 */
+	const TIMEOUT = 3600;
+
+	/**
 	 * add a default PING/PONG to our bot
 	 * @return
 	 */
@@ -101,10 +106,8 @@ class HonkerBot extends Commands {
 	 * @param callable $callback The function to execute
 	 * @return
 	 */
-	function addEvent( $pattern, $callback ){
-		if(is_callable($callback)){
-			$this->events[$pattern][] = $callback;
-		}
+	function addEvent( $pattern, callable $callback ){
+		$this->events[$pattern][] = $callback;
 	}
 
 	/**
@@ -114,7 +117,7 @@ class HonkerBot extends Commands {
 	 */
 	function listen(){
 		while( $line = trim( fgets( $this->handle ) ) ){
-			stream_set_timeout( $this->handle, 3600 );
+			stream_set_timeout( $this->handle, static::TIMEOUT );
 
 			if(!$this->suppress) fwrite(STDERR, "<< {$line}\n");
 
