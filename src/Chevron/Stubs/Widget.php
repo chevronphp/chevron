@@ -44,7 +44,7 @@ class Widget implements WidgetInterface {
 	 * Require, and thus render, a file
 	 */
 	function render(){
-		require($this->file);
+		return require($this->file);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Widget implements WidgetInterface {
 	 * @return type
 	 */
 	function __invoke(){
-		$this->render();
+		return $this->render();
 	}
 
 	/**

@@ -1,15 +1,7 @@
 <?php
 
 namespace Chevron\Hollow;
-/**
- * This is Hollow. A Dependency Injection Container
- *
- * Inspired by Pimple (github.com/fabpot/Pimple)
- *
- * @package Hollow
- * @author Jon Henderson
- * @license BSD 3 Clause (see below)
- */
+
 abstract class Hollow {
 	/**
 	 * The map in which to store our objects
@@ -28,23 +20,26 @@ abstract class Hollow {
 	 * @return mixed|null
 	 */
 	public static function get( $name, $new = false ) {
-		if( array_key_exists($name, self::$map) ) {
-			if( !isset(self::$map[$name]) ) return null;
 
-			if( is_callable(self::$map[$name]) ) {
-				if( $new ) {
-					return call_user_func(self::$map[$name]);
-				} elseif( !isset(self::$called[$name]) ) {
-					self::$called[$name] = call_user_func(self::$map[$name]);
-				}
+		if(!array_key_exists($name, self::$map)){
+			return null;
+		}
 
-				return self::$called[$name];
-			}
-
+		if(!is_callable(self::$map[$name])){
 			return self::$map[$name];
 		}
-		return null;
+
+		if($new){
+			return call_user_func(self::$map[$name]);
+		}
+
+		if(!array_key_exists($name, self::$called)){
+			self::$called[$name] = call_user_func(self::$map[$name]);
+		}
+
+		return self::$called[$name];
 	}
+
 	/**
 	 * Store a value via key to retrieve later
 	 * @param string $name The name/key of the item
@@ -52,9 +47,9 @@ abstract class Hollow {
 	 * @return mixed
 	 */
 	public static function set($name, $value){
-		// $value = is_callable($value) ? $value() : $value;
 		return self::$map[$name] = $value;
 	}
+
 	/**
 	 * Clone a given value into a second key
 	 * @param string $src The source
@@ -64,32 +59,16 @@ abstract class Hollow {
 	public static function duplicate($src, $dest){
 		return self::set($dest, self::raw($src));
 	}
+
 	/**
 	 * Retrieve an item without calling it
 	 * @param string $name The name/key to be retrieved
 	 * @return mixed
 	 */
 	public static function raw($name){
-		$return = null;
-		if(isset(self::$map[$name])){
-			$return = self::$map[$name];
+		if(array_key_exists($name, self::$map)){
+			return self::$map[$name];
 		}
-		return $return;
+		return null;
 	}
-	/**
-	 * Call a stored item, with args
-	 * @param string $name The name/key of the item
-	 * @param array array $args An array of args
-	 * @return mixed
-	 */
-	// public static function call($name, array $args){
-	// 	$value = self::raw($name);
-
-	// 	if( !is_callable($value) )
-	// 		throw new BadFunctionCallException(
-	// 			"Value stored at '{$name}' isn't callable.\n"
-	// 		);
-
-	// 	return call_user_func_array($value, $args);
-	// }
 }

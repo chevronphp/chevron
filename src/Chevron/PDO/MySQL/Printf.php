@@ -18,9 +18,9 @@ class Printf {
 	 */
 	function put($table, array $map, array $where = array()){
 		if( $where ){
-			return $this->update($table, $map, $where);
+			return self::update($table, $map, $where);
 		}else{
-			return $this->insert($table, $map, 0);
+			return self::insert($table, $map, 0);
 		}
 	}
 	/**

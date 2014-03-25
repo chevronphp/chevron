@@ -96,7 +96,7 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 			$success = $statement->execute($data);
 
 			if( $success ){
-			return $statement->rowCount();
+				return $statement->rowCount();
 			}
 
 			// deadlock

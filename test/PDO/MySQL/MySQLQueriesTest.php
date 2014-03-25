@@ -294,4 +294,445 @@ class MySQLQueryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected_values, $result, "Parse Error: Query::filter_data ");
 	}
 
+	/**
+	 * map_columns needs to accomodate a number of different strctures. there are
+	 * many test necessary to ensure that it does
+	 */
+
+	public function testMapColumnsVar1(){
+
+		$a = array(
+			"col1" => "val",
+			"col2" => "val",
+			"col3" => "val",
+			"col4" => "val",
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"?",
+			"?",
+			"?",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for simple col => val");
+		$this->assertEquals($tokens, $t, "testing tokens for simple col => val");
+
+	}
+
+	public function testMapColumnsVar2(){
+
+		$a = array(
+			"col1" => array(true, "val"),
+			"col2" => array(true, "val"),
+			"col3" => array(true, "val"),
+			"col4" => array(true, "val"),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"val",
+			"val",
+			"val",
+			"val",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for simple col => array(true, val)");
+		$this->assertEquals($tokens, $t, "testing tokens for simple col => array(true, val)");
+
+	}
+
+	public function testMapColumnsVar3(){
+
+		$a = array(
+			"col1" => "val",
+			"col2" => "val",
+			"col3" => array(true, "val"),
+			"col4" => array(true, "val"),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"?",
+			"?",
+			"val",
+			"val",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for mixed col => val, col => array(true, val) where arrays are last");
+		$this->assertEquals($tokens, $t, "testing tokens for mixed col => val, col => array(true, val) where arrays are last");
+
+	}
+
+	public function testMapColumnsVar4(){
+
+		$a = array(
+			"col1" => array(true, "val"),
+			"col2" => array(true, "val"),
+			"col3" => "val",
+			"col4" => "val",
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"val",
+			"val",
+			"?",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for mixed col => val, col => array(true, val) where arrays are first");
+		$this->assertEquals($tokens, $t, "testing tokens for mixed col => val, col => array(true, val) where arrays are first");
+
+	}
+
+	public function testMapColumnsVar5(){
+
+		$a = array(
+			"col1" => "val",
+			"col2" => array(true, "val"),
+			"col3" => array(true, "val"),
+			"col4" => "val",
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"?",
+			"val",
+			"val",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for mixed col => val, col => array(true, val) where arrays are in the middle");
+		$this->assertEquals($tokens, $t, "testing tokens for mixed col => val, col => array(true, val) where arrays are in the middle");
+
+	}
+
+	public function testMapColumnsVar6(){
+
+		$a = array(
+			array("col1" => "val"),
+			array("col1" => "val"),
+			array("col1" => "val"),
+			array("col1" => "val"),
+		);
+
+		$columns = array(
+			"col1",
+		);
+
+		$tokens = array(
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => val)");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => val)");
+
+	}
+
+	public function testMapColumnsVar7(){
+
+		$a = array(
+			array("col1" => array(true, "val")),
+			array("col1" => array(true, "val")),
+			array("col1" => array(true, "val")),
+			array("col1" => array(true, "val")),
+		);
+
+		$columns = array(
+			"col1",
+		);
+
+		$tokens = array(
+			"val",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => array(true, val))");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => array(true, val))");
+
+	}
+
+	public function testMapColumnsVar8(){
+
+		$a = array(
+			array("col1" => array(true, "val"), "col2" => array(true, "val")),
+			array("col1" => array(true, "val"), "col2" => array(true, "val")),
+			array("col1" => array(true, "val"), "col2" => array(true, "val")),
+			array("col1" => array(true, "val"), "col2" => array(true, "val")),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+		);
+
+		$tokens = array(
+			"val",
+			"val",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => array(true, val), col => array(true, val))");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => array(true, val), col => array(true, val))");
+
+	}
+
+	public function testMapColumnsVar9(){
+
+		$a = array(
+			array("col1" => "val", "col2" => "val"),
+			array("col1" => "val", "col2" => "val"),
+			array("col1" => "val", "col2" => "val"),
+			array("col1" => "val", "col2" => "val"),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+		);
+
+		$tokens = array(
+			"?",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => val, col => val)");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => val, col => val)");
+
+	}
+
+	public function testMapColumnsVar10(){
+
+		$a = array(
+			array("col1" => "val", "col2" => array(true, "val")),
+			array("col1" => "val", "col2" => array(true, "val")),
+			array("col1" => "val", "col2" => array(true, "val")),
+			array("col1" => "val", "col2" => array(true, "val")),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+		);
+
+		$tokens = array(
+			"?",
+			"val",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => val, col => array(true, val)) where arrays are second");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => val, col => array(true, val)) where arrays are second");
+
+	}
+
+	public function testMapColumnsVar11(){
+
+		$a = array(
+			array("col1" => array(true, "val"), "col2" => "val"),
+			array("col1" => array(true, "val"), "col2" => "val"),
+			array("col1" => array(true, "val"), "col2" => "val"),
+			array("col1" => array(true, "val"), "col2" => "val"),
+		);
+
+		$columns = array(
+			"col1",
+			"col2",
+		);
+
+		$tokens = array(
+			"val",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => val, col => array(true, val)) where arrays are first");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => val, col => array(true, val)) where arrays are first");
+
+	}
+
+	public function testMapColumnsVar12(){
+
+		$a = array(
+			"col1" => "val",
+			"col2" => null,
+			"col3" => "val",
+			"col4" => "val",
+		);
+
+		$columns = array(
+			"col1",
+			"col3",
+			"col4",
+		);
+
+		$tokens = array(
+			"?",
+			"?",
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for simple col => val with a NULL value");
+		$this->assertEquals($tokens, $t, "testing tokens for simple col => val with a NULL value");
+
+	}
+
+	public function testMapColumnsVar13(){
+
+		$a = array(
+			array("col1" => "val", "col2" => null),
+			array("col1" => "val", "col2" => null),
+			array("col1" => "val", "col2" => null),
+			array("col1" => "val", "col2" => null),
+		);
+
+		$columns = array(
+			"col1",
+		);
+
+		$tokens = array(
+			"?",
+		);
+
+		$sqlq   = new \Chevron\PDO\MySQL\Query;
+		$method = new ReflectionMethod($sqlq, "map_columns");
+		$method->setAccessible(true);
+
+		$result  = $method->invokeArgs($sqlq, array($a));
+		$c = array_keys($result);
+		$t = array_values($result);
+
+		$this->assertEquals($columns, $c, "testing columns for multi array(col => val, col => val) with a NULL value");
+		$this->assertEquals($tokens, $t, "testing tokens for multi array(col => val, col => val) with a NULL value");
+
+	}
+
+
+
+
+
 }

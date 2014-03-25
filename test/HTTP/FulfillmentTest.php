@@ -2,20 +2,6 @@
 
 class FulfillmentTest extends PHPUnit_Framework_TestCase {
 
-	public function test_setHeader(){
-
-		$F = new \Chevron\HTTP\Utils\Fulfillment;
-
-		$headers = array("content-type" => "This is a content type");
-
-		$F->setHeader("content-type", "This is a content type");
-
-		$value = $F->headers;
-
-		$this->assertEquals($headers, $value, "Fulfillment::setHeader failed.");
-
-	}
-
 	public function test_setLayout(){
 
 		$F = new \Chevron\HTTP\Utils\Fulfillment;
@@ -37,6 +23,32 @@ class FulfillmentTest extends PHPUnit_Framework_TestCase {
 		$value = $F->error;
 
 		$this->assertEquals(true, is_callable($value), "Fulfillment::setError failed.");
+
+	}
+
+	public function testSetStatusCode(){
+
+		$F = new \Chevron\HTTP\Utils\Fulfillment;
+
+		$F->setContentType("xml");
+
+		$value = $F->headers;
+		$expected = array(101 => "Content-Type: text/xml");
+
+		$this->assertEquals($expected, $value, "Fulfillment::setContentType failed.");
+
+	}
+
+	public function testSetContentType(){
+
+		$F = new \Chevron\HTTP\Utils\Fulfillment;
+
+		$F->setStatusCode(302);
+
+		$value = $F->headers;
+		$expected = array(102 => "HTTP/1.1 302 Temporary Redirect");
+
+		$this->assertEquals($expected, $value, "Fulfillment::setStatusCode failed.");
 
 	}
 

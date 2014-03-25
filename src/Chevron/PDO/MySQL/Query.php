@@ -89,24 +89,11 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	function filter_multi_data(){
-		$iter1 = new \RecursiveArrayIterator(func_get_args());
-		$iter2 = new \RecursiveIteratorIterator($iter1);
-		// arrays should never be more than 2 deep
-		$iter2->setMaxDepth(2);
-
+	function filter_multi_data(array $rows){
 		$final = array();
-		// re:REWIND ... http://stackoverflow.com/questions/13555884/recursiveiteratoriterator-returns-extra-elements
-		for($iter2->rewind(); $iter2->valid(); $iter2->next()){
-			$iter3 = $iter2->getInnerIterator();
-			$count[] = $iter3->count();
-			foreach($iter3 as $key => $value){
-
-				if(is_scalar($value)){
-					$final[] = $value;
-				}
-				// $keys[$key] = $key; // to use for validation
-			}
+		foreach($rows as $row){
+			$tmp = $this->filter_data($row);
+			$final = array_merge($final, $tmp);
 		}
 		return $final;
 	}
@@ -114,7 +101,9 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function paren_pairs(array $map, $multiple){
-		list($columns, $tokens) = $this->map_columns($map);
+		$tmp = $this->map_columns($map);
+		$columns = array_keys($tmp);
+		$tokens  = array_values($tmp);
 
 		$columns = sprintf("(`%s`)", implode("`, `", $columns));
 		$tokens  = sprintf("(%s)",   implode(", ",   $tokens));
@@ -129,7 +118,9 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function equal_pairs(array $map, $sep = ", "){
-		list($columns, $tokens) = $this->map_columns($map);
+		$tmp = $this->map_columns($map);
+		$columns = array_keys($tmp);
+		$tokens  = array_values($tmp);
 
 		$count = count($columns);
 		for( $i = 0; $i < $count; ++$i ){
@@ -142,34 +133,34 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
 	protected function map_columns(array $map){
-		$iter1 = new \RecursiveArrayIterator($map);
-		$iter2 = new \RecursiveIteratorIterator($iter1);
-		// arrays should never be more than 2 deep
-		$iter2->setMaxDepth(2);
+		$columns = $tokens = array();
+		foreach($map as $key => $value){
+			if(is_array($value)){
+				// check for bool switch
+				if(array_key_exists(0, $value)){
+					if($value[0] !== true) continue;
 
-		// re:REWIND ... http://stackoverflow.com/questions/13555884/recursiveiteratoriterator-returns-extra-elements
-		for($iter2->rewind(); $iter2->valid(); $iter2->next()){
-			$iter3 = $iter2->getInnerIterator();
-			foreach($iter3 as $key => $value){
-				if(is_null($value)) continue; // null values must be array(true, 'null')
+					$columns[$key] = $key;
+					$tokens[$key]  = $value[1];
 
-				// allow unescaped values when passed as array(true, $value)
-				if( is_array($value) ){
-					if($value[0] === true){
-				$columns[$key] = $key;
-					$tokens[$key] = $value[1];
-					}
 				}else{
-				// disallow numeric column names, helps filter out the array(true, value) syntax
-					if(!is_numeric($key)){
-						$columns[$key] = $key;
-						$tokens[$key]  = "?";
-					}
+					// if another array recurse
+					$tmp = $this->map_columns($value);
+					$columns = array_merge($columns, array_keys($tmp));
+					$tokens  = array_merge($tokens, array_values($tmp));
 				}
+			}else{
+				if(is_null($value)) continue;
+				// catch non-null scalars
+				$columns[$key] = $key;
+				$tokens[$key]  = "?";
 			}
 		}
-
-		// strip out the keys we used for uniqueness as they get in the way later
-		return array(array_values($columns), array_values($tokens));
+		// because $columns will inevitably contain duplicate values, once the
+		// two arrays are combined, they will collapse/uniquify. #darkcorner
+		return array_combine($columns, $tokens);
 	}
 }
+
+
+
