@@ -99,9 +99,13 @@ class Element {
 				continue;
 			}
 
-			if(is_scalar($value) || is_array($value)){
-				if(!$value) continue;
-				$value = implode(" ", (array)$value);
+			if(!$value) continue;
+
+			if(is_array($value)){
+				$value = implode(" ", $value);
+			}
+
+			if(is_scalar($value)){
 				$pairs[] = sprintf('%s="%s"', $key, htmlentities($value, ENT_QUOTES, "UTF-8"));
 			}
 		}
