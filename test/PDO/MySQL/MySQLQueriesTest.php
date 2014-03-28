@@ -34,7 +34,8 @@ class MySQLQueryTest extends PHPUnit_Framework_TestCase {
 		$data = array("col1" => "val3", "col2" => "val4", "col3" => array(true, "NOW()"));
 
 		$result = $method->invokeArgs($sqlq, array($data));
-		list( $columns, $tokens ) = $result;
+		$columns = array_keys($result);
+		$tokens  = array_values($result);
 
 		$expected_columns = array("col1", "col2", "col3");
 		$expected_tokens  = array("?", "?", "NOW()");

@@ -7,6 +7,7 @@ class MySQLWrapperTest extends PHPUnit_Framework_TestCase {
 	public function __construct(){
 		if(null == $this->dbConn){
 			$pdo = new Chevron\PDO\MySQL\Wrapper( TEST_DB_MYSQL_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD );
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->dbConn = $pdo;
 		}
 		return $this->dbConn;
@@ -915,6 +916,95 @@ class MySQLWrapperTest extends PHPUnit_Framework_TestCase {
 		$result = $this->dbConn->row($sql);
 		$this->assertEquals($result, $expected, "Wrapper::update did not verify");
 		$this->assertInternalType("null", $result["updated"], "Wrapper::update did not verify");
+	}
+
+	/**
+	 * @depends testRow
+	 */
+	public function testMultiOnDuplicateKey(){
+		// $this->markTestSkipped("Wrapper requires an active DB connection");
+
+		$this->setUpSprockets(true);
+
+		$data = array(
+			"title"     => array(true, sprintf(" (%d + %d) ", 5, 7)),
+			"descr"     => array(true, sprintf(" (%d + %d) ", 5, 7)),
+			"type_id"   => 6,
+		);
+
+		$where = array(
+			"sprocket_id" => "18"
+		);
+
+		$expected = array(
+			0             => "12",
+			"title"       => "12",
+			1             => "18",
+			"sprocket_id" => "18",
+			2             => "12",
+			"descr"       => "12",
+			3             => "6",
+			"type_id"     => "6",
+			4             => null,
+			"updated"     => null,
+		);
+
+		$result = $this->dbConn->on_duplicate_key("sprockets", $data, $where);
+		$this->assertEquals($result, 1, "Wrapper::update didn't update");
+
+		/**
+		 * Verify Rows
+		 */
+		$sql = "select * from sprockets where sprocket_id = 18;";
+
+		$result = $this->dbConn->row($sql);
+		$this->assertEquals($result, $expected, "Wrapper::update did not verify");
+		$this->assertInternalType("null", $result["updated"], "Wrapper::update did not verify");
+	}
+
+	/**
+	 * @expectedException PDOException
+	 */
+	public function testErrTokenCountMismatchSelect(){
+
+		$sql = "select * from sprockets where sprocket_id = ? and type_id = ?;";
+		$result = $this->dbConn->scalar($sql, array(18));
+
+	}
+
+	/**
+	 * @expectedException PDOException
+	 */
+	public function testErrTokenCountMismatchMultiReplace(){
+		$this->setUpSprockets(true);
+
+		/**
+		 * column counts MUST match for a multi_insert and funcs are applied to each insert
+		 * Basically, every row your inserting needs to have the same structure
+		 */
+		$data = array(
+			array(
+				"title"       => "REPLACED 1",
+				"sprocket_id" => "1",
+				"descr"       => array(true, "UUID()"),
+			),
+			array(
+				"title"       => "REPLACED 2",
+				"sprocket_id" => null,
+				"descr"       => array(true, "UUID()"),
+			),
+		);
+
+		// replace full ... we expect 4 because of a 2 delete(s) & 2 insert(s)
+		$result = $this->dbConn->multi_replace("sprockets", $data);
+	}
+
+	/**
+	 * @expectedException PDOException
+	 */
+	public function testErrPrepare(){
+		$sql = "select * from sprockets where and sprocket_id = ?;";
+		$result = $this->dbConn->scalar($sql, array(18));
 	}
 
 }
