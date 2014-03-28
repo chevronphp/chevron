@@ -11,16 +11,12 @@ class VirtualWidget extends Widget {
 	 * @param array $data An array of key to value to use in rendering the file
 	 * @return object
 	 */
-	function __construct(callable $callback, array $data = array(), array $meta = array()){
+	function __construct(callable $callback, array $data = array()){
 
 		$this->callback = $callback;
 
 		if(!empty($data)){
 			$this->loadData($data);
-		}
-
-		if(!empty($meta)){
-			$this->setMeta($meta);
 		}
 	}
 

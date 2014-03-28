@@ -77,8 +77,9 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	 */
 	function filter_data(){
 		$final = array();
-		foreach(func_get_args() as $arg){
-			foreach($arg as $key => $value){
+		$maps = func_get_args();
+		foreach($maps as $map){
+			foreach($map as $key => $value){
 				if( is_scalar($value) ){
 					$final[] = $value;
 				}

@@ -204,7 +204,7 @@ Interface WrapperInterface {
 	 * @param array $args An array of the arguments passed
 	 * @return mixed
 	 */
-	function __call($name, $args);
+	// function __call($name, $args);
 	/**
 	 * Take a string and prepare it. Count the number of tokens and compare it
 	 * to the number or params that are about to be used. This is helpful to

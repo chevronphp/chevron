@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\PDO;
+namespace Chevron\PDO\Mock;
 /**
  * This class implements the WrapperInterface but every method returns
  * whatever data you've stored in $next (via next()) in a FIFO way.
  * This should allow for the testing of DB dependent functionality by
  * eliminating a live DB.
  */
-class Mock implements Interfaces\WrapperInterface {
+class FIFO implements \Chevron\PDO\Interfaces\WrapperInterface {
 
 	protected $next = array();
 

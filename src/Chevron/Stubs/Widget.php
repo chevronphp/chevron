@@ -5,7 +5,6 @@ namespace Chevron\Stubs;
 class Widget implements WidgetInterface {
 
 	protected $file;
-	protected $__meta = array();
 	protected $__map  = array();
 	/**
 	 * Set the file and data map for the Widget
@@ -13,7 +12,7 @@ class Widget implements WidgetInterface {
 	 * @param array $data An array of key to value to use in rendering the file
 	 * @return object
 	 */
-	function __construct($file, array $data = array(), array $meta = array()){
+	function __construct($file, array $data = array()){
 		if( file_exists($file) ){
 			$this->file = $file;
 		}else{
@@ -23,10 +22,6 @@ class Widget implements WidgetInterface {
 		if(!empty($data)){
 			$this->loadData($data);
 		}
-
-		if(!empty($meta)){
-			$this->setMeta($meta);
-		}
 	}
 
 	/**
@@ -34,7 +29,7 @@ class Widget implements WidgetInterface {
 	 * @param array $data The data
 	 * @return
 	 */
-	function loadData(array $data){
+	function setData(array $data){
 		foreach($data as $key => $value){
 			$this->__map[$key] = $value;
 		}
@@ -45,28 +40,6 @@ class Widget implements WidgetInterface {
 	 */
 	function render(){
 		return require($this->file);
-	}
-
-	/**
-	 * Method to store additional information so that a widget can be
-	 * self aware without conflicting with the scoped data
-	 * @param array $data Metadata
-	 * @return
-	 */
-	function setMeta(array $data){
-		foreach($data as $key => $value){
-			$this->__meta[$key] = $value;
-		}
-	}
-
-	/**
-	 * Method to retrieve metadata
-	 * @param string $name The metadata to get
-	 * @return mixed
-	 */
-	function getMeta($key){
-		if(!array_key_exists($key, $this->__meta)) return null;
-		return $this->__meta[$key];
 	}
 
 	/**

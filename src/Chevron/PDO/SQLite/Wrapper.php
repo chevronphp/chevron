@@ -9,7 +9,7 @@ namespace Chevron\PDO\SQLite;
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\WrapperInterface {
+class Wrapper extends \PDO implements \Chevron\PDO\Interfaces\WrapperInterface {
 
 	public $debug       = false;
 	public $num_retries = 5;

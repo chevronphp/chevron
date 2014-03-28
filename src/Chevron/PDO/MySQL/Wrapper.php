@@ -9,11 +9,11 @@ namespace Chevron\PDO\MySQL;
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\WrapperInterface {
+class Wrapper extends \PDO implements \Chevron\PDO\Interfaces\WrapperInterface {
 
-	public $debug       = false;
-	public $num_retries = 5;
-	public $lastQry     = "";
+	public    $debug      = false;
+	public    $numRetries = 5;
+	protected $inspector;
 ##### PUT HELPERS
 ################################################################################
 	/**
@@ -89,11 +89,20 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	 */
 	protected function exe_return_count($query, array $data){
 
-		$statement = $this->validate_and_prepare($query, count($data));
+		if(is_callable($this->inspector)){
+			call_user_func($this->inspector, $this, $query, $data);
+		}
 
-		$retry = $this->num_retries;
+		$statement = $this->prepare($query);
+		// if( !($query InstanceOf \PDOStatement ) ){}
+
+		$retry = $this->numRetries;
 		while( $retry-- ){
-			$success = $statement->execute($data);
+			try{
+				$success = $statement->execute($data);
+			}catch(\Exception $e){
+				throw new \PDOException($this->fError($statement, $data));
+			}
 
 			if( $success ){
 				return $statement->rowCount();
@@ -102,9 +111,9 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 			// deadlock
 			if( $statement->errorCode() == "40001" ){ continue; }
 
-			throw new \Exception($this->error($statement));
+			throw new \PDOException($this->fError($statement));
 		}
-		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
+		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 	}
 ##### SELECT HELPERS
 ################################################################################
@@ -194,77 +203,58 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 		// redundant for IN queries since the data is already flat
 		$data = $pdoq->filter_data($map);
 
-		$statement = $this->validate_and_prepare($query, count($data));
+		if(is_callable($this->inspector)){
+			call_user_func($this->inspector, $this, $query, $data);
+		}
+
+		$statement = $this->prepare($query);
+		// if( !($query InstanceOf \PDOStatement ) ){}
 
 		$statement->setFetchMode($fetch);
 
-		$retry = $this->num_retries;
+		$retry = $this->numRetries;
 		while( $retry-- ){
-			$success = $statement->execute($data);
+			try{
+				$success = $statement->execute($data);
+			}catch(\Exception $e){
+				throw new \PDOException($this->fError($statement, $data));
+			}
 
 			if( $success ){
-			if( $statement->columnCount() ){
-				// only queries that return a result set should have a column count
-				return new \IteratorIterator($statement);
-			}
-			// successful queries that do not return a result
-			return true;
+				if( $statement->columnCount() ){
+					// only queries that return a result set should have a column count
+					return new \IteratorIterator($statement);
+				}
+				return true;
 			}
 
 			// deadlock
 			if( $statement->errorCode() == "40001" ){ continue; }
 
-			throw new \Exception($this->error($query));
+			throw new \PDOException($this->fError($statement));
 		}
 
-		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
+		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 
+	}
+
+	/**
+	 * Method to set a lambda as an inspector pre query
+	 * @param type callable $func
+	 * @return type
+	 */
+	function registerInspector(callable $func){
+		$this->inspector = $func;
 	}
 ##### UTIL HELPERS
 ################################################################################
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	function __call($name, $args){
-
-		$PDOR = new \ReflectionClass($this->conn);
-		if( $PDOR->hasMethod($name) ){
-			$method = $PDOR->getMethod($name);
-			return $method->invokeArgs($this->conn, $args);
-		}
-
-		throw new \Exception("Method PDO::{$name} doesn't exist.");
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	protected function validate_and_prepare($query, $param_count){
-		if( !($query InstanceOf \PDOStatement ) ){
-			$query = strtr($query, "\t", " ");
-			$statement = $this->conn->prepare($query);
-		}
-
-		$msg = sprintf("Query: %s \n\nToken Count: %s", $statement->queryString, $param_count);
-		$this->lastQry = $msg;
-
-		if($this->debug){
-			throw new \Exception("PDO Debug:\n{$msg}");
-		}
-
-		if( substr_count($statement->queryString, "?") != $param_count ){
-			throw new \Exception("Token count doesn't match the data count.");
-		}
-
-		return $statement;
-
-	}
 	/**
 	 * Beautifies an error message to display
 	 * @param PDOException $obj
 	 * @param bool $rtn A flag to toggle an exit or return
 	 * @return mixed
 	 */
-	function error($obj, $rtn = true){
+	function fError($obj, $data = null, $rtn = true){
 		$err   = $obj->errorInfo();
 		$err[] = $obj->queryString;
 
@@ -276,10 +266,15 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 				"### Query ###\n" .
 				"      %s\n\n";
 
+		if($data){
+			$err[] = count($data);
+			$str .= "### Parameter Count ###\n".
+					"      %s";
+		}
+
 		$str = vsprintf($str, $err);
 
-		if( $rtn )
-			return $str;
+		if( $rtn ) return $str;
 
 		printf($str);
 		exit();
