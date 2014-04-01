@@ -9,13 +9,21 @@ namespace Chevron\PDO\SQLite;
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\WrapperInterface {
+class WIP_Wrapper extends \PDO {
+
+	use \Chevron\PDO\Traits\QueryHelperTrait;
 
 	public $debug       = false;
 	public $num_retries = 5;
-	public $lastQry     = "";
-##### PUT HELPERS
-################################################################################
+	protected $inspector;
+	/**
+	 * Method to set a lambda as an inspector pre query
+	 * @param type callable $func
+	 * @return type
+	 */
+	function registerInspector(callable $func){
+		$this->inspector = $func;
+	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -30,31 +38,31 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function insert($table, array $map){
-		$pdoq = new Query;
-		$query = $pdoq->insert($table, $map, 0);
 
-		$data = $pdoq->filter_data($map);
-
+		list($columns, $tokens) = $this->parenPairs($map, 0);
+		$query = sprintf("INSERT INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
+		$data = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function update($table, array $map, array $where = array()){
-		$pdoq = new Query;
-		$query = $pdoq->update($table, $map, $where);
 
-		$data = $pdoq->filter_data($map, $where);
-
+		$column_map      = $this->equalPairs($map, ", ");
+		$conditional_map = $this->equalPairs($where, " and ");
+		$query = sprintf("UPDATE `%s` SET %s WHERE %s;", $table, $column_map, $conditional_map);
+		$data = $this->filterData($map, $where);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function replace($table, array $map){
-		$pdoq  = new Query;
-		$query = $pdoq->replace($table, $map, 0);
-		$data  = $pdoq->filter_data($map);
+
+		list($columns, $tokens) = $this->parenPairs($map, 0);
+		$query = sprintf("INSERT OR REPLACE INTO %s %s VALUES %s;", $table, $columns, $tokens);
+		$data  = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
@@ -69,17 +77,12 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	 *
 	 */
 	function on_duplicate_key($table, array $map, array $where){
-		$pdoq  = new Query;
 
-		$query = $pdoq->update($table, $map, $where);
-		$data  = $pdoq->filter_data($map, $where);
-		$count = $this->exe_return_count($query, $data);
+		$count = $this->update($table, $map, $where);
 
 		if($count === 0){
 			$data = array_merge($map, $where);
-			$query = $pdoq->insert($table, $data, 0);
-			$data  = $pdoq->filter_data($data);
-			$count = $this->exe_return_count($query, $data);
+			$count = $this->insert($table, $data, 0);
 		}
 
 		return $count;
@@ -88,41 +91,22 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_insert($table, array $map){
-		$pdoq  = new Query;
-		$query = $pdoq->insert($table, $map, count($map));
-		$data  = $pdoq->filter_multi_data($map);
+
+		list($columns, $tokens) = $this->parenPairs($map, count($map));
+		$query = sprintf("INSERT INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
+		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function multi_replace($table, array $map){
-		$pdoq  = new Query;
-		$query = $pdoq->replace($table, $map, count($map));
-		$data  = $pdoq->filter_multi_data($map);
+
+		list($columns, $tokens) = $this->parenPairs($map, count($map));
+		$query = sprintf("INSERT OR REPLACE INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
+		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	protected function exe_return_count($query, array $data){
-
-		$statement = $this->validate_and_prepare($query, count($data));
-
-		$retry = $this->num_retries;
-		while( $retry-- ){
-			$success = $statement->execute($data);
-
-			if( $success ){
-				return $statement->rowCount();
-			}
-
-			throw new \Exception($this->error($statement));
-		}
-		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
-	}
-##### SELECT HELPERS
-################################################################################
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -197,25 +181,64 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
+	protected function exe_return_count($query, array $data){
+
+		if(is_callable($this->inspector)){
+			call_user_func($this->inspector, $this, $query, $data);
+		}
+
+		$statement = $this->prepare($query);
+		// if( !($query InstanceOf \PDOStatement ) ){}
+
+		$retry = $this->numRetries;
+		while( $retry-- ){
+			try{
+				$success = $statement->execute($data);
+			}catch(\Exception $e){
+				throw new \PDOException($this->fError($statement, $data));
+			}
+
+			if( $success ){
+				return $statement->rowCount();
+			}
+
+			// deadlock -- this is a mysql number.
+			if( $statement->errorCode() == "40001" ){ continue; }
+
+			throw new \PDOException($this->fError($statement));
+		}
+		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
+	}
+	/**
+	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
-		$pdoq = new Query;
 		if($in){
 			// this syntax (returning an array with two values) is a little more
 			// esoteric than i'd prefer ... but it works
-			list( $query, $map ) = $pdoq->in( $query, $map );
+			list( $query, $map ) = $this->in( $query, $map );
 		}
 
 		// redundant for IN queries since the data is already flat
-		$data = $pdoq->filter_data($map);
+		$data = $this->filterData($map);
 
-		$statement = $this->validate_and_prepare($query, count($data));
+		if(is_callable($this->inspector)){
+			call_user_func($this->inspector, $this, $query, $data);
+		}
+
+		$statement = $this->prepare($query);
+		// if( !($query InstanceOf \PDOStatement ) ){}
 
 		$statement->setFetchMode($fetch);
 
-		$retry = $this->num_retries;
+		$retry = $this->numRetries;
 		while( $retry-- ){
-			$success = $statement->execute($data);
+			try{
+				$success = $statement->execute($data);
+			}catch(\Exception $e){
+				throw new \PDOException($this->fError($statement, $data));
+			}
 
 			if( $success ){
 				if( $statement->columnCount() ){
@@ -225,64 +248,13 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 				return true;
 			}
 
-			// deadlock
+			// deadlock -- this is a mysql number.
 			if( $statement->errorCode() == "40001" ){ continue; }
 
-			throw new \Exception($this->error($query));
+			throw new \PDOException($this->fError($statement));
 		}
 
-		throw new \Exception("Query Failed after 5 attempts:\n\n{$query}");
-
-	}
-##### UTIL HELPERS
-################################################################################
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	function __call($name, $args){
-
-		$PDOR = new \ReflectionClass($this->conn);
-		if( $PDOR->hasMethod($name) ){
-			$method = $PDOR->getMethod($name);
-			return $method->invokeArgs($this->conn, $args);
-		}
-
-		throw new \Exception("Method PDO::{$name} doesn't exist.");
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	function __get($name){
-
-		$PDOR = new \ReflectionClass($this->conn);
-		if( $PDOR->hasProperty($name) ){
-			$property = $PDOR->getProperty($name);
-			return $property->getVaule($this->conn);
-		}
-
-		throw new \Exception("Property PDO::{$name} doesn't exist.");
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 */
-	protected function validate_and_prepare($query, $param_count){
-		if( !($query InstanceOf \PDOStatement ) ){
-			$query = strtr($query, "\t", " ");
-			$statement = $this->conn->prepare($query);
-		}
-
-		$msg = sprintf("Query: %s \n\nToken Count: %s", $statement->queryString, $param_count);
-		$this->lastQry = $msg;
-
-		if($this->debug){
-			throw new \Exception("PDO Debug:\n{$msg}");
-		}
-
-		if( substr_count($statement->queryString, "?") != $param_count ){
-			throw new \Exception("Token count doesn't match the data count.");
-		}
-
-		return $statement;
+		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 
 	}
 	/**
@@ -291,7 +263,8 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 	 * @param bool $rtn A flag to toggle an exit or return
 	 * @return mixed
 	 */
-	function error($obj, $rtn = true){
+	protected function fError($obj, $data = null, $rtn = true){
+
 		$err   = $obj->errorInfo();
 		$err[] = $obj->queryString;
 
@@ -303,14 +276,18 @@ class Wrapper extends \Chevron\PDO\Connector implements \Chevron\PDO\Interfaces\
 				"### Query ###\n" .
 				"      %s\n\n";
 
+		if($data){
+			$err[] = count($data);
+			$str .= "### Parameter Count ###\n".
+					"      %s";
+		}
+
 		$str = vsprintf($str, $err);
 
-		if( $rtn )
-			return $str;
+		if( $rtn ) return $str;
 
 		printf($str);
 		exit();
 	}
-
 }
 
