@@ -259,11 +259,11 @@ function HTTP_error_code( $int, $explanation = false ){
 }
 
 function time_display($seconds){
-		$times = array(86400 => "day", 3600 => "hour", 60 => "minute");
-		foreach($times as $duration => $label){
-			$exp = $seconds / $duration;
-			if( $exp >= 1 ){
-				return sprintf("%s %s(s)", round($exp, 2), $label);
-			}
+	$times = array(86400 => "day", 3600 => "hour", 60 => "minute");
+	foreach($times as $duration => $label){
+		$exp = $seconds / $duration;
+		if( $exp >= 1 ){
+			return sprintf("%s %s(s)", round($exp, 2), $label);
 		}
 	}
+}
