@@ -4,9 +4,16 @@ require_once("tests/bootstrap.php");
 
 use Chevron\PDO\Mock;
 
-$dbConn = new Mock\Wrapper;
+FUnit::setup(function(){
 
-FUnit::test("Mock\Wrapper::put()", function()use($dbConn){
+	$dbConn = new Mock\Wrapper;
+	FUnit::fixture("dbConn", $dbConn);
+
+});
+
+FUnit::test("Mock\Wrapper::put()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -15,7 +22,9 @@ FUnit::test("Mock\Wrapper::put()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::insert()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::insert()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -24,7 +33,9 @@ FUnit::test("Mock\Wrapper::insert()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::update()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::update()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -33,7 +44,9 @@ FUnit::test("Mock\Wrapper::update()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::replace()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::replace()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -42,7 +55,9 @@ FUnit::test("Mock\Wrapper::replace()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::on_duplicate_key()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::on_duplicate_key()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -51,7 +66,9 @@ FUnit::test("Mock\Wrapper::on_duplicate_key()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::multi_insert()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::multi_insert()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -60,7 +77,9 @@ FUnit::test("Mock\Wrapper::multi_insert()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::multi_replace()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::multi_replace()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -69,7 +88,9 @@ FUnit::test("Mock\Wrapper::multi_replace()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::exe()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::exe()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -78,7 +99,9 @@ FUnit::test("Mock\Wrapper::exe()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::assoc()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::assoc()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -87,7 +110,9 @@ FUnit::test("Mock\Wrapper::assoc()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::row()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::row()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -96,7 +121,9 @@ FUnit::test("Mock\Wrapper::row()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::scalar()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::scalar()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -105,7 +132,9 @@ FUnit::test("Mock\Wrapper::scalar()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::scalars()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::scalars()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -114,7 +143,9 @@ FUnit::test("Mock\Wrapper::scalars()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::keypair()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::keypair()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
@@ -123,7 +154,9 @@ FUnit::test("Mock\Wrapper::keypair()", function()use($dbConn){
 
 });
 
-FUnit::test("Mock\Wrapper::keyrow()", function()use($dbConn){
+FUnit::test("Mock\Wrapper::keyrow()", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
 
 	$expected = 8675309;
 	$dbConn->next($expected);
