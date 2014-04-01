@@ -5,7 +5,7 @@ require_once("tests/bootstrap.php");
 use Chevron\PDO\MySQL;
 
 /*
- * tests
+ * fixtures
  */
 
 FUnit::setup(function(){
@@ -39,6 +39,10 @@ FUnit::setup(function(){
 	FUnit::fixture("mapColumns", $mapColumns);
 
 });
+
+/*
+ * tests
+ */
 
 FUnit::test("MySQL\Wrapper::exe() set up table", function(){
 
@@ -360,7 +364,7 @@ FUnit::test("protected MySQL\Wrapper::in()", function(){
 FUnit::test("protected MySQL\Wrapper::equalPairs() using seperator ','", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("equalPairs");
+	$method = FUnit::fixture("equalPairs");
 
 	$data = array("col1" => "val3", "col2" => "val4");
 
@@ -372,7 +376,7 @@ FUnit::test("protected MySQL\Wrapper::equalPairs() using seperator ','", functio
 FUnit::test("protected MySQL\Wrapper::equalPairs() using seperator 'and'", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("equalPairs");
+	$method = FUnit::fixture("equalPairs");
 
 	$data = array("col1" => "val3", "col2" => "val4");
 
@@ -384,7 +388,7 @@ FUnit::test("protected MySQL\Wrapper::equalPairs() using seperator 'and'", funct
 FUnit::test("protected MySQL\Wrapper::mapColumns()", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("mapColumns");
+	$method = FUnit::fixture("mapColumns");
 
 	$data = array("col1" => "val3", "col2" => "val4", "col3" => array(true, "NOW()"));
 
@@ -444,7 +448,7 @@ FUnit::test("protected MySQL\Wrapper::parenPairs() multiple pairs", function(){
 FUnit::test("protected MySQL\Wrapper::filterData()", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("filterData");
+	$method = FUnit::fixture("filterData");
 
 	$data = array(
 		"col1" => "val3",
@@ -462,7 +466,7 @@ FUnit::test("protected MySQL\Wrapper::filterData()", function(){
 FUnit::test("protected MySQL\Wrapper::filterData() -- multiple args", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("filterData");
+	$method = FUnit::fixture("filterData");
 
 	$data = array(
 		"import_q"    => array(true, "NOW()"),
@@ -492,7 +496,7 @@ FUnit::test("protected MySQL\Wrapper::filterData() -- multiple args", function()
 FUnit::test("protected MySQL\Wrapper::filterMultiData()", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
-		$method = FUnit::fixture("filterMultiData");
+	$method = FUnit::fixture("filterMultiData");
 
 	$data = array(
 		array(
