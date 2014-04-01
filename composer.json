@@ -19,12 +19,17 @@
 		"psr/log": "1.*"
 	},
 	"require-dev": {
-		"phpunit/phpunit" : "3.7.*",
-		"funkatron/funit" : "0.*"
+		"funkatron/funit" : "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
 			"Chevron\\": "src/Chevron/"
 		}
-	}
+	},
+	"repositories": [
+		{
+			"type" : "vcs",
+			"url"  : "https://github.com/funkatron/FUnit.git"
+		}
+	]
 }

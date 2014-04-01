@@ -1,66 +1,13 @@
 <?php
 
-namespace Chevron\PDO\SQLite;
-/**
- *
- * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
- *
- * @package DB
- */
-class Query implements \Chevron\PDO\Interfaces\QueryInterface {
+namespace Chevron\PDO\Traits;
 
+trait QueryHelperTrait {
 	/**
-	 * I am NOT handling named tokens at this time.
+	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	protected $namedTokens = false;
-	protected $columns, $tokens;
+	protected function in($query, array $map){
 
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function __construct($tokens = false){
-		if($tokens){
-			$this->namedTokens = true;
-		}
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function insert($table, array $map, $multiple){
-		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
-		$_SQL   = sprintf("INSERT INTO %s %s VALUES %s;", $table, $columns, $tokens);
-		return $_SQL;
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function replace($table, array $map, $multiple){
-		list($columns, $tokens) = $this->paren_pairs($map, $multiple);
-		$_SQL = sprintf("INSERT OR REPLACE INTO %s %s VALUES %s;", $table, $columns, $tokens);
-		return $_SQL;
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function update($table, array $map, array $where){
-		$column_map      = $this->equal_pairs($map, ", ");
-		$conditional_map = $this->equal_pairs($where, " and ");
-		$_SQL = sprintf("UPDATE %s SET %s WHERE %s;", $table, $column_map, $conditional_map);
-		return $_SQL;
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function on_duplicate_key($table, array $map, array $where){
-		$column_map      = $this->equal_pairs($map, ", ");
-		$conditional_map = $this->equal_pairs($where, ", ");
-		$_SQL = sprintf("INSERT INTO %s SET %s, %s ON DUPLICATE KEY UPDATE %s;", $table, $column_map, $conditional_map, $column_map);
-		return $_SQL;
-	}
-	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
-	 */
-	function in($query, array $map){
 		$iter1 = new \ArrayIterator($map);
 		$final = $replacements = array();
 		foreach( $iter1 as $key => $value ){
@@ -75,7 +22,8 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	function filter_data(){
+	protected function filterData(){
+
 		$final = array();
 		$maps = func_get_args();
 		foreach($maps as $map){
@@ -90,10 +38,11 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	function filter_multi_data(array $rows){
+	protected function filterMultiData(array $rows){
+
 		$final = array();
 		foreach($rows as $row){
-			$tmp = $this->filter_data($row);
+			$tmp = $this->filterData($row);
 			$final = array_merge($final, $tmp);
 		}
 		return $final;
@@ -101,8 +50,9 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	protected function paren_pairs(array $map, $multiple){
-		$tmp = $this->map_columns($map);
+	protected function parenPairs(array $map, $multiple){
+
+		$tmp = $this->mapColumns($map);
 		$columns = array_keys($tmp);
 		$tokens  = array_values($tmp);
 
@@ -118,8 +68,9 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	protected function equal_pairs(array $map, $sep = ", "){
-		$tmp = $this->map_columns($map);
+	protected function equalPairs(array $map, $sep = ", "){
+
+		$tmp = $this->mapColumns($map);
 		$columns = array_keys($tmp);
 		$tokens  = array_values($tmp);
 
@@ -133,7 +84,8 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
 	 */
-	protected function map_columns(array $map){
+	protected function mapColumns(array $map){
+
 		$columns = $tokens = array();
 		foreach($map as $key => $value){
 			if(is_array($value)){
@@ -146,7 +98,7 @@ class Query implements \Chevron\PDO\Interfaces\QueryInterface {
 
 				}else{
 					// if another array recurse
-					$tmp = $this->map_columns($value);
+					$tmp = $this->mapColumns($value);
 					$columns = array_merge($columns, array_keys($tmp));
 					$tokens  = array_merge($tokens, array_values($tmp));
 				}

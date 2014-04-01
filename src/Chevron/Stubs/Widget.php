@@ -20,10 +20,9 @@ class Widget implements WidgetInterface {
 		}
 
 		if(!empty($data)){
-			$this->loadData($data);
+			$this->setData($data);
 		}
 	}
-
 	/**
 	 * Load an array of data into the Conf registry
 	 * @param array $data The data
@@ -34,14 +33,12 @@ class Widget implements WidgetInterface {
 			$this->__map[$key] = $value;
 		}
 	}
-
 	/**
 	 * Require, and thus render, a file
 	 */
 	function render(){
 		return require($this->file);
 	}
-
 	/**
 	 * Method to make this class callable
 	 * @return type
@@ -49,7 +46,6 @@ class Widget implements WidgetInterface {
 	function __invoke(){
 		return $this->render();
 	}
-
 	/**
 	 * Get the value stored at $key
 	 * @param string $key The key of the value to get
@@ -59,17 +55,6 @@ class Widget implements WidgetInterface {
 		if(!array_key_exists($key, $this->__map)) return null;
 		return $this->__map[$key];
 	}
-
-	/**
-	 * Set the value at $key to $value
-	 * @param string $key The key of the value
-	 * @param mixed $value The value
-	 * @return mixed
-	 */
-	function __set($key, $value){
-		return $this->__map[$key] = $value;
-	}
-
 	/**
 	 * A means to check if a particular data point is set
 	 * @param string $name The key of the data to check
@@ -78,7 +63,6 @@ class Widget implements WidgetInterface {
 	function __isset($name){
 		return array_key_exists($name, $this->__map);
 	}
-
 	/**
 	 * method to return the widget as a string ...
 	 * @return string

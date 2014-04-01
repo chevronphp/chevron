@@ -7,7 +7,7 @@ namespace Chevron\PDO\Mock;
  * This should allow for the testing of DB dependent functionality by
  * eliminating a live DB.
  */
-class FIFO implements \Chevron\PDO\Interfaces\WrapperInterface {
+class Wrapper implements \Chevron\PDO\Interfaces\WrapperInterface {
 
 	protected $next = array();
 
@@ -79,10 +79,8 @@ class FIFO implements \Chevron\PDO\Interfaces\WrapperInterface {
 		return $this->shift();
 	}
 
-	function __call($name, $args){
+	function keyrow($query, array $map = array(), $in = false){
 		return $this->shift();
 	}
-
-	function __construct($dsn, $username, $password){}
 
 }

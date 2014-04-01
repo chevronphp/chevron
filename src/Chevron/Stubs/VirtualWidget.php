@@ -16,7 +16,7 @@ class VirtualWidget extends Widget {
 		$this->callback = $callback;
 
 		if(!empty($data)){
-			$this->loadData($data);
+			$this->setData($data);
 		}
 	}
 

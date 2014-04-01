@@ -1,84 +1,49 @@
 <?php
 
+require_once("tests/bootstrap.php");
 
-FUnit::test("Form::__callStatic() w/o args", function(){
+use \Chevron\HTML;
 
-	$el = \Chevron\HTML\Form::text("name");
+FUnit::test("ElementFactory::__call()", function(){
+	$elF = new HTML\ElementFactory;
+	$el = $elF->p("This is html.");
+	FUnit::equal("<p>This is html.</p>", (string)$el);
+});
 
-	if(!($el InstanceOf \Chevron\HTML\Form)){
-		FUnit::fail("incorrect InstanceOf");
-	}
-
-	$reflection = new ReflectionClass($el);
-
-	$tag = $reflection->getProperty("tag");
-	$tag->setAccessible(true);
-	$value = $tag->getValue($el);
-
-	FUnit::equal($value, "input", "correct tag");
-
-	$attributes = $reflection->getProperty("attributes");
-	$attributes->setAccessible(true);
-	$value = $attributes->getValue($el);
-	$expected = array("name" => "name", "type" => "text");
-
-	FUnit::equal($value, $expected, "correct attrs");
+FUnit::test("ElementFactory::__call() w/ escaping", function(){
+	$elF = new HTML\ElementFactory;
+	$el = $elF->p("This is html.");
+	$el->setInnerHTML("This is <new>html</new>.");
+	$el->setAttributes(array(
+		"class" => "testClass",
+	));
+	FUnit::equal("<p class=\"testClass\">This is &lt;new&gt;html&lt;/new&gt;.</p>", (string)$el);
 
 });
 
-
-FUnit::test("Form::__callStatic() w/ args", function(){
-
-	$el = \Chevron\HTML\Form::radio("name", "value", true, array("data-test" => "15"));
-
-	if(!($el InstanceOf \Chevron\HTML\Form)){
-		FUnit::fail("incorrect InstanceOf");
-	}
-
-	$reflection = new ReflectionClass($el);
-
-	$attributes = $reflection->getProperty("attributes");
-	$attributes->setAccessible(true);
-	$value = $attributes->getValue($el);
-	$expected = array("name" => "name", "type" => "radio", "checked" => "checked", "value" => "value", "data-test" => "15");
-
-	FUnit::equal($value, $expected, "correct attrs");
+FUnit::test("ElementFactory::__call() input w/ escaping", function(){
+	$elF = new HTML\ElementFactory;
+	$el = $elF->text("textName", "a <bad>textValue</bad>");
+	$el->setAttributes(array(
+		"class" => "testClass",
+	));
+	$expected = "<input type=\"text\" name=\"textName\" value=\"a &lt;bad&gt;textValue&lt;/bad&gt;\" class=\"testClass\" />";
+	FUnit::equal($expected, (string)$el);
 
 });
 
-FUnit::test("Form::__callStatic() w/ innerHTML", function(){
-
-	$el = \Chevron\HTML\Form::textarea("name", "This is the innerHTML", false, array("rows" => "15", "cols" => "15"));
-
-	$reflection = new ReflectionClass($el);
-
-	$innerHTML = $reflection->getProperty("innerHTML");
-	$innerHTML->setAccessible(true);
-	$value = $innerHTML->getValue($el);
-	$expected = "This is the innerHTML";
-
-	FUnit::equal($value, $expected);
+FUnit::test("ElementFactory::__call() radio w/ escaping", function(){
+	$elF = new HTML\ElementFactory;
+	$el = $elF->radio("textName", "a <bad>textValue</bad>", true);
+	$expected = "<input type=\"radio\" name=\"textName\" value=\"a &lt;bad&gt;textValue&lt;/bad&gt;\" checked=\"checked\" />";
+	FUnit::equal($expected, (string)$el);
 
 });
 
-FUnit::test("Form::arrayify_name()", function(){
+FUnit::test("ElementFactory::select()", function(){
 
-	$data = array("this", "is", "an", "array");
-	$result   = \Chevron\HTML\Form::arrayify_name($data);
-	$expected = "this[is][an][array]";
+	$elF = new HTML\ElementFactory;
 
-	FUnit::equal($result, $expected, "w/o a numeric key");
-
-	$data = array("this", "", "an", "array");
-	$result   = \Chevron\HTML\Form::arrayify_name($data);
-	$expected = "this[][an][array]";
-
-	FUnit::equal($result, $expected, "w/ a numeric key");
-
-});
-
-
-FUnit::test("Form::select() w/o groups w/ all params", function(){
 	$options = array(
 		"5"  => "five",
 		"15" => "fifteen",
@@ -92,7 +57,7 @@ FUnit::test("Form::select() w/o groups w/ all params", function(){
 		"class" => "select-options-class"
 	);
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" class="select-options-class">'
 					.'<option value="5" selected="selected">five</option>'
@@ -102,9 +67,13 @@ FUnit::test("Form::select() w/o groups w/ all params", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/o groups w/o a selected option", function(){
+FUnit::test("ElementFactory::select() w/o selection", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"5"  => "five",
 		"15" => "fifteen",
@@ -120,7 +89,7 @@ FUnit::test("Form::select() w/o groups w/o a selected option", function(){
 
 	$selected = "";
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" class="select-options-class">'
 					.'<option value="5">five</option>'
@@ -130,9 +99,13 @@ FUnit::test("Form::select() w/o groups w/o a selected option", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/o groups w/ multiple selected options", function(){
+FUnit::test("ElementFactory::select() w/ multi selection", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"5"  => "five",
 		"15" => "fifteen",
@@ -147,7 +120,7 @@ FUnit::test("Form::select() w/o groups w/ multiple selected options", function()
 		"size" => 4
 	);
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" multiple size="4">'
 					.'<option value="5" selected="selected">five</option>'
@@ -157,9 +130,13 @@ FUnit::test("Form::select() w/o groups w/ multiple selected options", function()
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/o groups w/o selection w/o attrs", function(){
+FUnit::test("ElementFactory::select() w/ nothing", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"5"  => "five",
 		"15" => "fifteen",
@@ -171,7 +148,7 @@ FUnit::test("Form::select() w/o groups w/o selection w/o attrs", function(){
 
 	$attributes = array();
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name">'
 					.'<option value="5">five</option>'
@@ -181,9 +158,13 @@ FUnit::test("Form::select() w/o groups w/o selection w/o attrs", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/ groups w/ all params", function(){
+FUnit::test("ElementFactory::select() w/ optgroups w/ single selection", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"first" => array(
 			"5"  => "five",
@@ -211,7 +192,7 @@ FUnit::test("Form::select() w/ groups w/ all params", function(){
 		"class" => "select-options-class"
 	);
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" class="select-options-class">'
 					.'<optgroup label="first">'
@@ -235,9 +216,13 @@ FUnit::test("Form::select() w/ groups w/ all params", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/ groups w/o a selected option", function(){
+FUnit::test("ElementFactory::select() w/ optgroups w/o selection", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"first" => array(
 			"5"  => "five",
@@ -265,7 +250,7 @@ FUnit::test("Form::select() w/ groups w/o a selected option", function(){
 		"class" => "select-options-class"
 	);
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" class="select-options-class">'
 					.'<optgroup label="first">'
@@ -289,9 +274,13 @@ FUnit::test("Form::select() w/ groups w/o a selected option", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
 
-FUnit::test("Form::select() w/ groups w/ multiple selected options", function(){
+FUnit::test("ElementFactory::select() w/ optgroups w multi selection", function(){
+
+	$elF = new HTML\ElementFactory;
+
 	$options = array(
 		"first" => array(
 			"5"  => "five",
@@ -320,7 +309,7 @@ FUnit::test("Form::select() w/ groups w/ multiple selected options", function(){
 		"size" => 4
 	);
 
-	$result = \Chevron\HTML\Form::select("name", $options, $selected, $attributes);
+	$result = $elF->select("name", $options, $selected, $attributes);
 
 	$expected = '<select name="name" multiple size="4">'
 					.'<optgroup label="first">'
@@ -344,6 +333,5 @@ FUnit::test("Form::select() w/ groups w/ multiple selected options", function(){
 				.'</select>';
 
 	FUnit::equal($result, $expected);
+
 });
-
-

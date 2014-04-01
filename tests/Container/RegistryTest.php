@@ -1,11 +1,15 @@
 <?php
 
+require_once("tests/bootstrap.php");
+
+use Chevron\Container;
+
 /**
  * test Registry::set($key)
  */
 FUnit::test("Registry::length() && Registry::set()", function(){
 
-	$R = new Chevron\Container\Registry;
+	$R = new Container\Registry;
 
 	$pre = $R->length();
 
@@ -22,7 +26,7 @@ FUnit::test("Registry::length() && Registry::set()", function(){
  */
 FUnit::test("Registry::has()", function(){
 
-	$R = new Chevron\Container\Registry;
+	$R = new Container\Registry;
 
 	$pre = $R->length();
 
@@ -38,7 +42,7 @@ FUnit::test("Registry::has()", function(){
  */
 FUnit::test("Registry::setMany()", function(){
 
-	$R = new Chevron\Container\Registry;
+	$R = new Container\Registry;
 
 	$pre = $R->length();
 
@@ -59,7 +63,7 @@ FUnit::test("Registry::setMany()", function(){
  */
 FUnit::test("Registry::get() return value", function(){
 
-	$R = new Chevron\Container\Registry;
+	$R = new Container\Registry;
 
 	$key = "bloop";
 	$value = "bleep";
@@ -76,7 +80,7 @@ FUnit::test("Registry::get() return value", function(){
  */
 FUnit::test("Registry::getIterator() returns ArrayIterator", function(){
 
-	$R = new Chevron\Container\Registry;
+	$R = new Container\Registry;
 
 	$R->setMany(array(
 		"bloop" => "bleep",

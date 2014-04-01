@@ -36,3 +36,9 @@ class Registry {
 	}
 
 }
+
+// ArrayAccess
+// public offsetExists ( $offset )
+// public offsetGet ( $offset )
+// public offsetSet ( $offset, $value )
+// public offsetUnset ( $offset )
