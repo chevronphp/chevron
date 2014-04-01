@@ -40,6 +40,10 @@ FUnit::setup(function(){
 
 });
 
+/*
+ * tests
+ */
+
 FUnit::test("protected MySQL\Wrapper::in()", function(){
 
 	$dbConn = FUnit::fixture("dbConn");
