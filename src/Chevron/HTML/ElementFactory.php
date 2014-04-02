@@ -93,12 +93,6 @@ class ElementFactory {
 			$el->setAttributes( array("value" => null) );
 		}
 
-		// asign the "type" based on the alias
-		if( array_key_exists($el->tag, $this->tagAliases) ){
-			$type = $this->tagAliases[ $el->tag ]["type"];
-			$el->setAttributes( array("type" => $type) );
-		}
-
 		return $el;
 
 	}
