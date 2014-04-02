@@ -8,7 +8,7 @@ use Chevron\PDO\MySQL;
  * fixtures
  */
 
-FUnit::setup(function(){
+// FUnit::setup(function(){
 
 	$dbConn = new \Chevron\PDO\MySQL\Wrapper(TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD);
 	$dbConn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -38,7 +38,7 @@ FUnit::setup(function(){
 	$mapColumns->setAccessible(true);
 	FUnit::fixture("mapColumns", $mapColumns);
 
-});
+// });
 
 /*
  * tests
