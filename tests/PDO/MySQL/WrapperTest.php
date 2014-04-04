@@ -44,7 +44,7 @@ use Chevron\PDO\MySQL;
  * tests
  */
 
-FUnit::test("MySQL\Wrapper::exe() set up table", function(){
+FUnit::setup(function(){
 
 	$dbConn = FUnit::fixture("dbConn");
 
@@ -61,14 +61,14 @@ FUnit::test("MySQL\Wrapper::exe() set up table", function(){
 
 	$populate_table = "
 		INSERT INTO `test_table` (test_value, test_score) VALUES
-		('first value', 10), ('second value', 20), ('third value', 30);
+		('first value', 10), ('second value', 20), ('third value', 30),
+		('fourth value', 40), ('fifth value', 50), ('sixth value', 60),
+		('seventh value', 70), ('eight value', 80), ('ninth value', 90);
 	";
 
 	$dbConn->exec($drop_table);
 	$dbConn->exec($create_table);
 	$dbConn->exec($populate_table);
-
-	FUnit::ok(1);
 
 });
 
@@ -77,8 +77,8 @@ FUnit::test("MySQL\Wrapper::insert() a row", function(){
 	$dbConn = FUnit::fixture("dbConn");
 
 	$num = $dbConn->insert("test_table", array(
-		"test_value"  => "fourth value",
-		"test_score"  => 40,
+		"test_value"  => "tenth value",
+		"test_score"  => 100,
 	));
 
 	FUnit::equal(1, $num);
@@ -128,8 +128,8 @@ FUnit::test("MySQL\Wrapper::on_duplicate_key() (as insert) a row", function(){
 	$dbConn = FUnit::fixture("dbConn");
 
 	$num = $dbConn->replace("test_table", array(
-		"test_value"  => "ninth value",
-		"test_score"  => 90,
+		"test_value"  => "tenth value",
+		"test_score"  => 100,
 	), array("test_key" => 10));
 
 	FUnit::equal(1, $num);
@@ -155,12 +155,12 @@ FUnit::test("MySQL\Wrapper::multi_insert() two rows", function(){
 
 	$num = $dbConn->multi_insert("test_table", array(
 		array(
-			"test_value"  => "seventh value",
-			"test_score"  => 70,
+			"test_value"  => "tenth value",
+			"test_score"  => 100,
 		),
 		array(
-			"test_value"  => "eighth value",
-			"test_score"  => 80,
+			"test_value"  => "eleventh value",
+			"test_score"  => 110,
 		),
 	));
 
@@ -205,7 +205,7 @@ FUnit::test("MySQL\Wrapper::scalars()", function(){
 
 	$sql = "select test_value from test_table where test_key in(%s) or test_score = ?;";
 	$vals = $dbConn->scalars($sql, array(array(1, 2), 60), true);
-	FUnit::equal(array("first value", "seventh value", "sixth value"), $vals);
+	FUnit::equal(array("first value", "second value", "sixth value"), $vals);
 
 });
 
@@ -245,10 +245,10 @@ FUnit::test("MySQL\Wrapper::keyrow()", function(){
 		2 => array(
 			"test_key"   => "2",
 			0            => "2",
-			"test_value" => "seventh value",
-			1            => "seventh value",
-			"test_score" => "70",
-			2            => "70",
+			"test_value" => "second value",
+			1            => "second value",
+			"test_score" => "20",
+			2            => "20",
 		),
 	);
 	FUnit::equal($expected, $vals);
@@ -276,10 +276,10 @@ FUnit::test("MySQL\Wrapper::keyrows() a row", function(){
 			array(
 				"test_key"   => "2",
 				0            => "2",
-				"test_value" => "seventh value",
-				1            => "seventh value",
-				"test_score" => "70",
-				2            => "70",
+				"test_value" => "second value",
+				1            => "second value",
+				"test_score" => "20",
+				2            => "20",
 			),
 		),
 	);
@@ -295,7 +295,7 @@ FUnit::test("MySQL\Wrapper::keypair()", function(){
 	$vals = $dbConn->keypair($sql, array(array(1, 2)), true);
 	$expected = array(
 		"1" => "10",
-		"2" => "70",
+		"2" => "20",
 	);
 	FUnit::equal($expected, $vals);
 
@@ -315,8 +315,8 @@ FUnit::test("MySQL\Wrapper::assoc()", function(){
 		),
 		array(
 			"test_key"   => "2",
-			"test_value" => "seventh value",
-			"test_score" => "70",
+			"test_value" => "second value",
+			"test_score" => "20",
 		),
 	);
 	FUnit::equal($expected, $vals);
@@ -965,6 +965,25 @@ FUnit::test("protected MySQL\Wrapper::mapColumns() for array(col => val, col => 
 	FUnit::equal($tokens, $t, "tokens");
 
 });
+
+FUnit::test("Traits\QueryHelperTrait::in() arrays with keys", function(){
+
+	$dbConn = FUnit::fixture("dbConn");
+
+	$sql = "select * from test_table where test_key in(%s) order by test_key;";
+	$vals = $dbConn->row($sql, array(array("one" => "1", "two" => "2")), true);
+	$expected = array(
+		"test_key"   => "1",
+		0            => "1",
+		"test_value" => "first value",
+		1            => "first value",
+		"test_score" => "10",
+		2            => "10",
+	);
+	FUnit::equal($expected, $vals);
+
+});
+
 
 
 
