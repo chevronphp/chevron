@@ -1,7 +1,7 @@
 <?php
 
 
-if(!function_exists("normalizeGlobalFilesArray")){
+if(!function_exists("normalize_global_files_array")){
 	/**
 	 * function to take the global $_FILES and normalize it's structure to
 	 * be the same for one field, multiple files, one field with multiple
@@ -9,7 +9,7 @@ if(!function_exists("normalizeGlobalFilesArray")){
 	 * @param array $globalFilesArray Ideally the $_FILES array
 	 * @return array
 	 */
-	function normalizeGlobalFilesArray(array $globalFilesArray){
+	function normalize_global_files_array(array $globalFilesArray){
 
 		$files = array();
 		if(!$globalFilesArray) return $files;
