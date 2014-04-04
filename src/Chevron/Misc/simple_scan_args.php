@@ -1,6 +1,19 @@
 <?php
 
 if( !function_exists("simple_scan_args") ){
+	/**
+	 * Function to take an array, like a CLI command and parse it into meaningful
+	 * key=>value pairs. Args should follow these formats:
+	 *  -f
+	 *  -flag
+	 *  -key=value
+	 *  -key value
+	 *
+	 * @param array $args The array to parse
+	 * @param array $values The keys that SHOULD have a value
+	 * @param array $flags The keys that should NOT have a value ... booleans
+	 * @return array
+	 */
 	function simple_scan_args(array $args, array $values, array $flags = array()){
 
 		// $values = array_fill_keys($values, false);
