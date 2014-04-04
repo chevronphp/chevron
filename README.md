@@ -18,13 +18,19 @@ documentation.
 # Installation
 
 Install the [Packagist archive](https://packagist.org/packages/henderjon/chevron)
-using [Composer](http://getcomposer.org/).
+using [Composer](http://getcomposer.org/). I will *generally* respect
+[Semantic Versioning](http://semver.org/). Learn about how Composer
+does [versions](https://getcomposer.org/doc/01-basic-usage.md#package-versions).
 
-```require: "henderjon/chevron": "v0.2.*"```
+*Note the absense of v1.0*
 
-# Versions
-
-I will *generally* respect [Semantic Versioning](http://semver.org/).
+```
+{
+	"require" : {
+		"henderjon/chevron": "0.2.*"
+	}
+}
+```
 
 # License
 
