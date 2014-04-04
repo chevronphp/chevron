@@ -2,9 +2,9 @@
 
 require_once("tests/bootstrap.php");
 
-require_once("src/Chevron/Misc/normalizeGlobalFilesArray.php");
+require_once("src/Chevron/Misc/normalize_global_files_array.php");
 
-FUnit::test("normalizeGlobalFilesArray() w/ a single field & single value", function(){
+FUnit::test("normalize_global_files_array() w/ a single field & single value", function(){
 
 	$input["fieldname"] = array(
 		'name'     => "field",
@@ -14,7 +14,7 @@ FUnit::test("normalizeGlobalFilesArray() w/ a single field & single value", func
 		'error'    => "0",
 	);
 
-	$output = normalizeGlobalFilesArray($input);
+	$output = normalize_global_files_array($input);
 
 	$expected = array(
 		"fieldname" => array(
@@ -32,7 +32,7 @@ FUnit::test("normalizeGlobalFilesArray() w/ a single field & single value", func
 
 });
 
-FUnit::test("normalizeGlobalFilesArray() w/ a single field & multiple values", function(){
+FUnit::test("normalize_global_files_array() w/ a single field & multiple values", function(){
 
 	$input["fieldname"] = array(
 		'name'     => array("field1", "field2"),
@@ -42,7 +42,7 @@ FUnit::test("normalizeGlobalFilesArray() w/ a single field & multiple values", f
 		'error'    => array("0", "0"),
 	);
 
-	$output = normalizeGlobalFilesArray($input);
+	$output = normalize_global_files_array($input);
 
 	$expected = array(
 		"fieldname" => array(
@@ -67,7 +67,7 @@ FUnit::test("normalizeGlobalFilesArray() w/ a single field & multiple values", f
 
 });
 
-FUnit::test("normalizeGlobalFilesArray() w/ a multiple fields & mixed values", function(){
+FUnit::test("normalize_global_files_array() w/ a multiple fields & mixed values", function(){
 
 	$input = array(
 		"fieldname1" => array(
@@ -86,7 +86,7 @@ FUnit::test("normalizeGlobalFilesArray() w/ a multiple fields & mixed values", f
 		)
 	);
 
-	$output = normalizeGlobalFilesArray($input);
+	$output = normalize_global_files_array($input);
 
 	$expected = array(
 		"fieldname1" => array(
