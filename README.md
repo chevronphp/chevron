@@ -32,12 +32,6 @@ does [versions](https://getcomposer.org/doc/01-basic-usage.md#package-versions).
 }
 ```
 
-```require: "henderjon/chevron": "v0.2.*"```
-
-# Versions
-
-I will *generally* respect [Semantic Versioning](http://semver.org/).
-
 # License
 
 See LICENSE.md for the [BSD-3-Clause](http://opensource.org/licenses/BSD-3-Clause) license.
