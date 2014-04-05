@@ -15,10 +15,13 @@
 		"irc" : "irc://irc.freenode.org/henderjon"
 	},
 	"require": {
-		"php"                           : ">=5.4.0",
-		"psr/log"                       : "1.*",
-		"henderjon/drop"                : "0.1.*",
-		"henderjon/weights_and_measures": "1.*"
+		"php"     : ">=5.4.0",
+		"psr/log" : "1.*"
+	},
+	"suggest" : {
+		"henderjon/drop"                 : "0.1.*",
+		"henderjon/weights_and_measures" : "1.*",
+		"henderjon/simple_scan_args"     : "1.*"
 	},
 	"require-dev": {
 		"funkatron/funit" : "dev-master"
