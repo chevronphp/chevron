@@ -8,37 +8,33 @@ use Chevron\PDO\MySQL;
  * fixtures
  */
 
-// FUnit::setup(function(){
+$dbConn = new \Chevron\PDO\MySQL\Wrapper(TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD);
+$dbConn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+FUnit::fixture("dbConn", $dbConn);
 
-	$dbConn = new \Chevron\PDO\MySQL\Wrapper(TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD);
-	$dbConn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-	FUnit::fixture("dbConn", $dbConn);
+$in = new ReflectionMethod($dbConn, "in");
+$in->setAccessible(true);
+FUnit::fixture("in", $in);
 
-	$in = new ReflectionMethod($dbConn, "in");
-	$in->setAccessible(true);
-	FUnit::fixture("in", $in);
+$filterData = new ReflectionMethod($dbConn, "filterData");
+$filterData->setAccessible(true);
+FUnit::fixture("filterData", $filterData);
 
-	$filterData = new ReflectionMethod($dbConn, "filterData");
-	$filterData->setAccessible(true);
-	FUnit::fixture("filterData", $filterData);
+$filterMultiData = new ReflectionMethod($dbConn, "filterMultiData");
+$filterMultiData->setAccessible(true);
+FUnit::fixture("filterMultiData", $filterMultiData);
 
-	$filterMultiData = new ReflectionMethod($dbConn, "filterMultiData");
-	$filterMultiData->setAccessible(true);
-	FUnit::fixture("filterMultiData", $filterMultiData);
+$parenPairs = new ReflectionMethod($dbConn, "parenPairs");
+$parenPairs->setAccessible(true);
+FUnit::fixture("parenPairs", $parenPairs);
 
-	$parenPairs = new ReflectionMethod($dbConn, "parenPairs");
-	$parenPairs->setAccessible(true);
-	FUnit::fixture("parenPairs", $parenPairs);
+$equalPairs = new ReflectionMethod($dbConn, "equalPairs");
+$equalPairs->setAccessible(true);
+FUnit::fixture("equalPairs", $equalPairs);
 
-	$equalPairs = new ReflectionMethod($dbConn, "equalPairs");
-	$equalPairs->setAccessible(true);
-	FUnit::fixture("equalPairs", $equalPairs);
-
-	$mapColumns = new ReflectionMethod($dbConn, "mapColumns");
-	$mapColumns->setAccessible(true);
-	FUnit::fixture("mapColumns", $mapColumns);
-
-// });
+$mapColumns = new ReflectionMethod($dbConn, "mapColumns");
+$mapColumns->setAccessible(true);
+FUnit::fixture("mapColumns", $mapColumns);
 
 /*
  * tests
