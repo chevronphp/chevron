@@ -1,20 +1,22 @@
 <?php
 
-namespace Chevron\PDO\SQLite;
+namespace Chevron\DB\MySQL;
+
+use \Chevron\DB\Interfaces;
 /**
  * A DB wrapper class offering some helpful shortcut methods
  *
  * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
  *
- * @package Chevron\PDO\MySQL
+ * @package Chevron\DB\MySQL
  * @author Jon Henderson
  */
-class WIP_Wrapper extends \PDO {
+class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 
-	use \Chevron\PDO\Traits\QueryHelperTrait;
+	use \Chevron\DB\Traits\QueryHelperTrait;
 
-	public $debug       = false;
-	public $num_retries = 5;
+	public    $debug      = false;
+	public    $numRetries = 5;
 	protected $inspector;
 	/**
 	 * Method to set a lambda as an inspector pre query
@@ -61,31 +63,20 @@ class WIP_Wrapper extends \PDO {
 	function replace($table, array $map){
 
 		list($columns, $tokens) = $this->parenPairs($map, 0);
-		$query = sprintf("INSERT OR REPLACE INTO %s %s VALUES %s;", $table, $columns, $tokens);
+		$query = sprintf("REPLACE INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
 		$data  = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
-	 *
-	 * via http://stackoverflow.com/questions/418898/sqlite-upsert-not-insert-or-replace
-	 * If you are generally doing updates I would ..
-	 *   - Begin a transaction, Do the update, Check the rowcount, If it is 0 do the insert, Commit
-	 *
-	 * If you are generally doing inserts I would
-	 *   - Begin a transaction, Try an insert, Check for primary key violation error, if we got an error do the update, Commit
-	 *
 	 */
 	function on_duplicate_key($table, array $map, array $where){
 
-		$count = $this->update($table, $map, $where);
-
-		if($count === 0){
-			$data = array_merge($map, $where);
-			$count = $this->insert($table, $data, 0);
-		}
-
-		return $count;
+		$column_map      = $this->equalPairs($map, ", ");
+		$conditional_map = $this->equalPairs($where, ", ");
+		$query = sprintf("INSERT INTO `%s` SET %s, %s ON DUPLICATE KEY UPDATE %s;", $table, $column_map, $conditional_map, $column_map);
+		$data  = $this->filterData($map, $where, $map);
+		return $this->exe_return_count($query, $data);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
@@ -103,7 +94,7 @@ class WIP_Wrapper extends \PDO {
 	function multi_replace($table, array $map){
 
 		list($columns, $tokens) = $this->parenPairs($map, count($map));
-		$query = sprintf("INSERT OR REPLACE INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
+		$query = sprintf("REPLACE INTO `%s` %s VALUES %s;", $table, $columns, $tokens);
 		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
@@ -111,12 +102,14 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function exe($query, array $map = array(), $in = false){
+
 		return $this->exe_return_result($query, $map, $in);
 	}
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function assoc($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in, \PDO::FETCH_ASSOC);
 		return iterator_to_array($result) ?: array();
 	}
@@ -124,6 +117,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function row($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		foreach($result as $row){ return $row; }
 		return array();
@@ -132,6 +126,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function scalar($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		foreach($result as $row){ return $row[0]; }
 		return null;
@@ -140,6 +135,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function scalars($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		$final = array();
 		foreach($result as $row){ $final[] = $row[0]; }
@@ -149,6 +145,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function keypair($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		$final = array();
 		foreach($result as $row){
@@ -160,6 +157,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function keyrow($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		$final = array();
 		foreach($result as $row){
@@ -171,6 +169,7 @@ class WIP_Wrapper extends \PDO {
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
 	function keyrows($query, array $map = array(), $in = false){
+
 		$result = $this->exe_return_result($query, $map, $in);
 		$final = array();
 		foreach($result as $row){
@@ -202,7 +201,7 @@ class WIP_Wrapper extends \PDO {
 				return $statement->rowCount();
 			}
 
-			// deadlock -- this is a mysql number.
+			// deadlock
 			if( $statement->errorCode() == "40001" ){ continue; }
 
 			throw new \PDOException($this->fError($statement));
@@ -248,7 +247,7 @@ class WIP_Wrapper extends \PDO {
 				return true;
 			}
 
-			// deadlock -- this is a mysql number.
+			// deadlock
 			if( $statement->errorCode() == "40001" ){ continue; }
 
 			throw new \PDOException($this->fError($statement));

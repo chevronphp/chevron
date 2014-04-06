@@ -2,11 +2,11 @@
 
 require_once("tests/bootstrap.php");
 
-use Chevron\PDO\Mock;
+use Chevron\DB\Mock;
 
 FUnit::setup(function(){
 
-	$dbConn = new Mock\Wrapper;
+	$dbConn = new Mock\PDOWrapper;
 	FUnit::fixture("dbConn", $dbConn);
 
 });
