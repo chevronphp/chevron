@@ -1,13 +1,13 @@
 <?php
 
-namespace Chevron\PDO\Interfaces;
+namespace Chevron\DB\Interfaces;
 /**
  * An interface defining the functionality of the Chevron\PDO\MySQL\Wrapper class
  *
  * @package Chevron\PDO\MySQL
  * @author Jon Henderson
  */
-Interface WrapperInterface {
+Interface PDOWrapperInterface {
 	/**
 	 * Capture both INSERT and UPDATE queries and dispatch accordingly
 	 *

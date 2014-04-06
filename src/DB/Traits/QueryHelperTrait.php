@@ -1,6 +1,6 @@
 <?php
 
-namespace Chevron\PDO\Traits;
+namespace Chevron\DB\Traits;
 
 trait QueryHelperTrait {
 	/**

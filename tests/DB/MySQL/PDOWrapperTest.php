@@ -8,7 +8,7 @@ use Chevron\PDO\MySQL;
  * fixtures
  */
 
-$dbConn = new \Chevron\PDO\MySQL\Wrapper(TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD);
+$dbConn = new \Chevron\DB\MySQL\PDOWrapper(TEST_DB_DSN, TEST_DB_USERNAME, TEST_DB_PASSWORD);
 $dbConn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 FUnit::fixture("dbConn", $dbConn);
 
