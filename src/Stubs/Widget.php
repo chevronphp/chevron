@@ -5,7 +5,7 @@ namespace Chevron\Stubs;
 class Widget implements WidgetInterface {
 
 	protected $file;
-	protected $__map  = array();
+	protected $map  = array();
 	/**
 	 * Set the file and data map for the Widget
 	 * @param string $file The file to render
@@ -30,7 +30,7 @@ class Widget implements WidgetInterface {
 	 */
 	function setData(array $data){
 		foreach($data as $key => $value){
-			$this->__map[$key] = $value;
+			$this->map[$key] = $value;
 		}
 	}
 	/**
@@ -52,8 +52,8 @@ class Widget implements WidgetInterface {
 	 * @return mixed
 	 */
 	function __get($key){
-		if(!array_key_exists($key, $this->__map)) return null;
-		return $this->__map[$key];
+		if(!array_key_exists($key, $this->map)) return null;
+		return $this->map[$key];
 	}
 	/**
 	 * A means to check if a particular data point is set
@@ -61,7 +61,7 @@ class Widget implements WidgetInterface {
 	 * @return bool
 	 */
 	function __isset($name){
-		return array_key_exists($name, $this->__map);
+		return array_key_exists($name, $this->map);
 	}
 	/**
 	 * method to return the widget as a string ...

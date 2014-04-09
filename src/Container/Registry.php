@@ -2,9 +2,17 @@
 
 namespace Chevron\Container;
 
-class Registry {
+class Registry implements \Countable {
 
 	protected $map = array();
+
+	// function __construct( &$map = null ) {
+	// 	if( $map === null ) {
+	// 		$map = array();
+	// 	}
+
+	// 	$this->map =& $map;
+	// }
 
 	function set($key, $value){
 		$this->map[$key] = $value;
@@ -33,6 +41,10 @@ class Registry {
 
 	function getIterator(){
 		return new \ArrayIterator($this->map);
+	}
+
+	function count() {
+		return $this->length();
 	}
 
 }
