@@ -8,8 +8,8 @@ class Deferred extends Registry {
 
 	/**
 	 * method to call the lambda stored at $tag and pass a payload at invokation
-	 * @param string $tag The lambda
-	 * @param mixed $args The value to pass to the lambda
+	 * @param string $key The lambda
+	 * @param array $args The values to pass to the lambda
 	 * @return mixed
 	 */
 	function invoke($key, array $args = array()){
@@ -20,7 +20,7 @@ class Deferred extends Registry {
 
 	/**
 	 * magic method to call a lambda with the passed payload
-	 * @param string $tag The lambda
+	 * @param string $key The lambda
 	 * @param array $args The args passed
 	 * @return mixed
 	 */
@@ -30,6 +30,8 @@ class Deferred extends Registry {
 
 	/**
 	 * method to retrieve a singleton value from the deferred registry
+	 * @param string $key The lambda
+	 * @param array $args The values to pass to the lambda
 	 * @return mixed
 	 */
 	function once($key, array $args = array()) {
@@ -37,8 +39,6 @@ class Deferred extends Registry {
 		if(!array_key_exists($key, $this->map) ) {
 			return null;
 		}
-
-		// if( !isset($this->map[$key]) ) return null;
 
 		if(!is_callable($this->map[$key])){
 			return $this->map[$key];
