@@ -19,7 +19,8 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 	public    $numRetries = 5;
 	protected $inspector;
 	/**
-	 * Method to set a lambda as an inspector pre query
+	 * Method to set a lambda as an inspector pre query, The callback will be passed
+	 * three params: PDO $this, string $query, array $data
 	 * @param type callable $func
 	 * @return type
 	 */
