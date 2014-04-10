@@ -24,7 +24,8 @@
 		"psr/log"                       : "1.*",
 		"henderjon/drop"                : "0.1.*",
 		"henderjon/weights_and_measures": "3.*",
-		"henderjon/simple_scan_args"    : "0.1.*"
+		"henderjon/simple_scan_args"    : "0.1.*",
+		"aws/aws-sdk-php"               : "2.5.* -- Allows you to use the Mailer"
 	},
 	"autoload": {
 		"psr-4": {

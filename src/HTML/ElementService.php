@@ -2,7 +2,7 @@
 
 namespace Chevron\HTML;
 
-class ElementFactory {
+class ElementService {
 	/**
 	 * Array of common tags that are to remain empty
 	 */
