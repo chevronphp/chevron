@@ -20,9 +20,9 @@ FUnit::test("Widget::__isset()", function(){
 	FUnit::not_ok(isset($widget->notThere));
 });
 
-FUnit::test("Widget::setData()", function(){
+FUnit::test("Widget::setMany()", function(){
 	$widget = new Widget(__DIR__."/exampleView.php");
-	$widget->setData(["test" => "data"]);
+	$widget->setMany(["test" => "data"]);
 	FUnit::ok(isset($widget->test));
 	FUnit::not_ok(isset($widget->notThere));
 });

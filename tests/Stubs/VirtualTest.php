@@ -2,10 +2,10 @@
 
 require_once("tests/bootstrap.php");
 
-use \Chevron\Stubs\VirtualWidget;
+use \Chevron\Stubs\Virtual;
 
-FUnit::test("VirtualWidget::render()", function(){
-	$widget = new VirtualWidget(function(){
+FUnit::test("Virtual::render()", function(){
+	$widget = new Virtual(function(){
 		return 999;
 	});
 
@@ -16,7 +16,7 @@ FUnit::test("VirtualWidget::render()", function(){
 });
 
 FUnit::test("Widget::__toString()", function(){
-	$widget = new VirtualWidget(function( $obj ){
+	$widget = new Virtual(function( $obj ){
 		print($obj->placebo);
 	}, ["placebo" => "effect"]);
 

@@ -2,9 +2,14 @@
 
 namespace Chevron\Stubs;
 
-class Widget implements WidgetInterface {
-
+class Widget implements Interfaces\WidgetInterface {
+	/**
+	 * The file that the widget will load
+	 */
 	protected $file;
+	/**
+	 * property to hold the data local to the widget, available via __get()
+	 */
 	protected $map  = array();
 	/**
 	 * Set the file and data map for the Widget
@@ -20,40 +25,8 @@ class Widget implements WidgetInterface {
 		}
 
 		if(!empty($data)){
-			$this->setData($data);
+			$this->setMany($data);
 		}
-	}
-	/**
-	 * Load an array of data into the Conf registry
-	 * @param array $data The data
-	 * @return
-	 */
-	function setData(array $data){
-		foreach($data as $key => $value){
-			$this->map[$key] = $value;
-		}
-	}
-	/**
-	 * Require, and thus render, a file
-	 */
-	function render(){
-		return require($this->file);
-	}
-	/**
-	 * Method to make this class callable
-	 * @return type
-	 */
-	function __invoke(){
-		return $this->render();
-	}
-	/**
-	 * Get the value stored at $key
-	 * @param string $key The key of the value to get
-	 * @return mixed
-	 */
-	function __get($key){
-		if(!array_key_exists($key, $this->map)) return null;
-		return $this->map[$key];
 	}
 	/**
 	 * A means to check if a particular data point is set
@@ -71,6 +44,39 @@ class Widget implements WidgetInterface {
 		ob_start();
 		$this->render();
 		return ob_get_clean();
+	}
+	/*
+	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
+	 */
+	function set($key, $value){
+		$this->map[$key] = $value;
+	}
+	/*
+	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
+	 */
+	function setMany(array $map){
+		foreach($map as $key => $value){
+			$this->set($key, $value);
+		}
+	}
+	/*
+	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
+	 */
+	function render(){
+		return require($this->file);
+	}
+	/*
+	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
+	 */
+	function __invoke(){
+		return $this->render();
+	}
+	/*
+	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
+	 */
+	function __get($key){
+		if(!array_key_exists($key, $this->map)) return null;
+		return $this->map[$key];
 	}
 
 }

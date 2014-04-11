@@ -4,14 +4,14 @@ require_once("tests/bootstrap.php");
 
 use \Chevron\HTML;
 
-FUnit::test("ElementFactory::__call()", function(){
-	$elF = new HTML\ElementFactory;
+FUnit::test("ElementService::__call()", function(){
+	$elF = new HTML\ElementService;
 	$el = $elF->p("This is html.");
 	FUnit::equal("<p>This is html.</p>", (string)$el);
 });
 
-FUnit::test("ElementFactory::__call() w/ escaping", function(){
-	$elF = new HTML\ElementFactory;
+FUnit::test("ElementService::__call() w/ escaping", function(){
+	$elF = new HTML\ElementService;
 	$el = $elF->p("This is html.");
 	$el->setInnerHTML("This is <new>html</new>.");
 	$el->setAttributes(array(
@@ -21,8 +21,8 @@ FUnit::test("ElementFactory::__call() w/ escaping", function(){
 
 });
 
-FUnit::test("ElementFactory::__call() input w/ escaping", function(){
-	$elF = new HTML\ElementFactory;
+FUnit::test("ElementService::__call() input w/ escaping", function(){
+	$elF = new HTML\ElementService;
 	$el = $elF->text("textName", "a <bad>textValue</bad>");
 	$el->setAttributes(array(
 		"class" => "testClass",
@@ -32,17 +32,17 @@ FUnit::test("ElementFactory::__call() input w/ escaping", function(){
 
 });
 
-FUnit::test("ElementFactory::__call() radio w/ escaping", function(){
-	$elF = new HTML\ElementFactory;
+FUnit::test("ElementService::__call() radio w/ escaping", function(){
+	$elF = new HTML\ElementService;
 	$el = $elF->radio("textName", "a <bad>textValue</bad>", true);
 	$expected = "<input type=\"radio\" name=\"textName\" value=\"a &lt;bad&gt;textValue&lt;/bad&gt;\" checked=\"checked\" />";
 	FUnit::equal($expected, (string)$el);
 
 });
 
-FUnit::test("ElementFactory::select()", function(){
+FUnit::test("ElementService::select()", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"5"  => "five",
@@ -70,9 +70,9 @@ FUnit::test("ElementFactory::select()", function(){
 
 });
 
-FUnit::test("ElementFactory::select() w/o selection", function(){
+FUnit::test("ElementService::select() w/o selection", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"5"  => "five",
@@ -102,9 +102,9 @@ FUnit::test("ElementFactory::select() w/o selection", function(){
 
 });
 
-FUnit::test("ElementFactory::select() w/ multi selection", function(){
+FUnit::test("ElementService::select() w/ multi selection", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"5"  => "five",
@@ -133,9 +133,9 @@ FUnit::test("ElementFactory::select() w/ multi selection", function(){
 
 });
 
-FUnit::test("ElementFactory::select() w/ nothing", function(){
+FUnit::test("ElementService::select() w/ nothing", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"5"  => "five",
@@ -161,9 +161,9 @@ FUnit::test("ElementFactory::select() w/ nothing", function(){
 
 });
 
-FUnit::test("ElementFactory::select() w/ optgroups w/ single selection", function(){
+FUnit::test("ElementService::select() w/ optgroups w/ single selection", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"first" => array(
@@ -219,9 +219,9 @@ FUnit::test("ElementFactory::select() w/ optgroups w/ single selection", functio
 
 });
 
-FUnit::test("ElementFactory::select() w/ optgroups w/o selection", function(){
+FUnit::test("ElementService::select() w/ optgroups w/o selection", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"first" => array(
@@ -277,9 +277,9 @@ FUnit::test("ElementFactory::select() w/ optgroups w/o selection", function(){
 
 });
 
-FUnit::test("ElementFactory::select() w/ optgroups w multi selection", function(){
+FUnit::test("ElementService::select() w/ optgroups w multi selection", function(){
 
-	$elF = new HTML\ElementFactory;
+	$elF = new HTML\ElementService;
 
 	$options = array(
 		"first" => array(
