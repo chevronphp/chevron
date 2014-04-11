@@ -2,7 +2,7 @@
 
 namespace Chevron\Stubs;
 
-class VirtualWidget extends Widget {
+class Virtual extends Widget {
 
 	protected $callback;
 	/**
@@ -16,7 +16,7 @@ class VirtualWidget extends Widget {
 		$this->callback = $callback;
 
 		if(!empty($data)){
-			$this->setData($data);
+			$this->setMany($data);
 		}
 	}
 
