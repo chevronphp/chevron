@@ -7,10 +7,11 @@ php:
   - 5.5
 
 before_script:
-  - composer --self-update
   - mysql -e "create database IF NOT EXISTS chevron_tests;" -uroot;
 
-install: composer install
+install:
+  - composer --self-update
+  - composer install
 
 script: ./vendor/bin/fu -r tests/
 
