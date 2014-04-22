@@ -6,12 +6,12 @@ use \Chevron\DB\Interfaces;
 /**
  * A DB wrapper class offering some helpful shortcut methods
  *
- * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+ * For documentation, consult the Interface (__DIR__ . "/PDOWrapperInterface.php")
  *
  * @package Chevron\DB\MySQL
  * @author Jon Henderson
  */
-class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
+class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 
 	use \Chevron\DB\Traits\QueryHelperTrait;
 
@@ -28,7 +28,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		$this->inspector = $func;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function put($table, array $map, array $where = array()){
 		if( $where ){
@@ -38,7 +38,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		}
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function insert($table, array $map){
 
@@ -48,7 +48,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function update($table, array $map, array $where = array()){
 
@@ -59,7 +59,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function replace($table, array $map){
 
@@ -69,7 +69,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function on_duplicate_key($table, array $map, array $where){
 
@@ -80,7 +80,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function multi_insert($table, array $map){
 
@@ -90,7 +90,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function multi_replace($table, array $map){
 
@@ -100,14 +100,14 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $this->exe_return_count($query, $data);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function exe($query, array $map = array(), $in = false){
 
 		return $this->exe_return_result($query, $map, $in);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function assoc($query, array $map = array(), $in = false){
 
@@ -115,7 +115,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return iterator_to_array($result) ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function row($query, array $map = array(), $in = false){
 
@@ -124,7 +124,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function scalar($query, array $map = array(), $in = false){
 
@@ -133,7 +133,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return null;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function scalars($query, array $map = array(), $in = false){
 
@@ -143,7 +143,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $final;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function keypair($query, array $map = array(), $in = false){
 
@@ -155,7 +155,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $final ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function keyrow($query, array $map = array(), $in = false){
 
@@ -167,7 +167,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $final ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 * For documentation, consult the PDOWrapperInterface
 	 */
 	function keyrows($query, array $map = array(), $in = false){
 
@@ -179,7 +179,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		return $final ?: array();
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 *
 	 */
 	protected function exe_return_count($query, array $data){
 
@@ -210,7 +210,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
+	 *
 	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 
