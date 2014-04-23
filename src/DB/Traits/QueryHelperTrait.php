@@ -4,7 +4,11 @@ namespace Chevron\DB\Traits;
 
 trait QueryHelperTrait {
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to pre-parse a query to inject a variable number of "?" tokens into
+	 * the string based on a variable number of pices of data
+	 * @param string $query The string of the query
+	 * @param array $map The data map to parse
+	 * @return array
 	 */
 	protected function in($query, array $map){
 
@@ -20,7 +24,9 @@ trait QueryHelperTrait {
 		return array( $_SQL, $final );
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to parse the map of data into a flat array for use with prepared
+	 * statements--this is intended for non IN queries
+	 * @return array
 	 */
 	protected function filterData(){
 
@@ -36,7 +42,10 @@ trait QueryHelperTrait {
 		return $final;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to parse a map of maps of data into a flat array for use with prepared
+	 * statements--this is intended for use with IN claues
+	 * @param array $rows An array of arrays
+	 * @return array
 	 */
 	protected function filterMultiData(array $rows){
 
@@ -48,7 +57,11 @@ trait QueryHelperTrait {
 		return $final;
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to parse an array of data into tokens, organized by the parenthetical
+	 * syntax
+	 * @param array $map The data
+	 * @param int $multiple How many times to repeat the paren pairs
+	 * @return array
 	 */
 	protected function parenPairs(array $map, $multiple){
 
@@ -66,7 +79,11 @@ trait QueryHelperTrait {
 		return array( $columns, $tokens );
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to parse an array of data into tokens, organized by the equals
+	 * syntax
+	 * @param array $map The data
+	 * @param string $sep The seperator to use
+	 * @return string
 	 */
 	protected function equalPairs(array $map, $sep = ", "){
 
@@ -82,7 +99,11 @@ trait QueryHelperTrait {
 		return implode($sep, $temp);
 	}
 	/**
-	 * For documentation, consult the Interface (__DIR__ . "/QueryInterface.php")
+	 * method to take an array of data and count/filter it to determine how many given
+	 * data points ought to be passed as tokens vs injected (unescaped) into the
+	 * query
+	 * @param array $map The data
+	 * @return array
 	 */
 	protected function mapColumns(array $map){
 
