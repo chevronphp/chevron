@@ -16,6 +16,7 @@ class Filter {
 		});
 		return $map;
 	}
+
 	/**
 	 * Filter a mixed value translating spaces " " for dangerous control chars.
 	 * This will recurse deeper into arrays
@@ -26,6 +27,7 @@ class Filter {
 	function scalarControlChars($value){
 		return strtr($value, "\x00\x07\x08\x09\x0B\x0C\x0D\x1A", "\x20\x20\x20\x20\x20\x20\x20\x20");
 	}
+
 	/**
 	 * function to take the global $_FILES and normalize it's structure to
 	 * be the same for one field, multiple files, one field with multiple

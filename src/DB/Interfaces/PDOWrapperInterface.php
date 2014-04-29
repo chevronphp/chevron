@@ -17,6 +17,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function put($table, array $map, array $where = array());
+
 	/**
 	 * Capture INSERT queries. As with all of the "PUT helpers"
 	 * the array $map can take an array(true, "FUNC") where func is an unescaped
@@ -27,6 +28,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function insert($table, array $map);
+
 	/**
 	 * Capture UPDATE queries. As with all of the "PUT helpers"
 	 * the array $map can take an array(true, "FUNC") where func is an unescaped
@@ -38,6 +40,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function update($table, array $map, array $where = array());
+
 	/**
 	 * Execute a REPLACE query. As with all of the "PUT helpers" the array $map
 	 * can take an array(true, "FUNC") where func is an unescaped value, usually
@@ -48,6 +51,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function replace($table, array $map);
+
 	/**
 	 * Execute an INSERT ... ON DUPLICATE KEY query. As with all of the "PUT
 	 * helpers" the array $map can take an array(true, "FUNC") where func is an
@@ -60,6 +64,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function on_duplicate_key($table, array $map, array $where);
+
 	/**
 	 * Execute an INSERT query with mulitples rows. As with all of the "PUT
 	 * helpers" the array $map can take an array(true, "FUNC") where func is an
@@ -70,6 +75,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function multi_insert($table, array $map);
+
 	/**
 	 * Execute a REPLACE query with mulitples rows. As with all of the "PUT
 	 * helpers" the array $map can take an array(true, "FUNC") where func is an
@@ -80,6 +86,7 @@ Interface PDOWrapperInterface {
 	 * @return int
 	 */
 	function multi_replace($table, array $map);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -94,6 +101,7 @@ Interface PDOWrapperInterface {
 	 * @return IteratorIterator
 	 */
 	function exe($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -108,6 +116,7 @@ Interface PDOWrapperInterface {
 	 * @return array
 	 */
 	function assoc($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -122,6 +131,7 @@ Interface PDOWrapperInterface {
 	 * @return array
 	 */
 	function row($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -136,6 +146,7 @@ Interface PDOWrapperInterface {
 	 * @return array
 	 */
 	function keyrow($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -151,6 +162,7 @@ Interface PDOWrapperInterface {
 	 * @return scalar
 	 */
 	function scalar($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -166,6 +178,7 @@ Interface PDOWrapperInterface {
 	 * @return array
 	 */
 	function scalars($query, array $map = array(), $in = false);
+
 	/**
 	 * Execute an SQL query with the provided data $map where $map is an array
 	 * of column => value pairs. The optional $in is used to denote the use of
@@ -182,5 +195,6 @@ Interface PDOWrapperInterface {
 	 * @return IteratorIterator
 	 */
 	function keypair($query, array $map = array(), $in = false);
+
 }
 

@@ -3,6 +3,7 @@
 namespace Chevron\DB\Traits;
 
 trait QueryHelperTrait {
+
 	/**
 	 * method to pre-parse a query to inject a variable number of "?" tokens into
 	 * the string based on a variable number of pices of data
@@ -23,6 +24,7 @@ trait QueryHelperTrait {
 		$_SQL = vsprintf($query, $replacements);
 		return array( $_SQL, $final );
 	}
+
 	/**
 	 * method to parse the map of data into a flat array for use with prepared
 	 * statements--this is intended for non IN queries
@@ -41,9 +43,10 @@ trait QueryHelperTrait {
 		}
 		return $final;
 	}
+
 	/**
 	 * method to parse a map of maps of data into a flat array for use with prepared
-	 * statements--this is intended for use with IN claues
+	 * statements--this is intended for use with IN clauses
 	 * @param array $rows An array of arrays
 	 * @return array
 	 */
@@ -56,6 +59,7 @@ trait QueryHelperTrait {
 		}
 		return $final;
 	}
+
 	/**
 	 * method to parse an array of data into tokens, organized by the parenthetical
 	 * syntax
@@ -78,6 +82,7 @@ trait QueryHelperTrait {
 
 		return array( $columns, $tokens );
 	}
+
 	/**
 	 * method to parse an array of data into tokens, organized by the equals
 	 * syntax
@@ -98,6 +103,7 @@ trait QueryHelperTrait {
 
 		return implode($sep, $temp);
 	}
+
 	/**
 	 * method to take an array of data and count/filter it to determine how many given
 	 * data points ought to be passed as tokens vs injected (unescaped) into the

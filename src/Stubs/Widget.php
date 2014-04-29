@@ -7,10 +7,12 @@ class Widget implements Interfaces\WidgetInterface {
 	 * The file that the widget will load
 	 */
 	protected $file;
+
 	/**
 	 * property to hold the data local to the widget, available via __get()
 	 */
 	protected $map  = array();
+
 	/**
 	 * Set the file and data map for the Widget
 	 * @param string $file The file to render
@@ -28,6 +30,7 @@ class Widget implements Interfaces\WidgetInterface {
 			$this->setMany($data);
 		}
 	}
+
 	/**
 	 * A means to check if a particular data point is set
 	 * @param string $name The key of the data to check
@@ -36,6 +39,7 @@ class Widget implements Interfaces\WidgetInterface {
 	function __isset($name){
 		return array_key_exists($name, $this->map);
 	}
+
 	/**
 	 * method to return the widget as a string ...
 	 * @return string
@@ -45,13 +49,15 @@ class Widget implements Interfaces\WidgetInterface {
 		$this->render();
 		return ob_get_clean();
 	}
-	/*
+
+	/**
 	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
 	 */
 	function set($key, $value){
 		$this->map[$key] = $value;
 	}
-	/*
+
+	/**
 	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
 	 */
 	function setMany(array $map){
@@ -59,19 +65,22 @@ class Widget implements Interfaces\WidgetInterface {
 			$this->set($key, $value);
 		}
 	}
-	/*
+
+	/**
 	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
 	 */
 	function render(){
 		return require($this->file);
 	}
-	/*
+
+	/**
 	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
 	 */
 	function __invoke(){
 		return $this->render();
 	}
-	/*
+
+	/**
 	 * for docs, check \Chevron\Stubs\Interfaces\WidgetInterface
 	 */
 	function __get($key){

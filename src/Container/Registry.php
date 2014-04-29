@@ -16,6 +16,7 @@ class Registry implements \Countable {
 	function set($key, $value){
 		$this->map[$key] = $value;
 	}
+
 	/**
 	 * Method to set many values in the registry
 	 * @param array $map The map of key => values
@@ -26,6 +27,7 @@ class Registry implements \Countable {
 			$this->set($key, $value);
 		}
 	}
+
 	/**
 	 * Method to retrieve the value stored at key
 	 * @param scalar $key The key of the value to retrieve
@@ -37,6 +39,7 @@ class Registry implements \Countable {
 		}
 		return null;
 	}
+
 	/**
 	 * Method to determine if the registry has a key
 	 * @param scalar $key The key to check
@@ -45,6 +48,7 @@ class Registry implements \Countable {
 	function has($key){
 		return array_key_exists($key, $this->map);
 	}
+
 	/**
 	 * Method to retrieve the number of values in the registry
 	 * @return type
@@ -52,6 +56,7 @@ class Registry implements \Countable {
 	function length(){
 		return count($this->map);
 	}
+
 	/**
 	 * Method to get an Iterator for the registry, allows looping
 	 * @return ArrayIterator
@@ -59,6 +64,7 @@ class Registry implements \Countable {
 	function getIterator(){
 		return new \ArrayIterator($this->map);
 	}
+
 	/**
 	 * Method to implement \Countable on the registry
 	 * @link http://php.net/manual/en/countable.count.php

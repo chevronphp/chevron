@@ -2,3 +2,4 @@
 /vendor/*
 /conf/*
 /composer.lock
+/output

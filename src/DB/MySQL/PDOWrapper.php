@@ -11,13 +11,14 @@ use \Chevron\DB\Interfaces;
  * @package Chevron\DB\MySQL
  * @author Jon Henderson
  */
-class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
+class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 
 	use \Chevron\DB\Traits\QueryHelperTrait;
 
 	public    $debug      = false;
 	public    $numRetries = 5;
 	protected $inspector;
+
 	/**
 	 * Method to set a lambda as an inspector pre query, The callback will be passed
 	 * three params: PDO $this, string $query, array $data
@@ -27,6 +28,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 	function registerInspector(callable $func){
 		$this->inspector = $func;
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -37,6 +39,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 			return $this->insert($table, $map, 0);
 		}
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -47,6 +50,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -58,6 +62,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data = $this->filterData($map, $where);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -68,6 +73,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data  = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -79,6 +85,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data  = $this->filterData($map, $where, $map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -89,6 +96,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -99,6 +107,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -106,6 +115,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 
 		return $this->exe_return_result($query, $map, $in);
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -114,6 +124,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		$result = $this->exe_return_result($query, $map, $in, \PDO::FETCH_ASSOC);
 		return iterator_to_array($result) ?: array();
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -123,6 +134,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		foreach($result as $row){ return $row; }
 		return array();
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -132,6 +144,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		foreach($result as $row){ return $row[0]; }
 		return null;
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -142,6 +155,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		foreach($result as $row){ $final[] = $row[0]; }
 		return $final;
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -154,6 +168,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		}
 		return $final ?: array();
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -166,6 +181,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		}
 		return $final ?: array();
 	}
+
 	/**
 	 * For documentation, consult the PDOWrapperInterface
 	 */
@@ -178,6 +194,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		}
 		return $final ?: array();
 	}
+
 	/**
 	 *
 	 */
@@ -209,6 +226,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		}
 		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 	}
+
 	/**
 	 *
 	 */
@@ -257,6 +275,7 @@ class PDOWrapper extends \PDO implements Interfaces\PDOPDOWrapperInterface {
 		throw new \PDOException("Query Failed after 5 attempts:\n\n{$query}");
 
 	}
+
 	/**
 	 * Beautifies an error message to display
 	 * @param PDOException $obj
