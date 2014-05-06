@@ -186,5 +186,12 @@ class Element {
 		return new $CLASS($tag, $innerHTML, $attributes);
 
 	}
+	/**
+	 * method to explicitly call __toString();
+	 * @return string
+	 */
+	function render(){
+		return $this->__toString();
+	}
 }
 
