@@ -3,6 +3,7 @@
 namespace Chevron\DB\MySQL;
 
 use \Chevron\DB\Interfaces;
+use \Chevron\DB\Traits;
 /**
  * A DB wrapper class offering some helpful shortcut methods
  *
@@ -13,7 +14,7 @@ use \Chevron\DB\Interfaces;
  */
 class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 
-	use \Chevron\DB\Traits\QueryHelperTrait;
+	use Traits\QueryHelperTrait;
 
 	public    $debug      = false;
 	public    $numRetries = 5;
