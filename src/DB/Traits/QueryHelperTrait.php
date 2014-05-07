@@ -1,7 +1,12 @@
 <?php
 
 namespace Chevron\DB\Traits;
-
+/**
+ * Implements a few query building helper methods
+ *
+ * @package Chevron\PDO
+ * @author Jon Henderson
+ */
 trait QueryHelperTrait {
 
 	/**

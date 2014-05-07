@@ -1,12 +1,29 @@
 <?php
 
 namespace Chevron\HTML;
-
+/**
+ * a class for not having to select tags by hand. includes entity safety
+ * @package Chevron\HTML
+ */
 class Select extends Element {
-	/***/
-	protected $options, $selected;
+	/**
+	 * an array of options for the select tag
+	 */
+	protected $options;
 
-	/***/
+	/**
+	 * an array of selected options
+	 */
+	protected $selected;
+
+	/**
+	 * method to create an element that is stringified to a select tag
+	 * @param string $name The name of the select tag
+	 * @param array $options An array of options/optgroups
+	 * @param mixed $selected The options to mark selected
+	 * @param array $attributes An array of attrs for the select tag
+	 * @return Chevron\HTML\Select
+	 */
 	function __construct($name, array $options, $selected = '', array $attributes = array()){
 
 		if($name){
@@ -40,30 +57,35 @@ class Select extends Element {
 
 	}
 
-	/***/
+	/**
+	 * method to return the sprintf pattern to use for the select tag
+	 * @return string
+	 */
 	function getPattern(){
 		return "<select%s>%s</select>";
 	}
 
-	/***/
+	/**
+	 * method to set the selected values for the select tag
+	 * @param mixed $value The value -- will be cast to array
+	 * @return
+	 */
 	function setSelected($value){
 		$this->selected = (array)$value;
 	}
 
-	/***/
+	/**
+	 * method to set the options/optgroups for the select tag
+	 * @param mixed $value The value -- will be cast to array
+	 * @return
+	 */
 	function setOptions($value){
 		$this->options = (array)$value;
 	}
 
 	/**
-	 * A helper function to create a select drop down form element from an array of information.
-	 * This function can take a two level array of options (i.e. array($value => $display) ||
-	 * array($label => array($value => $display)).
-	 *
-	 * @param string $name The name of the select element
-	 * @param array $options The array of information with which to construct the options
-	 * @param array $attributes An array of attribute value pairs to add to the select tag
-	 * @param int $level An argument used for recursion to track how far drilled down the recursion is
+	 * method to organize the options/optgroups
+	 * @param array $options The array of options/optgroups
 	 * @return string
 	 */
 	function marshalOptions(array $options = array()){
@@ -93,10 +115,10 @@ class Select extends Element {
 	}
 
 	/**
-	 * shortcut method to create a Form object using an alias as the method call
-	 * @param string $type The tag as a method call
-	 * @param array $args An array of args to be passed to the constructor
-	 * @return Form
+	 * shortcut method to create a select object using an alias as the method call
+	 * @param string $name The select name as a method call
+	 * @param array $args An array of args to be parsed and passed to the constructor
+	 * @return Chevron\HTML\Select
 	 */
 	static function __callStatic($name, $args){
 

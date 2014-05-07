@@ -6,24 +6,42 @@ namespace Chevron\DB\SQLite;
  *
  * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
  *
- * @package Chevron\PDO\MySQL
+ * @package Chevron\PDO
  * @author Jon Henderson
  */
 class WIP_Wrapper extends \PDO {
 
 	use \Chevron\DB\Traits\QueryHelperTrait;
 
-	public $debug       = false;
-	public $num_retries = 5;
-	protected $inspector;
 	/**
-	 * Method to set a lambda as an inspector pre query
-	 * @param type callable $func
-	 * @return type
+	 * the number of times to retry after a mysql error
+	 */
+	protected $numRetries = 5;
+
+	/**
+	 * a lambda to execute before executing a query, usefule for debugging
+	 */
+	protected $inspector;
+
+	/**
+	 * method to set the number of retries after an error
+	 * @param int $num The number of retries
+	 * @return
+	 */
+	function setNumRetries($num){
+		$this->numRetries = (int)$num;
+	}
+
+	/**
+	 * Method to set a lambda as an inspector pre query, The callback will be passed
+	 * three params: PDO $this, string $query, array $data
+	 * @param callable $func
+	 * @return
 	 */
 	function registerInspector(callable $func){
 		$this->inspector = $func;
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -34,6 +52,7 @@ class WIP_Wrapper extends \PDO {
 			return $this->insert($table, $map, 0);
 		}
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -44,6 +63,7 @@ class WIP_Wrapper extends \PDO {
 		$data = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -55,6 +75,7 @@ class WIP_Wrapper extends \PDO {
 		$data = $this->filterData($map, $where);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -65,6 +86,7 @@ class WIP_Wrapper extends \PDO {
 		$data  = $this->filterData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 *
@@ -87,6 +109,7 @@ class WIP_Wrapper extends \PDO {
 
 		return $count;
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */
@@ -97,6 +120,7 @@ class WIP_Wrapper extends \PDO {
 		$data  = $this->filterMultiData($map);
 		return $this->exe_return_count($query, $data);
 	}
+
 	/**
 	 * For documentation, consult the Interface (__DIR__ . "/WrapperInterface.php")
 	 */

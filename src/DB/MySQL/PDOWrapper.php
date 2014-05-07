@@ -9,22 +9,37 @@ use \Chevron\DB\Traits;
  *
  * For documentation, consult the Interface (__DIR__ . "/PDOWrapperInterface.php")
  *
- * @package Chevron\DB\MySQL
+ * @package Chevron\DB
  * @author Jon Henderson
  */
 class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 
 	use Traits\QueryHelperTrait;
 
-	public    $debug      = false;
-	public    $numRetries = 5;
+	/**
+	 * the number of times to retry after a mysql error
+	 */
+	protected $numRetries = 5;
+
+	/**
+	 * a lambda to execute before executing a query, usefule for debugging
+	 */
 	protected $inspector;
+
+	/**
+	 * method to set the number of retries after an error
+	 * @param int $num The number of retries
+	 * @return
+	 */
+	function setNumRetries($num){
+		$this->numRetries = (int)$num;
+	}
 
 	/**
 	 * Method to set a lambda as an inspector pre query, The callback will be passed
 	 * three params: PDO $this, string $query, array $data
-	 * @param type callable $func
-	 * @return type
+	 * @param callable $func
+	 * @return
 	 */
 	function registerInspector(callable $func){
 		$this->inspector = $func;
@@ -197,7 +212,13 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 	}
 
 	/**
+	 * method to debug (if necessary), execute a query, retrying if necessary,
+	 * will prepare the query before execution returning the number of affected
+	 * rows
 	 *
+	 * @param string $query The query to execute
+	 * @param array $data The data to pass to the query
+	 * @return int
 	 */
 	protected function exe_return_count($query, array $data){
 
@@ -229,7 +250,14 @@ class PDOWrapper extends \PDO implements Interfaces\PDOWrapperInterface {
 	}
 
 	/**
+	 * method to debug (if necessary), execute a query, retrying if necessary,
+	 * will prepare the query before execution, returning the result
 	 *
+	 * @param string $query The query to execute
+	 * @param array $map The data to pass to the query
+	 * @param bool $in A toggle to pre parse the query to use the IN clause
+	 * @param int $fetch The fetch method
+	 * @return array
 	 */
 	protected function exe_return_result($query, array $map, $in, $fetch = \PDO::FETCH_BOTH){
 

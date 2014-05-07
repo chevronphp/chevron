@@ -1,10 +1,18 @@
 <?php
 
 namespace Chevron\Stubs;
-
+/**
+ * implements a virtual widget -- being a widget that uses a lambda instead of
+ * a hard file
+ *
+ * @package Chevron\Stubs
+ */
 class Virtual extends Widget {
-
+	/**
+	 * the callable to use over a hard file
+	 */
 	protected $callback;
+
 	/**
 	 * Set the callback and data map for the Widget
 	 * @param string $file The file to render

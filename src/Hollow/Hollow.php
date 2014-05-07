@@ -1,7 +1,11 @@
 <?php
 
 namespace Chevron\Hollow;
-
+/**
+ * implements a static di container.
+ *
+ * @package Chevron\Hollow
+ */
 abstract class Hollow {
 	/**
 	 * The map in which to store our objects

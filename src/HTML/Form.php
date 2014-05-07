@@ -1,7 +1,10 @@
 <?php
 
 namespace Chevron\HTML;
-
+/**
+ * a class for not having to type HTML Form-related tags by hand. includes entity safety
+ * @package Chevron\HTML
+ */
 class Form extends Element {
 	/**
 	 * array of tags aliases

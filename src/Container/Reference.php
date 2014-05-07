@@ -2,12 +2,16 @@
 
 namespace Chevron\Container;
 /**
- * Class to implement a method via @donatj
+ * implementation of the registry pattern that supports wrapping map via
+ * reference -- for use with the $_SESSION
+ *
+ * @package Chevron\Container
  */
 class Reference extends Registry {
 	/**
 	 * If an array is passed to the constructor, it is assigned by REFERENCE
 	 * This is useful for a generic API to interact with the SESSION array
+	 *
 	 * @param array &$map The array to reference
 	 * @return
 	 */

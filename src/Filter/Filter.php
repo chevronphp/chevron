@@ -1,7 +1,11 @@
 <?php
 
 namespace Chevron\Filter;
-
+/**
+ * implements a few misc filter functions. this class needs cleaning
+ *
+ * @package Chevron\Filter
+ */
 class Filter {
 	/**
 	 * Filter a mixed value translating spaces " " for dangerous control chars.
@@ -34,7 +38,7 @@ class Filter {
 	 * inputs, and multiple files with multiple inputs. there is NO
 	 * validation. you should know roughly what you're doing when handling
 	 * uploaded files. this function will not protect you in any way.
-	 * @param array $globalFilesArray Ideally the $_FILES array
+	 * @param array $array Ideally the $_FILES array
 	 * @return array
 	 */
 	function normalizeGlobalFiles($array){

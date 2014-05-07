@@ -1,7 +1,10 @@
 <?php
 
 namespace Chevron\HTML;
-
+/**
+ * a class for not having to type HTML tags by hand. includes entity safety
+ * @package Chevron\HTML
+ */
 class Element {
 	/**
 	 * the "tag" of the current object
@@ -30,8 +33,9 @@ class Element {
 
 	/**
 	 * Create an Element object that will stringify to an HTML tag
-	 * @param string $selector A CSS selector string of attrs for the element
-	 * @param array $map An arbitrary map of attrs for the element
+	 * @param string $tag The tag to create
+	 * @param string $innerHTML The innerHTML of the tag
+	 * @param array $attributes An arbitrary map of attrs for the element
 	 * @return Chevron\HTML\Element
 	 */
 	function __construct( $tag, $innerHTML, $attributes ){

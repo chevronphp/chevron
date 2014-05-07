@@ -1,9 +1,17 @@
 <?php
 
 namespace Chevron\Container;
-
+/**
+ * implementation of the registry pattern that supports lambdas over/against
+ * scalar values
+ *
+ * @package Chevron\Container
+ */
 class Deferred extends Registry {
 
+	/**
+	 * an additional map for storing the return of singleton lambdas
+	 */
 	protected $called = array();
 
 	/**

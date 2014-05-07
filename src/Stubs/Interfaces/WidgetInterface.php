@@ -1,7 +1,13 @@
 <?php
 
 namespace Chevron\Stubs\Interfaces;
-
+/**
+ * interface for widgets -- being a way to include files with scoped data
+ *
+ * useful for HTML and templating
+ *
+ * @package Chevron\Stubs
+ */
 interface WidgetInterface {
 
 	/**
@@ -26,7 +32,7 @@ interface WidgetInterface {
 
 	/**
 	 * Method to make this class callable
-	 * @return type
+	 * @return
 	 */
 	function __invoke();
 

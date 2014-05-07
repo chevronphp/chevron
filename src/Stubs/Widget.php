@@ -1,7 +1,11 @@
 <?php
 
 namespace Chevron\Stubs;
-
+/**
+ * implements a widget
+ *
+ * @package Chevron\Stubs
+ */
 class Widget implements Interfaces\WidgetInterface {
 	/**
 	 * The file that the widget will load

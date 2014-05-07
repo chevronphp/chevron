@@ -1,7 +1,12 @@
 <?php
 
 namespace Chevron\Container;
-
+/**
+ * base implementation of the registry pattern that supports the countable
+ * interface
+ *
+ * @package Chevron\Container
+ */
 class Registry implements \Countable {
 	/**
 	 * The underlying storage array
@@ -51,7 +56,7 @@ class Registry implements \Countable {
 
 	/**
 	 * Method to retrieve the number of values in the registry
-	 * @return type
+	 * @return int
 	 */
 	function length(){
 		return count($this->map);
