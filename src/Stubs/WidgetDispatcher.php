@@ -18,7 +18,7 @@ class WidgetDispatcher {
 	 */
 	function __construct($dir){
 		if( !is_dir($dir) ){
-			throw new \Exception("WidgetFactory::__construct requires a valid source directory.");
+			throw new \Exception("WidgetDispatcher::__construct requires a valid source directory.");
 		}
 
 		$this->sourceDir = trim($dir);
@@ -31,7 +31,7 @@ class WidgetDispatcher {
 	 * @return Chevron\Stubs\Widget
 	 */
 	function make($file, array $data = array()){
-		$file = sprintf("%s/%s", rtrim($this->sourceDir, DIRECTORY_SEPERATOR), ltrim($file, DIRECTORY_SEPERATOR) );
+		$file = sprintf("%s/%s", rtrim($this->sourceDir, DIRECTORY_SEPARATOR), ltrim($file, DIRECTORY_SEPARATOR) );
 		return new Widget($file, $data);
 	}
 
