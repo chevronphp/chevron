@@ -86,3 +86,22 @@ FUnit::test("Deferred::once()", function(){
 	FUnit::equal($result, 7, "singleton via multiple calls");
 
 });
+
+FUnit::test("Deferred::get()", function(){
+
+	$R = new Container\Deferred;
+
+	$R->set("bloop", function(){ return md5(mt_rand(1,999)); });
+	$R->set("blooper", 9);
+
+	$val1 = $R->get("bloop");
+	$val2 = $R->get("bloop", true);
+	$val3 = $R->get("bloop");
+
+	FUnit::not_equal($val1, $val2, "lambda");
+	FUnit::equal($val1, $val3, "lambda singleton");
+
+	$val = $R->get("blooper");
+	FUnit::equal($val, 9, "scalar");
+
+});

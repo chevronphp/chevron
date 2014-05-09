@@ -37,6 +37,25 @@ class Deferred extends Registry {
 	}
 
 	/**
+	 * Method to retrieve the value stored at key. Allows for Di style lambda or
+	 * scalar retrieval.
+	 * @param string $key The key of the value to retrieve
+	 * @param bool $new A toggle to call the callable anew
+	 * @return mixed
+	 */
+	function get($key, $new = false){
+		if(!array_key_exists($key, $this->map)){ return null; }
+
+		if(is_callable($this->map[$key])){
+			if($new){
+				return $this->invoke($key);
+			}
+			return $this->once($key);
+		}
+		return $this->map[$key];
+	}
+
+	/**
 	 * method to retrieve a singleton value from the deferred registry
 	 * @param string $key The lambda
 	 * @param array $args The values to pass to the lambda
