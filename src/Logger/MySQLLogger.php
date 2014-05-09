@@ -28,7 +28,7 @@ class MySQLLogger extends AbstractLogger {
 	 */
 	public function __construct( PDOWrapperInterface $dbConn, $table = "logging" ){
 		$this->dbConn = $dbConn;
-		$this->table   = $table;
+		$this->table  = $table;
 	}
 
 	/**
