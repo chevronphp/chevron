@@ -30,9 +30,19 @@ class WidgetDispatcher {
 	 * @param array $data The data to pass to the Widget
 	 * @return Chevron\Stubs\Widget
 	 */
-	function make($file, array $data = array()){
+	function __invoke($file, array $data = array()){
 		$file = sprintf("%s/%s", rtrim($this->sourceDir, DIRECTORY_SEPARATOR), ltrim($file, DIRECTORY_SEPARATOR) );
 		return new Widget($file, $data);
+	}
+
+	/**
+	 * external (non-magic) method for dispatching Widgets
+	 * @param string $file The file to load
+	 * @param array $data The data to pass to the Widget
+	 * @return Chevron\Stubs\Widget
+	 */
+	function get($file, array $data = array()){
+		return $this->__invoke($file, $data);
 	}
 
 }
