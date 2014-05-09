@@ -9,7 +9,7 @@ namespace Chevron\DB\SQLite;
  * @package Chevron\PDO
  * @author Jon Henderson
  */
-class WIP_Wrapper extends \PDO {
+class PDOWrapper extends \PDO {
 
 	use \Chevron\DB\Traits\QueryHelperTrait;
 

@@ -130,4 +130,11 @@ class PDOWrapper implements Interfaces\PDOWrapperInterface {
 		return $this->shift();
 	}
 
+	/**
+	 * For documentation, consult the PDOWrapperInterface
+	 */
+	function keyrows($query, array $map = array(), $in = false){
+		return $this->shift();
+	}
+
 }
