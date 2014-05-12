@@ -5,13 +5,13 @@ namespace Chevron\HTML;
  * a class for not having to type HTML Form-related tags by hand. includes entity safety
  * @package Chevron\HTML
  */
-class Form extends Element {
-	/**
-	 * array of tags aliases
-	 */
-	protected $tagAliases = array(
-		"file",	"text", "search", "password", "submit", "reset", "hidden", "checkbox", "radio",
-	);
+class Form {
+
+	use Traits\ElementAttributeTrait;
+	use Traits\ElementInnerHTMLTrait;
+	use Traits\ElementPatternTrait;
+	use Traits\ElementRenderTrait;
+	use Traits\ElementTagTrait;
 
 	/**
 	 * method to create a Form HTML element
@@ -22,13 +22,13 @@ class Form extends Element {
 	 * @param array $attributes The attributes of the form element
 	 * @return Form
 	 */
-	function __construct( $alias, $name, $value, $checked, $attributes ){
-		if( !ctype_alpha( $alias ) ){ return null; }
+	function __construct( $alias, $name, $value = "", $checked = null, array $attributes = [] ){
 
-		$this->tag = $alias;
-		if(in_array($alias, $this->tagAliases)){
-			$this->tag = "input";
-			$attributes["type"] = $alias;
+		if($type = $this->getAlias($alias)){
+			$this->setTag("input");
+			$this->setAttributes(["type" => $type]);
+		}else{
+			$this->setTag($alias);
 		}
 
 		if($checked){
@@ -36,7 +36,7 @@ class Form extends Element {
 		}
 
 		if($name){
-			$attributes["name"] = $name;
+			$this->setAttributes(["name" => $name]);
 		}
 
 		if($value){
@@ -79,31 +79,31 @@ class Form extends Element {
 	 * @param array $args An array of args to be passed to the constructor
 	 * @return Form
 	 */
-	static function __callStatic($type, $args){
+	// static function __callStatic($type, $args){
 
-		$name = $value = $checked = "";
-		$attributes = array();
+	// 	$name = $value = $checked = "";
+	// 	$attributes = array();
 
-		if(array_key_exists(0, $args)){
-			$name = $args[0];
-		}
+	// 	if(array_key_exists(0, $args)){
+	// 		$name = $args[0];
+	// 	}
 
-		if(array_key_exists(1, $args)){
-			$value = $args[1];
-		}
+	// 	if(array_key_exists(1, $args)){
+	// 		$value = $args[1];
+	// 	}
 
-		if(array_key_exists(2, $args)){
-			$checked = $args[2];
-		}
+	// 	if(array_key_exists(2, $args)){
+	// 		$checked = $args[2];
+	// 	}
 
-		if(array_key_exists(3, $args)){
-			if(is_array($args[3])){
-				$attributes = array_merge($attributes, $args[3]);
-			}
-		}
+	// 	if(array_key_exists(3, $args)){
+	// 		if(is_array($args[3])){
+	// 			$attributes = array_merge($attributes, $args[3]);
+	// 		}
+	// 	}
 
-		$CLASS = __CLASS__;
-		return new $CLASS($type, $name, $value, $checked, $attributes);
+	// 	$CLASS = __CLASS__;
+	// 	return new $CLASS($type, $name, $value, $checked, $attributes);
 
-	}
+	// }
 }

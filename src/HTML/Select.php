@@ -5,7 +5,13 @@ namespace Chevron\HTML;
  * a class for not having to select tags by hand. includes entity safety
  * @package Chevron\HTML
  */
-class Select extends Element {
+class Select {
+
+	use Traits\ElementAttributeTrait;
+	use Traits\ElementInnerHTMLTrait;
+	use Traits\ElementRenderTrait;
+	use Traits\ElementTagTrait;
+
 	/**
 	 * an array of options for the select tag
 	 */
@@ -24,10 +30,10 @@ class Select extends Element {
 	 * @param array $attributes An array of attrs for the select tag
 	 * @return Chevron\HTML\Select
 	 */
-	function __construct($name, array $options, $selected = '', array $attributes = array()){
+	function __construct($name, array $options, $selected = '', array $attributes = []){
 
 		if($name){
-			$attributes["name"] = $name;
+			$this->setAttributes(["name" => $name]);
 		}
 
 		if($attributes){
@@ -120,31 +126,31 @@ class Select extends Element {
 	 * @param array $args An array of args to be parsed and passed to the constructor
 	 * @return Chevron\HTML\Select
 	 */
-	static function __callStatic($name, $args){
+	// static function __callStatic($name, $args){
 
-		$selected = "";
-		$options  = $attributes = array();
+	// 	$selected = "";
+	// 	$options  = $attributes = array();
 
-		if(array_key_exists(0, $args)){
-			if(is_array($args[0])){
-				$options = $args[0];
-			}
-		}
+	// 	if(array_key_exists(0, $args)){
+	// 		if(is_array($args[0])){
+	// 			$options = $args[0];
+	// 		}
+	// 	}
 
-		if(array_key_exists(1, $args)){
-			$selected = $args[1];
-		}
+	// 	if(array_key_exists(1, $args)){
+	// 		$selected = $args[1];
+	// 	}
 
-		if(array_key_exists(2, $args)){
-			if(is_array($args[2])){
-				$attributes = $args[2];
-			}
-		}
+	// 	if(array_key_exists(2, $args)){
+	// 		if(is_array($args[2])){
+	// 			$attributes = $args[2];
+	// 		}
+	// 	}
 
-		$CLASS = __CLASS__;
-		return new $CLASS($name, $options, $selected, $attributes);
+	// 	$CLASS = __CLASS__;
+	// 	return new $CLASS($name, $options, $selected, $attributes);
 
-	}
+	// }
 }
 
 
