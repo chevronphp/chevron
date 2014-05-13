@@ -7,6 +7,7 @@ namespace Chevron\HTML;
  */
 class Form {
 
+	use \Chevron\Filter\Traits\ToEntitiesTrait;
 	use Traits\ElementAttributeTrait;
 	use Traits\ElementInnerHTMLTrait;
 	use Traits\ElementPatternTrait;
@@ -74,36 +75,16 @@ class Form {
 	}
 
 	/**
-	 * shortcut method to create a Form object using an alias as the method call
-	 * @param string $type The tag as a method call
-	 * @param array $args An array of args to be passed to the constructor
-	 * @return Form
+	 * Properly render an Element object as an HTML tag string. The patterns
+	 * omit a preceding space for the attribute strings for aesthetic reasons.
+	 * @return string
 	 */
-	// static function __callStatic($type, $args){
+	function __toString(){
+		return vsprintf($this->getPattern(), array(
+			$this->marshalTag(),
+			$this->marshalAttributes(),
+			$this->marshalInnerHTML()
+		));
+	}
 
-	// 	$name = $value = $checked = "";
-	// 	$attributes = array();
-
-	// 	if(array_key_exists(0, $args)){
-	// 		$name = $args[0];
-	// 	}
-
-	// 	if(array_key_exists(1, $args)){
-	// 		$value = $args[1];
-	// 	}
-
-	// 	if(array_key_exists(2, $args)){
-	// 		$checked = $args[2];
-	// 	}
-
-	// 	if(array_key_exists(3, $args)){
-	// 		if(is_array($args[3])){
-	// 			$attributes = array_merge($attributes, $args[3]);
-	// 		}
-	// 	}
-
-	// 	$CLASS = __CLASS__;
-	// 	return new $CLASS($type, $name, $value, $checked, $attributes);
-
-	// }
 }

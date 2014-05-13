@@ -12,9 +12,9 @@ trait ElementTagTrait {
 	/**
 	 * array of tags aliases
 	 */
-	protected $tagAliases = array(
+	protected $tagAliases = [
 		"file",	"text", "search", "password", "submit", "reset", "hidden", "checkbox", "radio",
-	);
+	];
 
 	/**
 	 * Add content to an Element object
@@ -26,6 +26,19 @@ trait ElementTagTrait {
 		$this->tag = $tag;
 	}
 
+	/**
+	 * method to get the tag of an Element
+	 * @return string
+	 */
+	function marshalTag(){
+		return $this->tag;
+	}
+
+	/**
+	 * method to get the tag alias (for Form objects)
+	 * @param type $tag
+	 * @return type
+	 */
 	function getAlias($tag){
 		if( $key = array_search($tag, $this->tagAliases) ){
 			return $this->tagAliases[ $key ];

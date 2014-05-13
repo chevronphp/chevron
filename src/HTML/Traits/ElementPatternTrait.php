@@ -46,10 +46,6 @@ trait ElementPatternTrait {
 			$pattern = '<%1$s%2$s />';
 		}
 
-		if( $this->isSelfClosingTag() ){
-			$pattern = '<%1$s%2$s />';
-		}
-
 		return $pattern;
 	}
 

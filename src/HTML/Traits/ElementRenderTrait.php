@@ -9,13 +9,7 @@ trait ElementRenderTrait {
 	 * omit a preceding space for the attribute strings for aesthetic reasons.
 	 * @return string
 	 */
-	function __toString(){
-		return vsprintf($this->getPattern(), array(
-			$this->tag,
-			$this->marshalAttributes(),
-			$this->marshalInnerHTML()
-		));
-	}
+	abstract function __toString();
 
 	/**
 	 * method to explicitly call __toString();

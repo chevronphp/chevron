@@ -7,6 +7,7 @@ namespace Chevron\HTML;
  */
 class Element {
 
+	use \Chevron\Filter\Traits\ToEntitiesTrait;
 	use Traits\ElementAttributeTrait;
 	use Traits\ElementInnerHTMLTrait;
 	use Traits\ElementPatternTrait;
@@ -21,8 +22,7 @@ class Element {
 	 * @return Chevron\HTML\Element
 	 */
 	function __construct( $tag, $innerHTML = "", array $attributes = [] ){
-		if( !ctype_alpha( $tag ) ){ return null; }
-		$this->tag = $tag;
+		$this->setTag($tag);
 
 		if($innerHTML){
 			$this->setInnerHTML($innerHTML);
@@ -34,28 +34,17 @@ class Element {
 	}
 
 	/**
-	 * shortcut to quickly create and return an object using the tag as the method name
-	 * @param string $tag The tag name as a method call
-	 * @param array $args The various args that ought to be passed to the constructor
-	 * @return Element
+	 * Properly render an Element object as an HTML tag string. The patterns
+	 * omit a preceding space for the attribute strings for aesthetic reasons.
+	 * @return string
 	 */
-	// static function __callStatic($tag, $args){
+	function __toString(){
+		return vsprintf($this->getPattern(), array(
+			$this->marshalTag(),
+			$this->marshalAttributes(),
+			$this->marshalInnerHTML()
+		));
+	}
 
-	// 	$innerHTML = "";
-	// 	if(array_key_exists(0, $args)){
-	// 		$innerHTML = $args[0];
-	// 	}
-
-	// 	$attributes = array();
-	// 	if(array_key_exists(1, $args)){
-	// 		if(is_array($args[1])){
-	// 			$attributes = $args[1];
-	// 		}
-	// 	}
-
-	// 	$CLASS = __CLASS__;
-	// 	return new $CLASS($tag, $innerHTML, $attributes);
-
-	// }
 }
 

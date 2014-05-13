@@ -7,6 +7,7 @@ namespace Chevron\HTML;
  */
 class Select {
 
+	use \Chevron\Filter\Traits\ToEntitiesTrait;
 	use Traits\ElementAttributeTrait;
 	use Traits\ElementInnerHTMLTrait;
 	use Traits\ElementRenderTrait;
@@ -31,6 +32,8 @@ class Select {
 	 * @return Chevron\HTML\Select
 	 */
 	function __construct($name, array $options, $selected = '', array $attributes = []){
+
+		$this->setTag("select");
 
 		if($name){
 			$this->setAttributes(["name" => $name]);
@@ -57,6 +60,7 @@ class Select {
 	function __toString(){
 
 		return vsprintf($this->getPattern(), array(
+			$this->marshalTag(),
 			$this->marshalAttributes(),
 			$this->marshalOptions()
 		));
@@ -68,7 +72,7 @@ class Select {
 	 * @return string
 	 */
 	function getPattern(){
-		return "<select%s>%s</select>";
+		return "<%s%s>%s</select>";
 	}
 
 	/**
@@ -120,37 +124,6 @@ class Select {
 		return $opts;
 	}
 
-	/**
-	 * shortcut method to create a select object using an alias as the method call
-	 * @param string $name The select name as a method call
-	 * @param array $args An array of args to be parsed and passed to the constructor
-	 * @return Chevron\HTML\Select
-	 */
-	// static function __callStatic($name, $args){
-
-	// 	$selected = "";
-	// 	$options  = $attributes = array();
-
-	// 	if(array_key_exists(0, $args)){
-	// 		if(is_array($args[0])){
-	// 			$options = $args[0];
-	// 		}
-	// 	}
-
-	// 	if(array_key_exists(1, $args)){
-	// 		$selected = $args[1];
-	// 	}
-
-	// 	if(array_key_exists(2, $args)){
-	// 		if(is_array($args[2])){
-	// 			$attributes = $args[2];
-	// 		}
-	// 	}
-
-	// 	$CLASS = __CLASS__;
-	// 	return new $CLASS($name, $options, $selected, $attributes);
-
-	// }
 }
 
 

@@ -1,7 +1,11 @@
 <?php
 
-namespace;
-
+namespace Chevron\Filter\Traits;
+/**
+ * implements functions to entity-ize a scalar value
+ *
+ * @package Chevron\Filter
+ */
 trait ToEntitiesTrait {
 
 	/**

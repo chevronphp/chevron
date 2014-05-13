@@ -21,15 +21,6 @@ trait ElementAttributeTrait {
 	}
 
 	/**
-	 * method to entity-ize a value
-	 * @param string $value The value to sanitize
-	 * @return string
-	 */
-	function toEntity($value){
-		return htmlentities($value, ENT_QUOTES, "UTF-8");
-	}
-
-	/**
 	 * method to convert the current attributes to an entitiy-ized string
 	 * @return string
 	 */
