@@ -2,14 +2,14 @@
 
 namespace Chevron\Filter\Traits;
 /**
- * implements functions to entity-ize a scalar value
+ * implements functions to entity-ize values
  *
  * @package Chevron\Filter
  */
 trait FilterEntitiesTrait {
 
 	/**
-	 * method to entity-ize a value
+	 * method to entity-ize a scalar value
 	 * @param string $value The value
 	 * @return string
 	 */
@@ -19,7 +19,7 @@ trait FilterEntitiesTrait {
 	}
 
 	/**
-	 * method to entity-ize a value
+	 * method to entity-ize the values in an array
 	 * @param string $value The value
 	 * @return string
 	 */

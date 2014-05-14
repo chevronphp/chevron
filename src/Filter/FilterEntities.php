@@ -2,7 +2,7 @@
 
 namespace Chevron\Filter;
 /**
- * implements functions to strip control chars out of scalar and iteratable values
+ * implements functions to entity-ize
  *
  * @package Chevron\Filter
  */

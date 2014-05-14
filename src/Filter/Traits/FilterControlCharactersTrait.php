@@ -9,7 +9,7 @@ namespace Chevron\Filter\Traits;
 trait FilterControlCharactersTrait {
 
 	/**
-	 * Filter a mixed value translating spaces " " for dangerous control chars.
+	 * Filter a scalar value translating spaces " " for dangerous control chars.
 	 * This will recurse deeper into arrays
 	 *
 	 * @param mixed $value The value to sanitize
@@ -20,7 +20,7 @@ trait FilterControlCharactersTrait {
 	}
 
 	/**
-	 * Filter a mixed value translating spaces " " for dangerous control chars.
+	 * Filter the values in an array, translating spaces " " for dangerous control chars.
 	 * This will recurse deeper into arrays
 	 *
 	 * @param array $map The value to sanitize
