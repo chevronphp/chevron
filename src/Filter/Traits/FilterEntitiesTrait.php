@@ -6,15 +6,27 @@ namespace Chevron\Filter\Traits;
  *
  * @package Chevron\Filter
  */
-trait ToEntitiesTrait {
+trait FilterEntitiesTrait {
 
 	/**
 	 * method to entity-ize a value
 	 * @param string $value The value
 	 * @return string
 	 */
-	protected function toEntity($value){
+	function filter($value){
 		if(!is_scalar($value)) return;
 		return htmlentities($value, ENT_QUOTES, "UTF-8");
+	}
+
+	/**
+	 * method to entity-ize a value
+	 * @param string $value The value
+	 * @return string
+	 */
+	function filterArray(array $map){
+		array_walk_recursive($map, function(&$value){
+			$value = htmlentities($value, ENT_QUOTES, "UTF-8");
+		});
+		return $map;
 	}
 }

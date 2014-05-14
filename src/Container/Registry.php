@@ -79,9 +79,3 @@ class Registry implements \Countable {
 		return $this->length();
 	}
 }
-
-// ArrayAccess
-// public offsetExists ( $offset )
-// public offsetGet ( $offset )
-// public offsetSet ( $offset, $value )
-// public offsetUnset ( $offset )

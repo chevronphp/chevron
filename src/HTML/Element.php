@@ -1,13 +1,18 @@
 <?php
 
 namespace Chevron\HTML;
+
+use \Chevron\Filter\Traits\FilterEntitiesTrait as EntityFilter;
 /**
  * a class for not having to type HTML tags by hand. includes entity safety
  * @package Chevron\HTML
  */
 class Element {
 
-	use \Chevron\Filter\Traits\ToEntitiesTrait;
+	use EntityFilter{
+		EntityFilter::filter as toEntity;
+	}
+
 	use Traits\ElementAttributeTrait;
 	use Traits\ElementInnerHTMLTrait;
 	use Traits\ElementPatternTrait;

@@ -26,4 +26,11 @@ trait ElementInnerHTMLTrait {
 		return $this->toEntity($this->innerHTML);
 	}
 
+	/**
+	 * method to sanitize values MUST exist
+	 * @param scalar $value The value to convert
+	 * @return string
+	 */
+	abstract function toEntity($value);
+
 }

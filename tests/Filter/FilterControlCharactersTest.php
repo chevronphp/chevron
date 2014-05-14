@@ -1,18 +1,18 @@
 <?php
 
 require_once("tests/bootstrap.php");
-/*
-FUnit::test("Filter::scalarControlChars()", function(){
+
+FUnit::test("FilterControlCharacters::filter()", function(){
     $data     = "4e864\n4e993\x08e422743\x0739ebf\x0D7504a\x1A893b0";
     $expected = "4e864\n4e993 e422743 39ebf 7504a 893b0";
 
     // scalar
-    $filter = new \Chevron\Filter\Filter;
-    $filtered = $filter->scalarControlChars($data);
+    $filter = new \Chevron\Filter\FilterControlCharacters;
+    $filtered = $filter->filter($data);
     FUnit::equal($filtered, $expected);
 });
 
-FUnit::test("Filter::arrayControlChars()", function(){
+FUnit::test("FilterControlCharacters::filterArray()", function(){
     $data = array(
         0        => "4e864\n4e99\x083e422743\x0739ebf\x0D7504a\x1A893b0",
         "string" => "4e864\n4e993\x08e422743\x0739ebf\x0D7504a\x1A893b0",
@@ -23,12 +23,12 @@ FUnit::test("Filter::arrayControlChars()", function(){
     );
 
     // array
-    $filter = new \Chevron\Filter\Filter;
-    $filtered = $filter->arrayControlChars($data);
+    $filter = new \Chevron\Filter\FilterControlCharacters;
+    $filtered = $filter->filterArray($data);
     FUnit::equal($filtered, $expected);
 });
 
-FUnit::test("Filter::arrayControlChars() recursive", function(){
+FUnit::test("FilterControlCharacters::filterArray() recursive", function(){
     $data = array(
         0        => "4e864\n4e99\x083e422743\x0739ebf\x0D7504a\x1A893b0",
         "string" => "4e864\n4e993\x08e422743\x0739ebf\x0D7504a\x1A893b0",
@@ -52,8 +52,7 @@ FUnit::test("Filter::arrayControlChars() recursive", function(){
     );
 
     // recursive array
-    $filter = new \Chevron\Filter\Filter;
-    $filtered = $filter->arrayControlChars($data);
+    $filter = new \Chevron\Filter\FilterControlCharacters;
+    $filtered = $filter->filterArray($data);
     FUnit::equal($filtered, $expected);
 });
-*/
