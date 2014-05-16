@@ -30,7 +30,7 @@
 		"psr/log"                       : "1.*",
 		"corpus/autoloader"             : "1.*",
 		"henderjon/chevron.html"        : "1.*",
-		"henderjon/chevron.validators"  : "1.*",
+		"henderjon/chevron.validators"  : "1.* -- not yet at v1.0",
 		"henderjon/weights_and_measures": "3.*",
 		"henderjon/simple_scan_args"    : "0.1.*",
 		"aws/aws-sdk-php"               : "2.5.*",
