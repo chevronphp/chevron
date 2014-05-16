@@ -14,6 +14,16 @@ applications much easier for me.
 
 Look at each module individually for tests, examples, etc.
 
+# v1.*
+
+Version 1 comprises
+
+  - chevron.containers
+  - chevron.widgets
+  - chevron.db
+  - chevron.filters
+  - chevron.loggers
+
 # Installation
 
 Using [Composer](http://getcomposer.org/) `"require" : { "henderjon/chevron": "1.*" }`
