@@ -18,11 +18,11 @@ Look at each module individually for tests, examples, etc.
 
 Version 1 comprises
 
-  - chevron.containers
-  - chevron.widgets
-  - chevron.db
-  - chevron.filters
-  - chevron.loggers
+  - [chevron.containers](https://github.com/henderjon/chevron.containers)
+  - [chevron.widgets](https://github.com/henderjon/chevron.widgets)
+  - [chevron.db](https://github.com/henderjon/chevron.db)
+  - [chevron.filters](https://github.com/henderjon/chevron.filters)
+  - [chevron.loggers](https://github.com/henderjon/chevron.loggers)
 
 # Installation
 
