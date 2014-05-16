@@ -12,29 +12,15 @@ applications much easier for me.
 
 # Usage
 
-You're best bet is to check the tests to see usage, as I'm awful at
-documentation.
+Look at each module individually for tests, examples, etc.
 
 # Installation
 
-Install the [Packagist archive](https://packagist.org/packages/henderjon/chevron)
-using [Composer](http://getcomposer.org/). I will *generally* respect
-[Semantic Versioning](http://semver.org/). Learn about how Composer
-does [versions](https://getcomposer.org/doc/01-basic-usage.md#package-versions).
-
-*Note the absense of v1.0*
-
-```
-{
-	"require" : {
-		"henderjon/chevron": "0.2.*"
-	}
-}
-```
+Using [Composer](http://getcomposer.org/) `"require" : { "henderjon/chevron": "1.*" }`
 
 # License
 
-See LICENSE.md for the [BSD-3-Clause](http://opensource.org/licenses/BSD-3-Clause) license.
+Each module carries its own LICENSE.md. A [BSD-3-Clause](http://opensource.org/licenses/BSD-3-Clause) license.
 
 
 
