@@ -24,7 +24,7 @@ Version 1 comprises
   - [chevron.filters](https://github.com/henderjon/chevron.filters)
   - [chevron.loggers](https://github.com/henderjon/chevron.loggers)
 
-# where is verion 1.*?
+# where is version 1.*?
 
 Packagist (an important component to the composer ecosystem) prefers dashes as separators (I was
 using dots). I had to update all the package names accordingly.

@@ -16,11 +16,11 @@
 	},
 	"require": {
 		"php"                         : ">=5.4.0",
-		"henderjon/chevron-containers": "1.*",
-		"henderjon/chevron-widgets"   : "1.*",
-		"henderjon/chevron-db"        : "1.*",
-		"henderjon/chevron-filters"   : "1.*",
-		"henderjon/chevron-loggers"   : "1.*"
+		"henderjon/chevron-containers": "2.*",
+		"henderjon/chevron-widgets"   : "2.*",
+		"henderjon/chevron-db"        : "2.*",
+		"henderjon/chevron-filters"   : "2.*",
+		"henderjon/chevron-loggers"   : "2.*"
 	},
 	"require-dev": {
 		"funkatron/funit" : "dev-master",
@@ -29,7 +29,7 @@
 	"suggest" : {
 		"psr/log"                       : "1.*",
 		"corpus/autoloader"             : "1.*",
-		"henderjon/chevron-html"        : "1.*",
+		"henderjon/chevron-html"        : "2.*",
 		"henderjon/chevron-validators"  : "1.* -- not yet at v1.0",
 		"henderjon/weights_and_measures": "3.*",
 		"henderjon/simple_scan_args"    : "0.1.*",
