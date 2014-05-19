@@ -14,7 +14,7 @@ applications much easier for me.
 
 Look at each module individually for tests, examples, etc.
 
-# v1.*
+# v2.*
 
 Version 1 comprises
 
@@ -23,6 +23,11 @@ Version 1 comprises
   - [chevron.db](https://github.com/henderjon/chevron.db)
   - [chevron.filters](https://github.com/henderjon/chevron.filters)
   - [chevron.loggers](https://github.com/henderjon/chevron.loggers)
+
+# where is verion 1.*?
+
+Packagist (an important component to the composer ecosystem) prefers dashes as separators (I was
+using dots). I had to update all the package names accordingly.
 
 # Installation
 
