@@ -14,7 +14,7 @@ applications much easier for me.
 
 Look at each module individually for tests, examples, etc.
 
-# v2.*
+# v1.*
 
 Version 1 comprises
 
