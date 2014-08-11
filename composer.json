@@ -15,28 +15,30 @@
 		"irc" : "irc://irc.freenode.org/henderjon"
 	},
 	"require": {
-		"php"                         : ">=5.4.0",
-		"henderjon/chevron-containers": "~3.0",
-		"henderjon/chevron-db"        : "~2.0",
-		"henderjon/chevron-filters"   : "~2.0",
-		"henderjon/chevron-loggers"   : "~3.0",
-		"henderjon/chevron-widgets"   : "~2.0",
+		"php"                            : ">=5.4.0",
+		"henderjon/chevron-argv"         : "~1.0",
+		"henderjon/chevron-containers"   : "~3.0",
+		"henderjon/chevron-db"           : "~2.0",
+		"henderjon/chevron-errhandler"   : "~1.0",
+		"henderjon/chevron-filters"      : "~2.0",
+		"henderjon/chevron-introspector" : "~1.0",
+		"henderjon/chevron-loggers"      : "~3.0",
+		"henderjon/chevron-widgets"      : "~2.0",
+		"henderjon/weights_and_measures" : "~3.0",
 	},
 	"require-dev": {
-		"funkatron/funit" : "dev-master",
-		"henderjon/drop"  : "1.*"
+		"phpunit/phpunit": "~4.0",
+		"henderjon/drop" : "~1.0",
+		"psr/log"        : "~1.0"
 	},
 	"suggest" : {
-		"psr/log"                        : "1.*",
-		"corpus/autoloader"              : "1.*",
-		"henderjon/chevron-html"         : "2.*",
-		"henderjon/chevron-argv"         : "1.*",
-		"henderjon/chevron-introspection": "0.*",
-		"henderjon/weights_and_measures" : "3.*",
-		"henderjon/simple_scan_args"     : "0.1.*",
-		"aws/aws-sdk-php"                : "2.5.*",
-		"phpdocumentor/phpdocumentor"    : "2.*",
-		"phpunit/phpunit"                : "~4.0"
+		"corpus/autoloader"          : "~1.0",
+		"ircmaxell/password-compat"  : "~1.0",
+		"funkatron/funit"            : "dev-master",
+		"henderjon/chevron-html"     : "~2.0",
+		"henderjon/chevron-kernel"   : "~1.0",
+		"aws/aws-sdk-php"            : "~2.5.0",
+		"phpdocumentor/phpdocumentor": "~2.0"
 	},
 	"autoload": {
 		"psr-4": {
