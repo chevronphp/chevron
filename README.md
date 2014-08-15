@@ -10,18 +10,9 @@ Because I find these tools useful and wanted to package them in a way
 that I could reuse them. Most of these tools have made building web
 applications much easier for me.
 
-# Usage
+See [packagist](https://packagist.org/packages/henderjon/chevron) for version/installation info. At the moment, I recommend using `~2.0`.
 
-Look at each module individually for tests, examples, etc.
+[![Latest Stable Version](https://poser.pugx.org/henderjon/chevron/v/stable.svg)](https://packagist.org/packages/henderjon/chevron)
 
-# Installation
-
-Using [Composer](http://getcomposer.org/) `"require" : { "henderjon/chevron": "~2.0" }`
-
-# License
-
-Each module carries its own LICENSE.md. A [BSD-3-Clause](http://opensource.org/licenses/BSD-3-Clause) license.
-
-[![Build Status](https://travis-ci.org/henderjon/chevron.svg?branch=master)](https://travis-ci.org/henderjon/chevron)
 
 
