@@ -21,10 +21,12 @@
 		"henderjon/chevron-db"           : "~2.0",
 		"henderjon/chevron-errhandler"   : "~1.0",
 		"henderjon/chevron-filters"      : "~2.0",
+		"henderjon/chevron-hooks"        : "~1.0",
 		"henderjon/chevron-introspector" : "~1.0",
 		"henderjon/chevron-loggers"      : "~3.0",
 		"henderjon/chevron-widgets"      : "~2.0",
-		"henderjon/weights_and_measures" : "~3.0"
+		"henderjon/weights_and_measures" : "~3.0",
+		"henderjon/is_cli"               : "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
