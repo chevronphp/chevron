@@ -17,14 +17,14 @@
 	"require": {
 		"php"                           : ">=5.4",
 		"chevron/argv"                  : "~2.0",
-		"chevron/containers"            : "~3.0",
+		"chevron/containers"            : "~4.0",
 		"chevron/db"                    : "~2.0",
 		"chevron/errhandler"            : "~1.0",
-		"chevron/hooks"                 : "~0.2",
-		"chevron/kernel"                : "~0.3",
+		"chevron/hooks"                 : "~0.3",
+		"chevron/kernel"                : "~0.4",
 		"chevron/loggers"               : "~4.0",
 		"chevron/objectloader"          : "~1.0",
-		"chevron/widgets"               : "~2.0",
+		"chevron/widgets"               : "~3.0",
 		"henderjon/weights_and_measures": "~3.0",
 		"henderjon/is_cli"              : "~1.0"
 	},
