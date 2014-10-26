@@ -28,7 +28,7 @@
 		"chevron/widgets"               : "~3.0",
 		"chevron/password"              : "~1.0",
 
-		"henderjon/weights_and_measures": "~3.0",
+		"henderjon/weights_and_measures": "~3.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit" : "~4.0",
