@@ -17,12 +17,12 @@
 	"require": {
 		"php"                           : ">=5.4",
 
-		"chevron/argv"                  : "~2.0",
+		"chevron/argv"                  : "~3.0",
 		"chevron/containers"            : "~4.0",
 		"chevron/db"                    : "~2.0",
 		"chevron/errhandler"            : "~1.0",
 		"chevron/hooks"                 : "~0.3",
-		"chevron/kernel"                : "~0.4",
+		"chevron/kernel"                : "~0.8",
 		"chevron/loggers"               : "~4.0",
 		"chevron/objectloader"          : "~1.0",
 		"chevron/widgets"               : "~3.0",
@@ -51,3 +51,5 @@
 		}
 	}
 }
+
+
