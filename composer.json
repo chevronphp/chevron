@@ -19,7 +19,7 @@
 
 		"chevron/argv"                  : "~3.0",
 		"chevron/containers"            : "~4.0",
-		"chevron/db"                    : "~2.0",
+		"chevron/db"                    : "~4.0",
 		"chevron/errhandler"            : "~1.0",
 		"chevron/hooks"                 : "~0.3",
 		"chevron/kernel"                : "~0.8",
