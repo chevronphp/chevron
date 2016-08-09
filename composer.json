@@ -36,7 +36,7 @@
 		"phpunit/phpunit" : "~4.0",
 		"psr/log"         : "~1.0",
 
-		"henderjon/redis" : "~1.0",
+		"henderjon/redis" : "~1.0"
 	},
 	"suggest" : {
 		"corpus/autoloader"          : "~1.0",
