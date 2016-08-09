@@ -29,7 +29,7 @@
 		"chevron/html"                  : "~0.0",
 
 		"henderjon/drop"                : "~1.0",
-		"henderjon/is_cli"              : "~1.0"
+		"henderjon/is_cli"              : "~1.0",
 		"henderjon/weights_and_measures": "~3.0"
 	},
 	"require-dev": {
