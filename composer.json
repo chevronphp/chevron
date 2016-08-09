@@ -23,7 +23,7 @@
 		"chevron/errhandler"            : "~1.0",
 		"chevron/hooks"                 : "~0.3",
 		"chevron/kernel"                : "~0.8",
-		"chevron/loggers"               : "~4.0",
+		"chevron/loggers"               : "~5.0",
 		"chevron/objectloader"          : "~1.0",
 		"chevron/widgets"               : "~3.0",
 		"chevron/password"              : "~1.0",
