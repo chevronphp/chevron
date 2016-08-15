@@ -17,7 +17,7 @@
 	"require": {
 		"php"                           : ">=5.4",
 
-		"chevron/argv"                  : "~3.0",
+		"chevron/argv"                  : "~4.0",
 		"chevron/containers"            : "~5.0",
 		"chevron/db"                    : "~4.0",
 		"chevron/errhandler"            : "~1.0",
